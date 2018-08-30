@@ -1,0 +1,579 @@
+---
+title: "tosca: Tools for Statistical Content Analysis"
+author: "Lars Koppers, Jonas Rieger, Karin Boczek, Gerret von Nordheim"
+date: \today
+output:
+  pdf_document:
+    toc: true
+    number_sections: true
+    # citation_package: ??
+    keep_tex: true
+editor_options: 
+  chunk_output_type: console
+vignette: >
+  %\VignetteIndexEntry{Vignette tosca}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+\newpage
+# Introduction
+
+This package provides different functions to explore text corpora with topic models. The package focuses on the visualisation and validation of content analysis. Therefore it provides some filters for preprocessing and a wrapper for the latent dirichlet allocation (lda) from the lda-package to include a topic model.
+Most visualisations aim at the presentation of measures for corpora, subcorpora or topics from lda over time. To use this functionality every document needs a date specification as metadata. To harmonize different text sources we provide the S3 object \texttt{textmeta}.
+
+The following table shows an overview over the functions in the package.
+
+|Function                        | Description|
+|--------------------------------|-----------------------------------------------------------|
+|**Preprocessing**               |
+|cleanTexts                      |tokenization, stopwords, removal of numbers, punctuation|
+|deleteAndRenameDuplicates       |deletion of duplicates, correction of not unique id's
+|duplist                         |list of different duplication types
+|filterCount                     |filter texts with few words
+|filterDate                      |filter texts depending on date
+|filterWord                      |filter texts depending on word lists
+|is.duplist                      |generic function for S3 object duplist
+|is.textmeta                     |generic function for S3 object textmeta
+|makeWordlist                    |wordlists and wordtables
+|mergeTextmeta                   |combining corpora
+|readTextmeta                    |create textmeta objects from csv files
+|readWiki                        |create textmeta objects from Wikipedia
+|readWikinews                    |create textmeta objects from Wikinews
+|removeHTML                      |converts html entities in UTF-8
+|removeUmlauts                   |converts german umlauts
+|removeXML                       |remove xml (html) tags
+|textmeta                        |S3 object textmeta
+||
+|**Topic Models**                |
+|LDAgen                          |wrapper for the lda in the lda-package
+|LDAprep                         |converts a tokenized textmeta object for the lda-package
+|clusterTopics                   |cluster analysis for topics
+|mergeLDA                        |combining lda-topics (for cluster analysis)
+||
+|**Descriptive Analysis: Corpus**|
+|plotFreq                        |plotting wordcounts over time
+|showMeta                        |export of meta data in csv
+|showTexts                       |export of text data in csv
+||
+|**Descriptive Analysis: Topics**|
+|plotArea                        |area plot for topics over time
+|plotHeat                        |heatmaps for topics over time
+|plotScot                        |plotting document counts of subcorpora over time
+|plotTopic                       |plotting topic counts over time
+|plotTopicWord                   |plotting wordcounts/proportion in topics over time
+|plotWordSub                     |plotting wordcounts/proportion in supcorpora relative to the original corpus
+|plotWordpt                      |plotting wordcounts/proportion relative to the topics
+|topTexts                        |filter representative texts for topics
+|topicsInText                    |visualisation of topics in a text
+||
+|**Validation**                  |
+|intruderTopics                  |intruder topics for topic validation
+|intruderWords                   |intruder words for topic validation
+
+
+The current version of the package can be installed with the \texttt{devtools} package.
+```{r, include = TRUE, message=FALSE}
+devtools::install_github("DoCMA-TU/tosca")
+library(tosca)
+```
+The actual version on CRAN can be installed with \texttt{instal.packages}.
+```{r, eval = FALSE}
+install.packages("tosca")
+library(tosca)
+```
+
+
+This vignette gives an overview over the functionality of the package. For a detailed description of the functions see the help pages.
+
+
+# Data Preprocessing
+A basic functionality of the package is data preprocessing. Therefore several functions are provided for reading text data, creating text objects, manipulating these objects and especially handling duplicates of different forms in the text data.
+
+## Read the Corpus - \texttt{textmeta}, \texttt{readWikinews}
+Read the corpus data through one of your self-implemented read-functions and create a \texttt{textmeta} object with the function of the same name and the arguments \texttt{text}, \texttt{meta} and \texttt{metamult}. The \texttt{text} component should be a \texttt{list} of \texttt{character} vectors or a \texttt{list} of \texttt{lists} of \texttt{character} vectors, whereas \texttt{meta} is a \texttt{data.frame} and \texttt{metamult} is intended for mainly unstructured meta-information as a \texttt{list}. Furthermore \texttt{meta} must contain the columns \texttt{id}, \texttt{date} and \texttt{title}.
+You can test whether your object meets the requirements of a \texttt{textmeta} object with the function \texttt{is.textmeta}.
+
+A read-function which is part of the package \texttt{tosca} is the function \texttt{readWikinews}. \texttt{readWikinews} reads XML-files created by the wikinews export page: [https://en.wikinews.org/wiki/Special:Export](https://en.wikinews.org/wiki/Special:Export "Wikinews Export pages"). By default \texttt{readWikinews} reads all XML-files in the working directory. The function creates a \texttt{textmeta} object. For this vignette we used two categories: *Politics_and_conflicts* and *Economy_and_business*. The pages were downloaded on 2018-03-05 in a file for each category. We can use \texttt{readWikinews} for reading both files, if they are in the same folder.
+
+```{r, eval = FALSE}
+corpus <- readWikinews()
+```
+
+Another method to read both files is to read them seperately and merge them with the function \texttt{mergeTextmeta}. This function should be used if you want to merge data from different sources using different read-functions. We use the two example datasets from the package.
+
+```{r, eval = TRUE}
+data(politics)
+data(economy)
+corpus <- mergeTextmeta(list(politics, economy))
+```
+
+```{r, eval = FALSE, echo=FALSE}
+save(politics, file = "../data/politics.rda")
+save(economy, file = "../data/economy.rda")
+```
+
+You obtain a note about duplicated texts (texts that appear in both categories). We have to handle this issue later. If we merge corpora with different meta-variables we can decide if all variables are used for the merged corpora (\texttt{all = TRUE}, default) or only variables that appear in all corpora (\texttt{all = FALSE}).
+
+After reading the raw data the texts need to be preprocessed.
+
+## Remove Umlauts and XML/HTML Tags - \texttt{removeXML removeHTML removeUmlauts}
+
+You can use \texttt{removeXML} to delete XML-tags (\texttt{<...>}) in character strings or a \texttt{list} of \texttt{character} vectors. The value you receive back are either a \texttt{character} vector or a list, if the input was a list.   
+If your texts contain html entities use \texttt{removeHTML}. If you want to transform the entities in UTF-8 characters you can choose between the entity-type (\texttt{dec=TRUE}: \&#248;, \texttt{hex=TRUE}: \&#xf8; or \texttt{entity=TRUE}: \&oslash;). If you are unsure which type was used, we recommend to enable all entity-type (disadvantage: longer run time). To choose which character should be replaced you can choose from all 16 ISO-8859 lists, e.g. \texttt{symbolList=c(1,15)} for ISO-8859-1 (latin1) and ISO-8859-15 (latin9). If \texttt{delete=TRUE} all remaining entities will be deleted.
+To replace german umlauts (ä ö ü ß -> ae oe ue ss) use \texttt{removeUmlauts}.
+
+We remove XML-tags and HTML-entities from our Wikinews corpus. Since we have only punctuation as HTML-entities in the Corpus we remove it completely.
+```{r}
+corpus$text <- removeXML(corpus$text)
+corpus$text <- removeHTML(corpus$text, dec=FALSE, hex=FALSE, entity=FALSE)
+```
+It is possible to apply the function to the \texttt{meta} component of a \texttt{textmeta} object as well, for example to remove XML tags or umlauts from the title of the Wikipedia pages.
+```{r}
+corpus$meta$title <- removeXML(corpus$meta$title)
+corpus$meta$title <- removeHTML(corpus$meta$title, dec=FALSE, hex=FALSE, entity=FALSE)
+```
+After applying the function to the text component, we have removed all database relicts like XML-tags. At this point you should deal with identifying different types of duplicates in your text data.
+
+## Identifying Duplicates - \texttt{deleteAndRenameDuplicates}, \texttt{duplist}
+You should ensure unique IDs in all three components of your \texttt{textmeta} object. If you cannot ensure that, it is recommended to use the function \texttt{deleteAndRenameDuplicates}. This function performs three actions. It deletes "complete duplicates", i.e. at least two entries with same ID and same information in \texttt{text} \textit{and} in \texttt{meta}. It renames so called "real duplicates" i.e. at least two entries with same ID and text, but diferrent information in meta, and it and renames also "fake duplicates" i.e. at least two entries with same ID but different \texttt{text} components. It is important to know that for technical reasons - expecting duplicates in the names of the \texttt{lists} - this is the only function, which works with classic indexing, so that it assumes the same order of articles in all three components.
+
+Additionally you can identify \texttt{text} component duplicates in your corpus with the function \texttt{duplist}, which creates a \texttt{list} of different types of duplicates. Non-unique IDs are not supported by the function, which implies that \texttt{deleteAndRenameDuplicates} should be executed before.
+
+In the given example corpus complete duplicates are only expected if pages were associated to both categories. These duplicates are deleted. 
+```{r}
+corpus <- deleteAndRenameDuplicates(corpus)
+```
+The function \texttt{deleteAndRenameDuplicates} deleted 286 complete duplicates, so that \texttt{duplist} is applicable to the corpus.
+```{r}
+dups <- duplist(corpus)
+```
+There is a possibility to visualize duplicates over time by the function \texttt{plotScot} which is explained in section 3.2.
+
+For further analysis, especially for performing the Latent Dirichlet Allocation, it is important that for each duplicate only one page is considered. Therefore it is the aim to reduce the corpus, so that it contains all pages which appear only once and a represantative page for all pages which appear twice or more frequent. In our example we have only duplicated texts containing the empty string \texttt{""} or short relicts like \texttt{"\_\_NOTOC\_\_"} or \texttt{"* * *"}
+
+## Clean Corpus - \texttt{cleanTexts}
+For further preprocessing of text corpora tosca offers the function \texttt{cleanTexts}. It removes punctuation, numbers and stopwords. By default it removes english stopwords. It uses the stopword list of the function \texttt{stopwords} from the \texttt{tm} package. For the german stopword list some additional word (different spelling) are implemented (e.g. "dass" and "fuer"). You can control which stopwords should be removed with the argument \texttt{sw}. In addition the function changes all words to lowercase and tokenizes the documents. The result is a \texttt{list} of \texttt{character} vectors, or if \texttt{paragraph} is set \texttt{TRUE} (default) a \texttt{list} of \texttt{lists} of \texttt{character} vectors. The sublists represent additional text structure like paragraphs of a document. If you commit a \texttt{textmeta} object instead of a \texttt{list} of texts you will also receive a textmeta object back. In this case you have to commit it to the parameter \texttt{object} instead of \texttt{text}.
+
+The language of the example corpora is english, so that \texttt{sw} should be set to \texttt{stopwords()} from the \texttt{tm} package, which includes english stopwords by default (\texttt{kind = "en"}). 
+```{r}
+corpusClean <- cleanTexts(object = corpus)
+```
+
+The function \texttt{cleanTexts} deletes all \texttt{meta} entries which do not belong to one of the texts (e.g. deleted empty texts).
+To create a \texttt{textmeta} object including this data the corresponding function is used.
+
+```{r}
+textClean2 <- cleanTexts(text = corpus$text)
+corpusClean2 <- textmeta(text = textClean2, meta = corpus$meta)
+```
+
+
+## Generate Wordlist - \texttt{makeWordlist}
+After cleaning the corpus with the function \texttt{cleanTexts} we are able to call the function \texttt{makeWordlist}, which creates a table of all words that occur in a given corpus. The function \texttt{table} needs a high amount of RAM. That's a problem for very large Corpora. In \texttt{makeWordlist}  we use the parameter \texttt{k} (default: \texttt{100000L}) to reduce the number of texts which are processed at once. Large values of \texttt{k} lead to faster calculations but require more RAM usage.
+
+For calculating wordlists a tokenized corpus must be used. In the given example \texttt{corpusClean\$text} is committed to the function accordingly.
+```{r}
+wordtable <- makeWordlist(corpusClean$text)
+```
+
+# Descriptive Analysis
+After preprocessing the text data there is a typical workflow we highly reccomend as initial descriptive data analysis of the corpus. This workflow contains the generic functions \texttt{print} and \texttt{summary} as well as the highly adaptable functions \texttt{plotScot} and \texttt{plotFreq}. These graphical functions should be part of any initial analysis of text data.
+
+## Generic Functions - \texttt{print}, \texttt{summary}
+Some information about the (one to) three components of the \texttt{textmeta} object is obtained by calling the generic function \texttt{print}.
+```{r}
+print(corpus)
+```
+The function provides the number of pages in the corpus (7041) and adds two additional columns in \texttt{meta} to the mandatory ones \texttt{id}, \texttt{date} and \texttt{title}. The pages are dated from 2004-11-13 till 2018-03-04.
+
+You obtain more information, especially about counts of \texttt{NA}s and tables of some \texttt{candidates} (default: \texttt{resource} and \texttt{downloadDate}) with the generic function \texttt{summary}. In addition to \texttt{candidates} you can commit the argument \texttt{list.names} (default: \texttt{names(object)}) for specifying which components out of \texttt{text}, \texttt{meta} and \texttt{metamult} should be analysed by the function.
+```{r}
+summary(corpus)
+```
+Apparently there are 191 \texttt{NA}s in the variable \texttt{date}.
+
+## Visualisation of Corpus over Time - \texttt{plotScot}
+One of the descriptive plotting functions in the package is \texttt{plotScot} (\textbf{S}ub\textbf{C}orpus\textbf{O}ver\textbf{T}ime) which creates a plot of counts or proportions of either documents or words in a (sub)corpus over time. The subcorpus is specified by \texttt{id} and it is possible to set the \texttt{unit} to which the dates should be floored (default: \texttt{"month"}). The argument \texttt{curves = c("exact", "smooth", "both")} determine which curve(s) should be plotted. If you select \texttt{type = "words"}, the object which you commit should be a tokenized \texttt{textmeta} object. If \texttt{type = "docs"} (default) you can commit untokenized \texttt{textmeta} object as well.
+
+First of all the number of texts per month in the complete example corpus is plotted, as exact and smoothed curve.
+```{r, fig.width=5, fig.height=2.8, fig.align=2}
+plotScot(corpusClean, curves = "both")
+```
+The black curve is the exact one and the red curve represents the smoothed values. The grafic gives a first impression about the distribution of the texts over time. Most of the news articles where written between 2005 and 2009. 
+If you want to identify the distribution of duplicates over the time you can use \texttt{plotScot} to plot the IDs of the not duplicated texts in the corpus. 
+```{r, fig.width=5, fig.height=2.8, fig.align=2}
+plotScot(corpus, id = dups$notDuplicatedTexts, rel = TRUE)
+```
+
+The plot shows that between 2006 and 2011 around 80 per cent of the corpus are not duplicated texts. Most zeros in the plot result from no articles in the whole corpus during these time periods. It is possible to set these values to \texttt{NA} by setting \texttt{natozero = FALSE} in \texttt{plotScot}. This option works if \texttt{rel = TRUE} and is offered by many other functions in the package. Usually all plot functions in the package return the data belonging to the plot as invisible output. These plot functions offer a lot more functionality, which is described in the corresponding help functions.
+
+## Frequency Analysis - \texttt{plotFreq}
+The other descriptive plotting function is \texttt{plotFreq} which performs a frequency analysis. Most of the arguments are the same as in  \texttt{plotScot}. The options \texttt{wordlist} and \texttt{link = c("and", "or")} are added for specifying the words of the frequency analysis and their link within one vector. In detail \texttt{wordlist} could either be a \texttt{list} of \texttt{character} vectors or a single \texttt{character} vector, which will be coerced to a \texttt{list} of the vector's length. Each \texttt{list} entry represents a set of words which all (default \texttt{link = "and"}) or one of them (\texttt{link = "or"}) should appear in an article to be counted. The function uses \texttt{filterWord} with \texttt{out = "count"} for counting, which is explained later on.
+
+The example corpus contains Wikinews articles concerning the categories *Politics_and_conflicts* and *Economy_and_business*. Therefore some typical words out of these categories are selected to perform a frequency analysis. As a first example the words \textit{unemployment}, \textit{growth} and \textit{trade} were used. The function identifies patterns. 
+
+```{r, fig.width=5, fig.height=3.5, fig.align=2, fig.show="hold"}
+wordsEconomy <- list("unemployment", "growth", "trade", 
+                     c("unemployment", "growth", "trade"))
+plotFreq(corpusClean, wordlist = wordsEconomy, curves = "smooth",
+  ylim = c(0, 25), legend = "topright", 
+  main = "Wordlist-filtered texts over time. link: and")
+plotFreq(corpusClean, wordlist = wordsEconomy, link = "or", curves = "smooth",
+  ylim = c(0, 25), legend = "topright", 
+  main = "Wordlist-filtered texts over time. link: or")
+```
+In the figures above you can see the difference between the \textit{and} link and the \textit{or} link. In the first figure three curves indicate the single words. The fourth curve shows the number of texts in which all three words appear. For most dates no texts meets this requirement. In the second figure the same three curves representing single words are shown. The fourth curve represents all three words again, but setting \texttt{link = "or"}. The curve lies above the three others in every point. Due to smoothing it is possible that the line falls under one of the single word lines. This can be avoided by choosing \texttt{curves = "exact"}. 
+
+In another figure the counts of pages in which the words \textit{crisis}, \textit{war} and \textit{conflict} appear, are analysed. You can see that it is often useful to compare smoothed and exact curves to visualize the variance and a trend in the data.
+```{r, fig.width=5, fig.height=3, fig.align=2}
+plotFreq(corpusClean, wordlist = list(c("crisis", "war", "conflict")), link = "or",
+  curves = "both", both.lwd = 2, legend = "topright", 
+  main = "Wordlist-filtered texts over time. link: or")
+```
+
+## Write CSV Files - \texttt{showTexts}, \texttt{showMeta}
+There are two functions for writing information from a \texttt{textmeta} object in csv files implemented in the package. Both need a \texttt{textmeta} object in \texttt{showTexts}, respectively the \texttt{meta} component of any-formated \texttt{textmeta} object in \texttt{showMeta}. The default of the parameter \texttt{id} in \texttt{showTexts} are all document IDs of the corpus as a \texttt{character} vector, but it is possible to commit a \texttt{character} matrix as well, so that each column will be represented in a seperated csv file. In the first column of the csv file there will be the ID of each document, in the second and third the title and the date and the fourthe column contains the text itself.
+
+Six IDs are sampled from the whole corpus with a given seed. Since we don't use the \texttt{file} parameter, the dataset is only returned as invisible to \texttt{temp}. To generate a csv file \texttt{file} must be specified.
+```{r}
+set.seed(123)
+ids.selected <- sample(corpus$meta$id, 6)
+temp <- showTexts(corpus, id = ids.selected)
+temp[, c("id", "date", "title")]
+```
+
+We now take a look at the meta data. The default of the parameter \texttt{id} in \texttt{showMeta} are the IDs which are in the column \texttt{meta\$id}. You can also commit a matrix of IDs like in \texttt{showTexts} and you can specify which columns of the \texttt{meta} component to write in the csv file by setting the argument \texttt{cols} (default: \texttt{colnames(meta)}).
+
+Analogously to \texttt{showTexts} the following code example will create three files named \texttt{corpus<i>meta.csv}, where $i = 1,2,3$ stands for the $i$-th column of the matrix of IDs.
+```{r}
+temp <- showMeta(corpus$meta, id = matrix(ids.selected, nrow = 2),
+  cols = c("title", "date"))
+temp
+```
+
+# Generating Subcorpora
+The preprocessing presented above is mandatory. For further preparation the package offers functions for filtering the corpus by dates, wordcount or search terms to generate subcorpora. There are three implemented ways to filter your corpora: \texttt{filterDate} for date filter, \texttt{filterCount} for wordcounts, and \texttt{filterWord} for word and pattern filter.
+
+## Filter Corpus by Dates - \texttt{filterDate}
+\texttt{filterDate}, filters a given \texttt{textmeta} object by a time period. The function works on any formated object of class \texttt{textmeta} and extracts documents out of the \texttt{text} component, from which the date column in the \texttt{meta} component is between \texttt{s.date} and \texttt{e.date} - including documents from both exact dates. The return value is either the filtered \texttt{textmeta} object or a \texttt{list}, e.g. the \texttt{text} component of a \texttt{textmeta} object, if you commit the \texttt{text} and the \texttt{meta} component not as a \texttt{textmeta} object.
+
+The example corpus is filtered to articles dated between 2006 and 2009.
+```{r}
+corpusDate <- filterDate(corpusClean, s.date = "2006-01-01", e.date = "2009-12-31")
+print(corpusClean)
+print(corpusDate)
+```
+The filtered corpus contains only the 3909 documents from the period 2006 till 2009. 
+
+## Filter Corpus by Wordcount - \texttt{filterCount}
+After cleaning the example corpus and restricting it to the given dates it consists of documents with the distribution of wordcounts (including symbols) given below.
+```{r}
+textCounts <- lengths(corpusDate$text)
+quantile(textCounts, probs = c(0, 0.05, 0.1, 0.2, 0.5, 0.8, 0.9, 0.95, 1))
+```
+To exclude very short documents from your corpus. You can use the function \texttt{filterCount}. The function considers only words which only consist of letters and which are seperated by any word seperating symbol like whitespace or punctuation. Tokenized documents can also be processed. The function call \texttt{filterCount(corpus, count = 5)} for example deletes all documents from \texttt{corpus} that consist of less than five words. 
+```{r}
+mean(textCounts != filterCount(corpusDate, out = "count"))
+```
+The counts returned by \texttt{filterCount} need not to match the lengths of the tokenized documents exactly, because based on the way of preprocessing the corpus may contain symbols - which leads to smaller counts - or multiple words in one token. These multiple words could be unaffected by tokenization in \texttt{cleanTexts} if they are seperated by remaining symbols instead of whitespace and then lead to higher counts.
+
+## Filter Corpus by Words - \texttt{filterWord}
+The use of \texttt{filterWord} works analogously. It filters the \texttt{text} component of a \texttt{textmeta} object by appearances of specific words. The function uses regular expressions. It filters the given documents in the \texttt{text} component by words committed by \texttt{search}, which could be a simple \texttt{character} vector or a \texttt{list} of \texttt{data.frames}. In the case of a character vector committed the entries of the vector are linked by an \textit{or}, so if \textit{any} of the words appears in one specific document, it is returned.
+
+If you are not interested in the texts of the documents itself you can set \texttt{out} to control the output: By default (\texttt{out = text}) you receive the filtered documents. If you commit the argument \texttt{object} you receive the corresponding \texttt{textmeta} object. If you choose \texttt{out = bin} you get the corresponding logical vector of indices, and if you choose \texttt{out = count} you get a matrix that contains in row \textit{i} and column \textit{j} how often the \textit{j}-th word of the \texttt{wordlist} appears in the \textit{i}-th document.
+
+Now examples are given for understanding the functionality of the function \texttt{filterWord}. An example for the \textit{or}-link is given by the next code example.
+```{r}
+toyCorpus <- list(text1 = "dataset", text2 = "anything")
+searchterm <- c("data", "as", "set", "anything")
+filterWord(text = toyCorpus, search = searchterm, out = "bin")
+```
+The returned values are both \texttt{TRUE}. There is at least one pattern in the \texttt{searchterm} vector which appears at least once in each of the strings \textit{dataset} and \textit{anything}.
+
+In the case of a \texttt{list} of \texttt{data.frames} committed each \texttt{data.frame} is linked by an \textit{or} and should contain columns \texttt{pattern}, \texttt{word}, and \texttt{count}. The parameter \texttt{pattern} includes the search terms, the column \texttt{word} is a logical variable which controls whether words (\texttt{TRUE}) or patterns are searched. Alternatively \texttt{word} can be a \texttt{character} string containing the keyword \texttt{left} or \texttt{right} for left- or right-truncated search, i.e. word = right searches for the exact pattern on the left of the word and all possible endings of the pattern. You must set the argument \texttt{count} to an \texttt{integer}. This argument controls how often a word or pattern must appear in a document to be returned. Rows in each \texttt{data.frame} are linked by an \textit{and}. An example is given by the following code.
+```{r}
+searchframe <- data.frame(pattern = searchterm, word = FALSE, count = 1)
+filterWord(text = toyCorpus, search = searchframe, out = "bin")
+```
+In the case that \texttt{search} is committed as \texttt{data.frame}, the \textit{and} link is active. The function checks whether all of the patterns appear as part of words in the two entries of \texttt{texts}. Therefore the function returns \texttt{FALSE} twice.
+
+For another emeplary case, we will delete the word \textit{anything} from the search terms.
+```{r}
+filterWord(text = toyCorpus, search = searchframe[1:3,], out = "bin")
+```
+By omitting the word \textit{anything} from \texttt{searchframe} you receive a \texttt{TRUE} for text1 (\textit{dataset}) - all three patterns appear in it - and a \texttt{FALSE} for text2 (\textit{anything}), because not all patterns appear in it, not even one of them.
+
+An example with \texttt{out = count} to receive a count for each document and search term combination is the following.
+```{r}
+filterWord(text = list(text1 = c("i", "was", "here", "text"),
+  text2 = c("some", "text", "about", "some", "text", "and", "something", "else")),
+  search = c("some", "text"), out = "count")
+```
+In the case of \texttt{out = count} it is useful, that \texttt{search} is a simple \texttt{character} vector.
+
+Another application of \texttt{filterWord} is to apply the function with \texttt{word = TRUE}, so that the function searches only for single words, not for strings containing these words. This is displayed by the following example.
+```{r}
+searchterm <- list(text1 = "land and and", text2 = c("and", "land", "and", "and"))
+searchframe <- list(
+  data.frame(pattern = "and", word = FALSE, count = 1),
+  data.frame(pattern = "and", word = TRUE, count = 1))
+filterWord(text = searchterm, search = searchframe, out = "count")
+```
+The function returns counts \texttt{c(3, 4)} for the simple pattern search and \texttt{c(2, 3)} for the word search, because the word \textit{and} appears once in every document of \texttt{searchterm} only as pattern and not as single word.
+
+After understanding the functionality of the function, now it is used for filtering the Wikipedia corpus. The example corpus is filtered to those pages which include the names of the categories as a pattern at least once. It is not necessary to set \texttt{ignore.case} because the Wikipedia corpus was cleaned before. This step includes that all words are lowercase now. 
+
+```{r}
+searchterm <- list(
+  data.frame(pattern = "economy", word = FALSE, count = 1),
+  data.frame(pattern = c("world", "economy"), word = FALSE, count = 1),
+  data.frame(pattern = "politics", word = FALSE, count = 1))
+corpusFiltered <- filterWord(corpusDate, search = searchterm)
+print(corpusDate)
+print(corpusFiltered)
+```
+The date and word filtered corpus consists of 451 documents compared to 3909 documents in the original \texttt{corpusDate} corpus.
+
+# Latent Dirichlet Allocation
+The central analytical functionality in this package is to perform and analyse a Latent Dirichlet Allocation. The package provides the function \texttt{LDAgen} for performing the LDA, functions for validating the LDA results and various functions for visualizing the results in different ways, especially over time. It is possible to analyse individual articles as well as their topic allocations. In tosca in addition a function for preparing your corpus for performing a Latent Dirichlet Allocation is given. This function creates a object which can be committed to the function you could use for a LDA.
+
+## Transform Corpus - \texttt{LDAprep}
+The last step before performing a Latent Dirichlet Allocation is to create corpus data, which can be committed to the function \texttt{lda.collapsed.gibbs.sampler} from the \texttt{lda} package or the function \texttt{LDAgen} from this package, respectively. This is done by using the function \texttt{LDAprep} with its arguments \texttt{text} (\texttt{text} component of a \texttt{textmeta} object) and \texttt{vocab} (\texttt{character} vector of vocabularies). These vocabularies are the words which are taken into account for LDA.
+
+You can have a look at the documentation of the \texttt{lda.collapsed.gibbs.sampler} for further information about lda. The function  \texttt{LDAprep} offers the option \texttt{reduce} all set to \texttt{TRUE} by default. The returned value is a \texttt{list} in which every entry represents an article and contains a matrix with two rows. In the first row there is the index of each word in \texttt{vocab} minus one (The index starts at 0), in the second row is always one and the number of the appearances of the word is indicated by the number of columns belonging to this word. This structure is needed by \texttt{lda.collapsed.gibbs.sampler}.
+
+For the example corpus first a new wordlist must be generated based on the filtered corpus.
+```{r}
+wordtableFiltered <- makeWordlist(corpusFiltered$text, method = "radix")
+```
+```{r}
+head(sort(wordtableFiltered$wordtable, decreasing = TRUE))
+```
+
+```{r}
+words5 <- wordtableFiltered$words[wordtableFiltered$wordtable > 5]
+pagesLDA <- LDAprep(text = corpusFiltered$text, vocab = words5)
+```
+After receiving the words which appear at least six times in the whole filtered corpus, the function \texttt{LDAprep} is applied to the example corpus with \texttt{vocab = words5}. The object \texttt{pagesLDA} will be committed to the function which performs a Latent Dirichlet Allocation.
+
+## Performing LDA - \texttt{LDAgen}
+The function that has to be applied first to the corpus prepared by \texttt{LDAprep} is \texttt{LDAgen}. The function offers the options \texttt{K} (\texttt{integer}, default: \texttt{K = 100L}) to set the number of topics, \texttt{vocab} (\texttt{character} vector) for specifying the words which are considered in the preparation of the corpus and several more e.g. number of iterations for the burnin (default: \texttt{burnin = 70}) and the number of iterations for the Gibbs sampler (default: \texttt{num.iterations = 200}). The result is saved in a \texttt{R} workspace, the first part of the results name can be specified by setting the option \texttt{folder} (default: \texttt{folder = paste0(tempdir(),"/lda-result")}). If you want to save your data permanent, you have to change the path in an non temporary one.
+
+In the concrete example corpus the manipulated corpus \texttt{pagesLDA} is used for \texttt{documents}, the topic number is set to \texttt{K = 10} and for reproducibility a seed is set to \texttt{seed = 123}. The filename consists of the \texttt{folder} argument followed by the options of \texttt{K}, \texttt{num.iterations}, \texttt{burnin} and the \texttt{seed} of the LDA. The hyperparameter \texttt{alpha} and \texttt{eta} are set to $1/K$ by default.
+```{r, eval = TRUE, include = FALSE}
+result <- LDAgen(documents = pagesLDA, K = 10L, vocab = words5, seed = 123)
+load("lda-result-k10i200b70s123alpha0.1eta0.1.RData")
+```
+
+```{r, eval = FALSE}
+result <- LDAgen(documents = pagesLDA, K = 10L, vocab = words5, seed = 123)
+load(paste0(tempdir(),"/lda-result-k10i200b70s123alpha0.1eta0.1.RData"))
+```
+
+For validation of the LDA result and further analysis, the result is loaded back to the workspace.
+
+## Validation of LDA Results - \texttt{intruderWords}, \texttt{intruderTopics}
+For validation of LDA results there are two functions in the package. \texttt{intruderWords} and \texttt{intruderTopics} are extended version of the method Chang et al. present in their paper "Reading Tea Leaves: How Humans Interpret Topic Models". These functions expect user input, the user works like a document labeler. The LDA result is committed by setting \texttt{beta = result\$topics}. From the function \texttt{intruderWords} the labeler gets a set of words. The number of words can be set by \texttt{numOutwords} (default: 5). This set represents one topic. It includes a number of intruders (default: \texttt{numIntruder = 1}), which can also be zero. In general, if the user identifies the intruder(s) correctly this is an identifier for a good topic allocation. You can set options \texttt{numTopwords} (default: 30) to control how many top words of each topic are considered for this validation. In addition it is possible to enable or disable the possibility for the user to mark nonsense topics. By default this option is enabled (\texttt{noTopic = TRUE}). The true intruder can be printed to the console after each step with \texttt{printSolution = TRUE} (default: \texttt{FALSE}).
+
+The LDA result of the example corpus is checked by \texttt{intruderWords} with the number of intruders being either 0 or 1.
+```{r, eval = FALSE}
+set.seed(155)
+intWords <- intruderWords(beta = result$topics, numIntruder = 0:1)
+```
+```{r, include = FALSE}
+set.seed(155)
+intWords <- intruderWords(beta = result$topics, numIntruder = 0:1,
+  test = TRUE, testinput = as.character(c(1,2,5,1,4,0,0,5,1,2)))
+```
+```{r, echo = FALSE}
+set.seed(155)
+toDelete <- intruderWords(beta = result$topics, numIntruder = 0:1,
+  test = TRUE, testinput = "q", printSolution = TRUE)
+```
+As an illustration the first set is shown. The word \textit{parliament} does not fit into the set with the words \textit{obama}, \textit{bush}, \textit{presidential} and \textit{mccain}. Therefore the user would type \texttt{1} and press enter. If the user wants to mark nonsense topics he would type an \texttt{x} (in the summary the number of meaningful topics is shown) and \texttt{0} if he thinks there is no intruder word. Actually \textit{will} is the true intruder in the set above. As an example user input \texttt{c(1, 2, 5, 1, 4, 0, 0, 5, 1, 2)} is considered.
+```{r}
+print(intWords)
+```
+By printing the object \texttt{intruderWords} generated by to the console, you get information about options for the validation strategy and a results matrix with ten rows an three columns. The rows indicate the different sets of potential intruders. For each set the matrix contains information how many intruders are in the specific set, how many intruders were missed by the user and how many false intruders were named. Of course the columns \texttt{missIntr} und \texttt{falseIntr} match if \texttt{numIntruder} is a scalar and the user names exactly this number of potential intruders for each set.
+```{r}
+summary(intWords)
+```
+Applying \texttt{summary} to an object of type \texttt{intruderWords} will result in an ouput of some measures concerning the validation. Each function call contains ten sets. You are able to continue labelling by calling \texttt{intruderWords} with \texttt{oldResult = intWords} if your set was not finished.
+```{r, eval = FALSE}
+intWords <- intruderWords(oldResult = intWords)
+```
+
+Analogously to \texttt{intruderWords} you can use \texttt{intruderTopics} for validation the other way around. This function is used for validation of topics associated to a specific document instead of validation of words associated to one topic. Therefore the document is displayed in another window and a sample of topics - represented by the ten \texttt{top.topic.words} - is shown in the console. You should commit in \texttt{text} the text component of the original untokenized corpus before manipulation by \texttt{cleanTexts}, so that the document is readable. The user then names the intruder(s). There are options for different numbers of topics and intruders as in \texttt{intruderWords} as well. The parameter \texttt{theta} should be set to \texttt{result\$document\_expects} where \texttt{result} is the LDA result. An example call is given below.
+```{r, eval = FALSE}
+intruderTopics(text = corpus$text, id = ldaID,
+  beta = result$topics, theta = result$document_sums)
+```
+
+## Clustering of Topics - \texttt{clusterTopics}, \texttt{mergeLDA}
+For analysing topic similarities it is useful to cluster the topics. The function \texttt{clusterTopics} implements this. The main argument is \texttt{topics} and should be set to the \texttt{topics} element of the \texttt{result} object. You could specify \texttt{file}, \texttt{width} and \texttt{height} (both \texttt{integers}) to write the resulting plot to a pdf. Other options are \texttt{topicnames} for labelling the topics in the plot and \texttt{method} (default: \texttt{"average"}), which determines the way the topics are clustered. The \texttt{method} statement is used for applying the distance matrix to the function \texttt{hclust}. The distance matrix is computed based on the Hellinger distance and is returned in a list together with the value of the \texttt{hclust} call as invisible by \texttt{clusterTopics}.
+
+```{r, fig.width=5, fig.height=3.3, fig.align=2}
+clustRes <- clusterTopics(ldaresult = result, xlab = "Topic", ylab = "Distance")
+names(clustRes)
+```
+The same plot as above can be recreated by calling \texttt{plot(clustRes\$cluster)}. In the plot you can see the similarities concerning the hellinger distance of the topics. For example the plot hints at a similarity between topic 6, 3 and 5 which all contain economic terms with topic 6 focussing more on economic policy and topic 5 concentrating on international politics and trade. Topic 2 and 8 both include words on national politics with topic 2 mentioning Australia, Ireland and the UK and topic 8 concentrating on U.S. politics. Topic 4 on war and conflict is close to topics 2 and 8.   
+
+It is possible to merge different results of LDAs by calling \texttt{mergeLDA(list(result1, result2, ..., resultN))}. The function \texttt{mergeLDA} binds the \texttt{topics} elements of the results by row and only considers words which appear in all results. As result you receive the \texttt{topics} matrix including all topics from the results.
+
+## Visualisation of Topics over Time - \texttt{plotTopic}
+As extension of the highly flexible functions \texttt{plotScot} and \texttt{plotFreq} the package \texttt{tosca} offers another plotting function of the same type. The function \texttt{plotTopic} does something very similar to these two functions. It plots the counts or proportion of words allocated to different topics of a LDA result over time. The result object is committed in \texttt{ldaresult}, and the corresponding IDs of documents as a \texttt{character} vector in \texttt{ldaid}. In \texttt{object} the function expects a strictly tokenized \texttt{textmeta} object. You could set \texttt{select} for selecting topics by an \texttt{integer} vector. By default all topics are selected. Analoguously to \texttt{wnames} in \texttt{plotFreq} it is possible to set topic names with \texttt{tnames}. By default the index and the most representative word (\texttt{top.topic.words}) per topic are chosen as names. For further individualisation the function offers mostly the same options as \texttt{plotScot} and \texttt{plotFreq}.
+
+Often it is useful to choose \texttt{curves = "smooth"} if you do not select topics, because there is a massive fluctuation of exact curves. However, it is important to have a look at the exact curves, because the smoothed curves are someway manipulated by the statement \texttt{smooth}, so the user is tempted to optimise the smoothing parameter for getting the curves he or she wants.
+```{r, fig.width=5.5, fig.height=3.5, fig.align=2}
+plotTopic(object = corpusFiltered, ldaresult = result, ldaID = ldaID,
+  rel = TRUE, curves = "smooth", smooth = 0.1, legend = "none", ylim = c(0, 0.7))
+```
+
+There is no difference of handing over an inflated corpus with documents which were not used for LDA. But the corpus must contain all documents of the LDA.
+```{r, fig.width=5.5, fig.height=3.5, fig.align=2}
+plotTopic(object = corpusClean, ldaresult = result, ldaID = ldaID,
+  select = c(3:4, 6, 8), rel = TRUE, curves = "both", smooth = 0.1, legend = "topleft")
+```
+
+## Visualisation of Topic Share over Time - \texttt{plotArea}
+The function \texttt{plotArea} offers possibilities to create so called area visualisation of topics over time. It requires the arguments \texttt{ldaresult}, \texttt{ldaid} and \texttt{meta} as introduced before. There are options \texttt{select}, \texttt{tnames}, \texttt{unit} and others. Additionally you can set \texttt{threshold} to a \texttt{numeric} value between 0 and 1, as a limit that a topics proportion has to surpass at least once to be plotted.
+
+Because this seems to be interesting topics \textit{T3.economy} (blue curve), \textit{T6.economic policy} (green) and \textit{T8.US politics} (red) are plotted in a sediment plot. The chosen \texttt{unit} is \texttt{"bimonth"} (default is \texttt{"quarter"}).
+```{r, eval = FALSE}
+plotArea(ldaresult = result, ldaID = ldaID, meta = corpusFiltered$meta,
+  select = c(3, 6, 8), unit = "bimonth", sort = FALSE)
+```
+```{r, echo=FALSE, fig.width=5.5, fig.height=3, fig.align=2}
+par(mar = c(3.5,3,1.5,1.5)+0.1)
+plotArea(ldaresult = result, ldaID = ldaID, meta = corpusFiltered$meta,
+  select = c(3, 6, 8), unit = "bimonth", sort = FALSE)
+```
+Examplary interpretation: The topic \textit{T3.economy} increases over time, especially after the bank Lehman Brothers declared bankruptcy in September 2008, the starting point of the global financial crisis. \textit{T8.US politics} is considerably larger during the 2008 presidential election campaign.
+
+## Visualisation of Words in Topic over Time - \texttt{plotTopicWord, plotWordpt}
+Another visualisation of topics over time is given by \texttt{plotTopicword}. It displays the counts or proportions of given topic-word combinations. If \texttt{rel = TRUE} the baseline for normalisation are the words counts, not the counts of topics. Arguments which have to specified are \texttt{object} (corpus, \texttt{textmeta} object), \texttt{docs} (corpus manipulated by \texttt{LDAprep}, the input for \texttt{LDAgen}) and the \texttt{ldaresult} with its \texttt{ldaid} (IDs of documents in \texttt{docs} or \texttt{ldaresult} respectively). The function asks for \texttt{docs} for complexity reasons. This object was created by \texttt{LDAprep} anyway. The options \texttt{wordlist} and \texttt{select} are known from other plot functions and offer a lot of different topic word combinations which should be plotted by \texttt{plotTopicword}.
+
+In the example corpus the proportion of the word \textit{economy} in the topics one, three and seven is explored. The \texttt{top.topic.words} of the three chosen topics are \textit{economy} (T3.economy, lightgreen curve), \textit{million} (T6.economic policy, orange) and \textit{obama} (T8.US politics, purple).
+```{r, fig.width=5.5, fig.height=3.5, fig.align=2}
+plotTopicWord(object = corpusFiltered, docs = pagesLDA, ldaresult = result, ldaID = ldaID,
+  wordlist = "economy", select = c(3, 6, 8), rel = TRUE, legend = "topleft")
+```
+The graphic shows that the word \textit{economy} is associated to the topic \textit{T3.economy, lightgreen curve} more often than with \textit{T6.economic policy, orange curve} and \textit{T8.US politics, purple curve}.
+
+For interpretation it is important to keep in mind the baseline, the word counts of \textit{economy}. To display this the sums of all topic-word proportions are calculated and are expected to be one for all dates which appear at least once, otherwise zero.
+```{r, eval = FALSE}
+tab <- plotTopicWord(corpusFiltered, pagesLDA, result, ldaID, "economy", rel = TRUE)
+all(round(rowSums(tab[, -1]), 10) %in% c(1, 0))
+```
+```{r, include = FALSE}
+tab <- plotTopicWord(corpusFiltered, pagesLDA, result, ldaID, "economy", rel = TRUE)
+all(round(rowSums(tab[, -1]), 10) %in% c(1, 0))
+```
+```{r, echo = FALSE}
+all(round(rowSums(tab[, -1]), 10) %in% c(1, 0))
+```
+This is confirmed by the call above. For some analysis maybe it could be interesting to take the other possible baseline, the topic counts, into account. For such tasks there is an additional function called \texttt{plotWordpt}.
+
+The function \texttt{plotWordpt} works analogously like its pendant \texttt{plotTopicWord}, but with baseline topic sums instead of word sums. The difference between the functions \texttt{plotWordpt} and \texttt{plotTopicWord} is that \texttt{plotWordpt} considers topic peaks. You will get the relative counts of the selected word(s) in the selected topic(s). All curves sum up to one if you choose any topic and the whole vocabulary list as wordlist.
+```{r, fig.width=5.5, fig.height=3.5, fig.align=2}
+plotWordpt(object = corpusFiltered, docs = pagesLDA, ldaresult = result, ldaID = ldaID,
+  wordlist = "economy", select = c(3, 6, 8), rel = TRUE)
+```
+
+## Visualisation of Words in Articles allocated to Topics - \texttt{plotWordSub}
+To identify words which are used frequently in articles allocated to a topic one can use the function \texttt{plotWordSub}. The first problem is allocation of topics. Therefore you set an absolute or relative limit how often words of a given article are allocated to one topic. Additionally you have to specify whether one article is allocated exactly once, maximally once or multiple times depending on the \texttt{limit} argument. The default is \texttt{limit = 10} and \texttt{alloc = "multi"}, so an article is allocated to a topic if it contains at least 11 words which are allocated to the given topic. Multiple or no allocations are possible. After allocating the articles to the topics the function creates subcorpora using \texttt{filterWord}. To control the filter you have to set the \texttt{search} argument. The counts of the subcorpora (normalized to their whole corpora) are plotted. There are many options to personalize your plot like in the other plot functions.
+```{r, fig.width=5.5, fig.height=3.5, fig.align=2}
+searcheco <- data.frame(pattern = "economy", word = TRUE, count = 3)
+plotWordSub(object = corpusFiltered, ldaresult = result, ldaID = ldaID, limit = 1/3,
+  select = c(3, 6, 8), search = searcheco, unit = "quarter", legend = "topright")
+```
+The plot shows subcorpora generated by the \texttt{search} argument above, which means articles must contain the word \textit{economy} at least three times. The corpora from which these subcorpora are generated have to contain one third of words which are allocated to the corresponding topic (\texttt{limit = 1/3}). 
+
+## Heatmap of Topics over Time including Clustering - \texttt{plotHeat}
+The use case for \texttt{plotHeat} is given by searching for explicit peaks of coverage of some topics. Therefore the resulting heatmap shows the deviation of the proportion of a given topic at this current time from its mean proportion. In addition a dendrogramm is plotted on the left side of the heatmap showing similarities of topics. The clustering is performed with \texttt{hclust} on the dissimilarities computed by \texttt{dist}.
+
+By default the  proportions are calculated on the article lengths, but it is possible to force calculation on only the LDA vocabulary by setting \texttt{object} to a \texttt{textmeta} object only including meta information. Otherwise a strictly tokenized \texttt{textmeta} object is required. The parameters \texttt{ldaresult} and \texttt{ldaID} expect a LDA result and according IDs like in functions mentioned before. Options \texttt{tnames} (topic label), \texttt{file} (if you want to save the plot in a pdf) and \texttt{unit} (default: round dates to \texttt{"year"}) are given as well. Additionally it is possible to specify whether the deviations should be normalised to take different topic sizes into account (default: \texttt{norm = FALSE}). You can change the intervals of labeling on the x-axis by setting \texttt{date\_breaks}. By default (\texttt{date\_breaks = 1}) every label is drawn. If you choose \texttt{date\_breaks = 5} every fifth label will be drawn.
+
+The increase of the topic \textit{T3.economy} after September 2008 was mentioned before. This should be visible in the following heatmap as well. As compromise between clarity and interpretability \texttt{unit = "quarter"} is chosen.
+```{r, fig.height=6, fig.width=10}
+plotHeat(object = corpusFiltered, ldaresult = result, ldaID = ldaID, unit = "quarter")
+```
+
+In this figure, as expected the \textit{T3.economy} topic increase is clearly identifiable. The according rectangles are colored more and more red, starting from the first quarter of 2009. Almost all other quarters of years concerning this topic are colored lightblue. Other remarkable quarters are for example the third and fourth quarter of 2007, where the topic \textit{T10.Canadian politics} and topic \textit{T1.stopwords} have noticeable peaks. The dendrogramm shows that the topics are not very similar to another concerning the absolute deviations of topic proportion from the mean topic proportion per quarter. This supports the findings of clustering the topics with \texttt{clusterTopics}.
+
+## Individual Cases Contemplation - \texttt{topTexts}, \texttt{topicsInText}
+Sometimes it is useful to look at individual cases. Especially the documents with the highest counts or proportion of words belonging to one topic are of interest. These documents can be extracted by \texttt{topTexts}. By default (\texttt{rel = TRUE}) the proportion is considered. The function requires a \texttt{ldaresult} and the according object \texttt{ldaid}. It offers options \texttt{select}, \texttt{limit} and \texttt{minlength}, which control how much articles per topic (default: all topics) are returned (default: \texttt{limit = 20}) and articles of which minimum length (default: \texttt{minlength = 30}) are taken into account. The output value is a matrix of the corresponding IDs.
+
+In the example the top four pages from the topics \textit{T8.US politics}, \textit{T3.economy} and \textit{T6.economic policy} are requested. 
+```{r}
+topID <- topTexts(ldaresult = result, ldaID = ldaID, select = c(8, 3, 6), limit = 4)
+dim(topID)
+```
+Obviously the corresponding matrix has four rows and three columns.
+
+After identifying the top pages it is possible to have a closer look at these articles. Therefore the mentioned function \texttt{showTexts} can be used. The returned value is a list with three entries with \texttt{data.frames} of four rows - the different pages - and four columns each - \textit{id}, \textit{title}, \textit{date} and \textit{text}. For displaying, the fourth column of each \texttt{data.frame} containing the pages content itself is removed.
+```{r}
+topArt <- showTexts(corpusFiltered, id = topID)
+lapply(topArt, function(x) x[, 1:3])
+```
+
+At last the function \texttt{topicsInText} offers the possibilty to analyse a single document's topic allocations. The function creates a HTML document with its words colored depending on the topic allocations of each word. It requires arguments \texttt{ldaresult} and  \texttt{ldaID} as usual. The corresponding \texttt{LDAprep} object should be committed in \texttt{text}, and the vocabulary set as \texttt{character} vector in \texttt{words}. You will set \texttt{id} to the documents ID you are interested in. It is possible to show the original text by setting \texttt{originalText} to the corresponding uncleaned \texttt{text} component of your \texttt{textmeta} object. There are some more options - e.g. \texttt{wordOrder} - for modifying the output individually.
+
+The article \textit{Central banks worldwide cut interest rates} with ID \textit{ID114652} from the top article list of topic \textit{T3.economy} is analysed with the function \texttt{topicsInText} in more detail.
+```{r, eval = FALSE}
+topicsInText(text = pagesLDA, ldaresult = result, ldaID = ldaID,
+  id = topArt$T3.economy[4,1], vocab = words5, originaltext = corpus$text, wordOrder = "")
+```
+\begin{center}\includegraphics[width = \textwidth]{TopicsInText_example} \end{center}
+In the part of the HTML output above at first the different topics in the order of its absolute appearences in the given document are displayed. The topics are represented by its 20 \texttt{top.topic.words} each and are colored each in its own color. Words which were deleted by cleaning the corpus are colored black. This way you are able to check plausibility of individual documents, so \texttt{topicsInText} can also be seen as individual case validation.
+
+# Example pipeline
+
+In this section we summarize the presented functions to a standard pipelines for datasets. 
+```{r, eval = FALSE}
+library(tosca)
+## load data
+data(politics)
+data(economy)
+corpus <- mergeTextmeta(list(politics, economy))
+
+## Remove XML-tags and HTML-entities in title and text
+corpus$text <- removeXML(corpus$text)
+corpus$text <- removeHTML(corpus$text, dec=FALSE, hex=FALSE, entity=FALSE)
+corpus$meta$title <- removeXML(corpus$meta$title)
+corpus$meta$title <- removeHTML(corpus$meta$title, dec=FALSE, hex=FALSE, entity=FALSE)
+
+##looking for duplicates and first summaries
+corpus <- deleteAndRenameDuplicates(corpus)
+dups <- duplist(corpus)
+plotScot(corpus, id = dups$notDuplicatedTexts, rel = TRUE)
+print(corpus)
+summary(corpus)
+plotScot(corpus, curves = "both")
+
+## corpus preprocessing / wordlists
+corpusClean <- cleanTexts(object = corpus)
+wordtable <- makeWordlist(corpusClean$text)
+corpusDate <- filterDate(corpusClean, s.date = "2006-01-01", e.date = "2009-12-31")
+searchterm <- list(
+  data.frame(pattern = "economy", word = FALSE, count = 1),
+  data.frame(pattern = c("world", "economy"), word = FALSE, count = 1),
+  data.frame(pattern = "politics", word = FALSE, count = 1))
+corpusFiltered <- filterWord(corpusDate, search = searchterm)
+
+## prepare for LDA
+wordtableFiltered <- makeWordlist(corpusFiltered$text, method = "radix")
+words5 <- wordtableFiltered$words[wordtableFiltered$wordtable > 5]
+pagesLDA <- LDAprep(text = corpusFiltered$text, vocab = words5)
+LDAresult <- LDAgen(documents = pagesLDA, K = 10L, vocab = words5)
+```
+
+After generating the lda model further analysis depends on the specific aims of the project.
+
+# Conclusion
+Uor package tosca is a addition to the existing textmining packages on CRAN. It contains functions for a typical pipeline used for content analysis and uses the implementation of standard preprocessing of existing packages. Additional tosca provides functionality for visual exploration of corpora and topics resulting from the latent dirichlet allocation. tosca focusses on analysis over time, so it needs texts with a date as meta data. The actual version of the package offers an implementation of Chang's intruder topics and intruder words. For future versions a framework for effective sampling in (sub-) corpora is under preparation. There are plans for a better connection to the frameworks of the tm and the quanteda package.
+
+```{r, include = FALSE, eval = FALSE}
+library(knitr)
+purl("Vignette.Rmd", documentation = 2, quiet = TRUE)
+# get R-Code of the RMD
+```
