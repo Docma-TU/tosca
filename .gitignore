@@ -23,8 +23,6 @@ vignettes/*.pdf
 Vignette.R
 Vignette.tex
 Vignette.pdf
-Vignette.log
-Vignette.html
 unnamed-chunk-*.pdf
 
 # OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
@@ -40,9 +38,8 @@ unnamed-chunk-*.pdf
 
 # emacs temp files
 [#]*
-[.#]*
+.#*
 *R~
-
 # LaTeX
 *.aux
 *fdb_latexmk

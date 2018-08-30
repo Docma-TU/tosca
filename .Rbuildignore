@@ -1,0 +1,4 @@
+.gitignore
+README.md
+.travis.yml
+(.*?).R2
