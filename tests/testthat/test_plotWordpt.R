@@ -5,23 +5,23 @@ test_that("plotWordpt", {
   x1 <- matrix(sample(c(rep(0, 20), 1:20), 10000, replace = TRUE), 10, 1000)
   ldaID <- paste("ID", 1:200)
   x2 <- list(document_sums = x1)
-  
+
   text <- matrix(sample(paste("word", 1:100), 10000, replace = TRUE), 200, 50)
   text <- lapply(apply(text, 1, list), unlist)
   names(text) <- paste("ID", 1:200)
-  
+
   words <- makeWordlist(text)$words
   LDAdoc <- LDAprep(text, words)
   lda <- LDAgen(documents = LDAdoc, K = 3L, vocab = words,
     num.iterations = 20L, burnin = 70L, seed = 123)
-  
+
   meta1 <- as.Date(sample(1:730, 1200, replace = TRUE), origin = "1990-10-03")
   names(meta1) <- paste("ID", 1:1200)
-  meta <- data.frame(id = paste("ID", 1:1200), date = meta1, 
+  meta <- data.frame(id = paste("ID", 1:1200), date = meta1,
     title = as.character(NA), stringsAsFactors = FALSE)
-  
+
   obj <- textmeta(text = text, meta = meta)
-  
+
   res1 <- plotWordpt(object = obj, docs = LDAdoc, ldaresult = lda,
     ldaID = ldaID)
   expect_true(all(res1$date == seq(min(res1$date), max(res1$date), "month")))
@@ -40,7 +40,7 @@ test_that("plotWordpt", {
   expect_true(all(res5$date == res1$date), all(colnames(res1) == colnames(res5)),
     all(res5[, -1] <= 1))
   res6 <- plotWordpt(object = obj, docs = LDAdoc, ldaresult = lda,
-    ldaID = ldaID, file = "abc.pdf")
+    ldaID = ldaID, file = paste0(tempdir(),"/abc.pdf"))
   expect_equal(res1, res6)
   res7 <- plotWordpt(object = obj, docs = LDAdoc, ldaresult = lda,
     ldaID = ldaID, curves = "smooth")

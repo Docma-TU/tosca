@@ -11,7 +11,7 @@ showTexts(object, id = names(object$text), file)
 
 \item{id}{Character vector or matrix including article ids}
 
-\item{file}{Character Filename for the export}
+\item{file}{Character Filename for the export. If not specified the functions output ist only invisible.}
 }
 \value{
 A list of the requested articles. If file is set, writes a csv including the meta-data of the
@@ -32,6 +32,6 @@ title=c("Fishing", "Don't panic!", "Sir Ronald", "Berlin"),
 date=c("1885-01-02", "1979-03-04", "1951-05-06", "1967-06-02"),
 additionalVariable=1:4, stringsAsFactors=FALSE), text=texts)
 
-\donttest{showTexts(object=corpus, id = c("A","C"), file="test")}
+exportedTexts <- showTexts(object=corpus, id = c("A","C"))
 }
 \keyword{manip}

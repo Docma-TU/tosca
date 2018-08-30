@@ -10,8 +10,8 @@ test_that("showTexts", {
     M2 <- M[c(1,3,2),]
     M3 <- M[3:1,]
     rownames(M) <- rownames(M2) <- rownames(M3)<- 1:3
-    m <- showTexts(object,id=as.character(1:3), file="test.csv")
+    m <- showTexts(object,id=as.character(1:3))
     expect_equal(M,m)
-    m <- showTexts(object,id=matrix(as.character(c(1:3,1,3,2,3:1)),3,3), file="test.csv")
+    m <- showTexts(object,id=matrix(as.character(c(1:3,1,3,2,3:1)),3,3))
     expect_equal(list("1"=M, "2"=M2, "3"=M3),m)
 })

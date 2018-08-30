@@ -5,7 +5,7 @@
 #'
 #' @param object \code{\link{textmeta}} object
 #' @param id Character vector or matrix including article ids
-#' @param file Character Filename for the export
+#' @param file Character Filename for the export. If not specified the functions output ist only invisible.
 #' @return A list of the requested articles. If file is set, writes a csv including the meta-data of the
 #' requested articles.
 #' @keywords manip
@@ -21,7 +21,7 @@
 #' date=c("1885-01-02", "1979-03-04", "1951-05-06", "1967-06-02"),
 #' additionalVariable=1:4, stringsAsFactors=FALSE), text=texts)
 #'
-#' \donttest{showTexts(object=corpus, id = c("A","C"), file="test")}
+#' exportedTexts <- showTexts(object=corpus, id = c("A","C"))
 #' @export showTexts
 showTexts <- function(object, id = names(object$text), file){
   stopifnot(is.textmeta(object), all(id %in% object$meta$id),
