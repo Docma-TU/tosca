@@ -1,8 +1,8 @@
 Package: tosca
 Type: Package
 Title: Tools for Statistical Content Analysis
-Version: 0.1-0
-Date: 2018-08-31
+Version: 0.1-1
+Date: 2018-09-03
 Authors@R: c(person("Lars", "Koppers", email="koppers@statistik.tu-dortmund.de", role=c("aut", "cre"), comment = c(ORCID = "0000-0002-1642-9616")),
 	     person("Jonas", "Rieger", email="riegerjonas@gmx.de", role=c("aut")),
 	     person("Karin", "Boczek", email="karin.boczek@tu-dortmund.de", role=c("ctb"), comment = c(ORCID = "0000-0003-1516-4094")),

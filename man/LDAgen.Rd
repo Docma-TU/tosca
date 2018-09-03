@@ -6,7 +6,7 @@
 \usage{
 LDAgen(documents, K = 100L, vocab, num.iterations = 200L,
   burnin = 70L, alpha = NULL, eta = NULL, seed = NULL,
-  folder = paste0(tempdir(), "/lda-result"), num.words = 50L,
+  folder = file.path(tempdir(), "lda-result"), num.words = 50L,
   LDA = TRUE, count = FALSE)
 }
 \arguments{

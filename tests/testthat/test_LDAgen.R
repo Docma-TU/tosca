@@ -8,7 +8,7 @@ load("data/LDAdoc_compare.RData")
 
 csvTest <- read.csv("data/test-k3i20b70s24602alpha0.33eta0.33_orig.csv")
 counttest <- LDAgen(documents=LDAdoc, K = 3L, vocab=wordlist$words, num.iterations = 20L, burnin = 70L, seed=24602, num.words = 10L, LDA = TRUE, count=TRUE)
-csvTest2 <- read.csv(paste0(tempdir(),"/lda-result-k3i20b70s24602alpha0.33eta0.33.csv"))
+csvTest2 <- read.csv(file.path(tempdir(),"lda-result-k3i20b70s24602alpha0.33eta0.33.csv"))
 expect_equal(csvTest, csvTest2)
 
 expect_equal(lda1, LDAgen(documents=LDAdoc, K = 3L, vocab=wordlist$words, num.iterations = 20L, burnin = 70L, seed=24601, folder=tempdir(), num.words = 10L, LDA = TRUE))

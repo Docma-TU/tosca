@@ -47,7 +47,7 @@
 #' @export LDAgen
 LDAgen <- function(documents, K = 100L, vocab, num.iterations = 200L,
   burnin = 70L, alpha = NULL, eta = NULL, seed = NULL,
-  folder = paste0(tempdir(),"/lda-result"), num.words = 50L, LDA = TRUE, count = FALSE){
+  folder = file.path(tempdir(),"lda-result"), num.words = 50L, LDA = TRUE, count = FALSE){
     if(is.null(alpha)) alpha <- 1/K
     if(is.null(eta)) eta <- 1/K
     if(is.null(seed)) seed <- sample(1:10^8,1)

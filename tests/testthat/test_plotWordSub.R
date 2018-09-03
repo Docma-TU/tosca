@@ -65,7 +65,7 @@ test_that("plotWordSub", {
   expect_true(all(res5$date == res1$date), all(colnames(res1) == colnames(res5)),
     all(res5[, -1] <= 1))
   res6 <- plotWordSub(object = obj, ldaresult = lda, ldaID = ldaID,
-    file = paste0(tempdir(),"/abc.pdf"), search = search)
+    file = file.path(tempdir(),"abc.pdf"), search = search)
   expect_equal(res1, res6)
   res7 <- plotWordSub(object = obj, ldaresult = lda, ldaID = ldaID,
     curves = "smooth", search = search)

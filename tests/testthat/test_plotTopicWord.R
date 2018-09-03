@@ -40,7 +40,7 @@ test_that("plotTopicWord", {
   expect_true(all(res5$date == res1$date), all(colnames(res1) == colnames(res5)),
     all(res5[, -1] <= 1))
   res6 <- plotTopicWord(object = obj, docs = LDAdoc, ldaresult = lda,
-    ldaID = ldaID, file = paste0(tempdir(),"/abc.pdf"))
+    ldaID = ldaID, file = file.path(tempdir(),"abc.pdf"))
   expect_equal(res1, res6)
   res7 <- plotTopicWord(object = obj, docs = LDAdoc, ldaresult = lda,
     ldaID = ldaID, curves = "smooth")
