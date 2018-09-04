@@ -31,9 +31,9 @@ expect_equal(lda1, LDAgen(documents=LDAdoc, K = 3L, vocab=wordlist$words, num.it
 ## wordlist <- makeWordlist(text)
 ## LDAdoc <- LDAprep(text, wordlist$words)
 
-## lda1 <- LDAgen(documents=LDAdoc, K = 3L, vocab=wordlist$words, num.iterations = 20L, burnin = 70L, seed=24601, folder=paste0(getwd(),"/test"), num.words = 10L, LDA = TRUE)
+## lda1 <- LDAgen(documents=LDAdoc, K = 3L, vocab=wordlist$words, num.iterations = 20L, burnin = 70L, seed=24601, folder=file.path(getwd(),"test"), num.words = 10L, LDA = TRUE)
 
-## lda2 <- LDAgen(documents=LDAdoc, K = 3L, vocab=wordlist$words, num.iterations = 20L, burnin = 70L, seed=24602, folder=paste0(getwd(),"/test"), num.words = 10L, LDA = TRUE, count=TRUE) # add _orig in filename!
+## lda2 <- LDAgen(documents=LDAdoc, K = 3L, vocab=wordlist$words, num.iterations = 20L, burnin = 70L, seed=24602, folder=file.path(getwd(),"test"), num.words = 10L, LDA = TRUE, count=TRUE) # add _orig in filename!
 
 
 ## save(lda1, LDAdoc, wordlist ,file="data/LDAdoc_compare.RData")

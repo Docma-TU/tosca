@@ -1,7 +1,7 @@
 context("read CSV files")
 
 test_that("readTextmeta", {
-  tm <- readTextmeta(path = paste0(getwd(),"/data"), file = "readTextmeta.csv",
+  tm <- readTextmeta(path = file.path(getwd(),"data"), file = "readTextmeta.csv",
     dateCol = "date_gmt", textCol = "content")
   expect_true(is.textmeta(tm))
   expect_equal(length(tm$text), 3)
@@ -9,8 +9,8 @@ test_that("readTextmeta", {
   expect_equal(names(tm$text), c("ABC", "IDK100", "IWaS"))
   expect_false(any(sapply(tm$text, is.na)))
   expect_equal(tm$meta$id, names(tm$text))
-  
-  tm <- readTextmeta(path = paste0(getwd(),"/data"), file = "readTextmeta.csv",
+
+  tm <- readTextmeta(path = file.path(getwd(),"data"), file = "readTextmeta.csv",
     cols = character())
   expect_true(is.textmeta(tm))
   expect_equal(length(tm$text), 3)
@@ -21,8 +21,8 @@ test_that("readTextmeta", {
   expect_true(all(is.na(tm$meta$title)))
   expect_equal(tm$meta$id, paste("ID", 1:3, sep = "-"))
   expect_equal(tm$meta$id, names(tm$text))
-  
-  tm <- readTextmeta(path = paste0(getwd(),"/data"), file = "readTextmeta.csv",
+
+  tm <- readTextmeta(path = file.path(getwd(),"data"), file = "readTextmeta.csv",
     cols = "id")
   expect_true(is.textmeta(tm))
   expect_equal(length(tm$text), 3)

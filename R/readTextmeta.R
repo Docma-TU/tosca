@@ -50,7 +50,7 @@ readTextmeta <- function(path, file, cols, dateFormat = "%Y-%m-%d", idCol = "id"
     message(paste0(i, "/", length(file), ": ", file[i]))
 
     # read in a lone file
-    lonefile <- read.csv(file = paste(path, file[i], sep = "/"), fileEncoding = encoding)
+    lonefile <- read.csv(file = file.path(path, file[i]), fileEncoding = encoding)
 
     if(keepAllCols) cols <- substr(colnames(lonefile), 1, nchar(colnames(lonefile))-2)
     else lonefile <- lonefile[, cols]
