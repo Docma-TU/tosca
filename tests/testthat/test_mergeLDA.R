@@ -15,12 +15,12 @@ text <- list(A= "Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiu
 text2 <- cleanTexts(text = text)
 wordlist <- makeWordlist(text2)
 LDAdoc <- LDAprep(text2, wordlist$words)
-lda1 <- LDAgen(documents=LDAdoc, K = 3L, vocab=wordlist$words, num.iterations = 20L, burnin = 70L, seed=124601, folder=tempdir(), num.words = 10L, LDA = TRUE)
+lda1 <- LDAgen(documents=LDAdoc, K = 3L, vocab=wordlist$words, num.iterations = 20L, burnin = 70L, seed=124601, num.words = 10L, LDA = TRUE)
 
 text2 <- cleanTexts(text = text[c("B", "C", "F", "H")])
 wordlist <- makeWordlist(text2)
 LDAdoc <- LDAprep(text2, wordlist$words)
-lda2 <- LDAgen(documents=LDAdoc, K = 3L, vocab=wordlist$words, num.iterations = 20L, burnin = 70L, seed=124601, folder=tempdir(), num.words = 10L, LDA = TRUE)
+lda2 <- LDAgen(documents=LDAdoc, K = 3L, vocab=wordlist$words, num.iterations = 20L, burnin = 70L, seed=124601, num.words = 10L, LDA = TRUE)
 
 
 ## mL1 <- mergeLDA(x=list(lda1=lda1, lda2=lda2))

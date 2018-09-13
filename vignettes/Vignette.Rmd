@@ -75,7 +75,7 @@ The current version of the package can be installed with the \texttt{devtools} p
 devtools::install_github("DoCMA-TU/tosca")
 library(tosca)
 ```
-The actual version on CRAN can be installed with \texttt{instal.packages}.
+The actual version on CRAN can be installed with \texttt{install.packages}.
 ```{r, eval = FALSE}
 install.packages("tosca")
 library(tosca)
@@ -372,7 +372,7 @@ load(file.path(tempdir(),"lda-result-k10i200b70s123alpha0.1eta0.1.RData"))
 For validation of the LDA result and further analysis, the result is loaded back to the workspace.
 
 ## Validation of LDA Results - \texttt{intruderWords}, \texttt{intruderTopics}
-For validation of LDA results there are two functions in the package. \texttt{intruderWords} and \texttt{intruderTopics} are extended version of the method Chang et al. present in their paper "Reading Tea Leaves: How Humans Interpret Topic Models". These functions expect user input, the user works like a document labeler. The LDA result is committed by setting \texttt{beta = result\$topics}. From the function \texttt{intruderWords} the labeler gets a set of words. The number of words can be set by \texttt{numOutwords} (default: 5). This set represents one topic. It includes a number of intruders (default: \texttt{numIntruder = 1}), which can also be zero. In general, if the user identifies the intruder(s) correctly this is an identifier for a good topic allocation. You can set options \texttt{numTopwords} (default: 30) to control how many top words of each topic are considered for this validation. In addition it is possible to enable or disable the possibility for the user to mark nonsense topics. By default this option is enabled (\texttt{noTopic = TRUE}). The true intruder can be printed to the console after each step with \texttt{printSolution = TRUE} (default: \texttt{FALSE}).
+For validation of LDA results there are two functions in the package. \texttt{intruderWords} and \texttt{intruderTopics} are extended version of the method Chang et al. (2009) present in their paper "Reading Tea Leaves: How Humans Interpret Topic Models". These functions expect user input, the user works like a document labeler. The LDA result is committed by setting \texttt{beta = result\$topics}. From the function \texttt{intruderWords} the labeler gets a set of words. The number of words can be set by \texttt{numOutwords} (default: 5). This set represents one topic. It includes a number of intruders (default: \texttt{numIntruder = 1}), which can also be zero. In general, if the user identifies the intruder(s) correctly this is an identifier for a good topic allocation. You can set options \texttt{numTopwords} (default: 30) to control how many top words of each topic are considered for this validation. In addition it is possible to enable or disable the possibility for the user to mark nonsense topics. By default this option is enabled (\texttt{noTopic = TRUE}). The true intruder can be printed to the console after each step with \texttt{printSolution = TRUE} (default: \texttt{FALSE}).
 
 The LDA result of the example corpus is checked by \texttt{intruderWords} with the number of intruders being either 0 or 1.
 ```{r, eval = FALSE}
@@ -570,7 +570,7 @@ LDAresult <- LDAgen(documents = pagesLDA, K = 10L, vocab = words5)
 After generating the lda model further analysis depends on the specific aims of the project.
 
 # Conclusion
-Uor package tosca is a addition to the existing textmining packages on CRAN. It contains functions for a typical pipeline used for content analysis and uses the implementation of standard preprocessing of existing packages. Additional tosca provides functionality for visual exploration of corpora and topics resulting from the latent Dirichlet allocation. tosca focusses on analysis over time, so it needs texts with a date as meta data. The actual version of the package offers an implementation of Chang's intruder topics and intruder words. For future versions a framework for effective sampling in (sub-) corpora is under preparation. There are plans for a better connection to the frameworks of the tm and the quanteda package.
+Our package tosca is an addition to the existing textmining packages on CRAN. It contains functions for a typical pipeline used for content analysis and uses the implementation of standard preprocessing of existing packages. Additionaly tosca provides functionality for visual exploration of corpora and topics resulting from the latent Dirichlet allocation. tosca focusses on analysis over time, so it needs texts with a date as meta data. The actual version of the package offers an implementation of intruder topics and intruder words (Chang et al., 2009). For future versions a framework for effective sampling in (sub-) corpora is under preparation. There are plans for a better connection to the frameworks of the tm and the quanteda package.
 
 ```{r, include = FALSE, eval = FALSE}
 library(knitr)
