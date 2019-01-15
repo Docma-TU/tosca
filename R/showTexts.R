@@ -6,6 +6,7 @@
 #' @param object \code{\link{textmeta}} object
 #' @param id Character vector or matrix including article ids
 #' @param file Character Filename for the export. If not specified the functions output ist only invisible.
+#' @param fileEncoding character string: declares file encoding. For more Infos see \code{\link{base::write.csv}}
 #' @return A list of the requested articles. If file is set, writes a csv including the meta-data of the
 #' requested articles.
 #' @keywords manip
@@ -23,7 +24,7 @@
 #'
 #' exportedTexts <- showTexts(object=corpus, id = c("A","C"))
 #' @export showTexts
-showTexts <- function(object, id = names(object$text), file){
+showTexts <- function(object, id = names(object$text), file, fileEncoding = "UTF-8"){
   stopifnot(is.textmeta(object), all(id %in% object$meta$id),
     all(id %in% names(object$text)))
   more_files <- TRUE
@@ -45,7 +46,7 @@ showTexts <- function(object, id = names(object$text), file){
     out2 <- cbind(object$meta$id[mtch2],as.character(object$meta$date[mtch2]),object$meta$title[mtch2],out)
     out2 <- data.frame(out2, stringsAsFactors = FALSE, row.names = 1:length(out))
     colnames(out2) <- c("id","date","title","text")
-    if(!missing(file)) write.csv(out2, file = paste0(file, nameArg[i], ".csv"))
+    if(!missing(file)) write.csv(out2, file = paste0(file, nameArg[i], ".csv"), fileEncoding = fileEncoding)
     outlist <- c(outlist, list(out2))
   }
   if(more_files){

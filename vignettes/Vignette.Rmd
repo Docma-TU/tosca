@@ -71,7 +71,7 @@ The following table shows an overview over the functions in the package.
 
 
 The current version of the package can be installed with the \texttt{devtools} package.
-```{r, include = TRUE, message=FALSE}
+```{r, include = TRUE, message=FALSE, eval = FALSE}
 devtools::install_github("DoCMA-TU/tosca")
 library(tosca)
 ```
@@ -80,7 +80,9 @@ The actual version on CRAN can be installed with \texttt{install.packages}.
 install.packages("tosca")
 library(tosca)
 ```
-
+```{r, include = FALSE, message=FALSE}
+library(tosca)
+```
 
 This vignette gives an overview over the functionality of the package. For a detailed description of the functions see the help pages.
 

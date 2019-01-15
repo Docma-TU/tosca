@@ -4,7 +4,8 @@
 \alias{showMeta}
 \title{Export Readable Meta-Data of Articles.}
 \usage{
-showMeta(meta, id = meta$id, cols = colnames(meta), file)
+showMeta(meta, id = meta$id, cols = colnames(meta), file,
+  fileEncoding = "UTF-8")
 }
 \arguments{
 \item{meta}{A data.frame of meta-data as a result of a read-function.}
@@ -14,6 +15,8 @@ showMeta(meta, id = meta$id, cols = colnames(meta), file)
 \item{cols}{Character vector including the requested columns of meta.}
 
 \item{file}{Character Filename for the export.}
+
+\item{fileEncoding}{character string: declares file encoding. For more Infos see \code{\link{base::write.csv}}}
 }
 \value{
 A list of the requested meta data. If file is set, writes a csv including the meta-data of the

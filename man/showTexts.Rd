@@ -4,7 +4,8 @@
 \alias{showTexts}
 \title{Exports Readable Text Lists}
 \usage{
-showTexts(object, id = names(object$text), file)
+showTexts(object, id = names(object$text), file,
+  fileEncoding = "UTF-8")
 }
 \arguments{
 \item{object}{\code{\link{textmeta}} object}
@@ -12,6 +13,8 @@ showTexts(object, id = names(object$text), file)
 \item{id}{Character vector or matrix including article ids}
 
 \item{file}{Character Filename for the export. If not specified the functions output ist only invisible.}
+
+\item{fileEncoding}{character string: declares file encoding. For more Infos see \code{\link{base::write.csv}}}
 }
 \value{
 A list of the requested articles. If file is set, writes a csv including the meta-data of the

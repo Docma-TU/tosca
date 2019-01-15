@@ -7,6 +7,7 @@
 #' @param id Character vector or matrix including article ids.
 #' @param cols Character vector including the requested columns of meta.
 #' @param file Character Filename for the export.
+#' @param fileEncoding character string: declares file encoding. For more Infos see \code{\link{base::write.csv}}
 #' @return A list of the requested meta data. If file is set, writes a csv including the meta-data of the
 #' requested meta data.
 #' @keywords manip
@@ -20,7 +21,7 @@
 #'
 #' @export showMeta
 #'
-showMeta <- function(meta, id = meta$id, cols = colnames(meta), file){
+showMeta <- function(meta, id = meta$id, cols = colnames(meta), file, fileEncoding = "UTF-8"){
   stopifnot(is.data.frame(meta), all(id %in% meta$id), is.character(cols),
     all(cols %in% colnames(meta)))
   more_files <- TRUE
@@ -38,7 +39,7 @@ showMeta <- function(meta, id = meta$id, cols = colnames(meta), file){
   outlist <- list()
   for(i in 1:ncol(id)){
     out <-  meta[meta$id %in% id[, i], cols]
-    if(!missing(file)) write.csv(out, file = paste0(file, nameArg[i], ".csv"))
+    if(!missing(file)) write.csv(out, file = paste0(file, nameArg[i], ".csv"), fileEncoding = fileEncoding)
     outlist <- c(outlist, list(out))
   }
   if(more_files){
