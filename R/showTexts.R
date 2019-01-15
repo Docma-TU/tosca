@@ -6,7 +6,7 @@
 #' @param object \code{\link{textmeta}} object
 #' @param id Character vector or matrix including article ids
 #' @param file Character Filename for the export. If not specified the functions output ist only invisible.
-#' @param fileEncoding character string: declares file encoding. For more Infos see \code{\link{base::write.csv}}
+#' @param fileEncoding character string: declares file encoding. For more information see \code{\link{utils::write.csv}}
 #' @return A list of the requested articles. If file is set, writes a csv including the meta-data of the
 #' requested articles.
 #' @keywords manip
