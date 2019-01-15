@@ -77,6 +77,7 @@ is.textmeta_tidy <- function(x){
 }
 
 #' @rdname tidy.textmeta
+#' @param ... further arguments passed to or from other methods.
 #' @export
 print.textmeta_tidy <- function(x, ...){
   stopifnot(is.textmeta_tidy(x))

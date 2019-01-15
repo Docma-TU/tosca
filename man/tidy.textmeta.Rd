@@ -16,6 +16,8 @@ is.textmeta_tidy(x)
 \item{object}{A \code{\link{textmeta}} object}
 
 \item{x}{an R Object.}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \value{
 An object with tidy text data
