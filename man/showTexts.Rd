@@ -14,7 +14,7 @@ showTexts(object, id = names(object$text), file,
 
 \item{file}{Character Filename for the export. If not specified the functions output ist only invisible.}
 
-\item{fileEncoding}{character string: declares file encoding. For more Infos see \code{\link{base::write.csv}}}
+\item{fileEncoding}{character string: declares file encoding. For more information see \code{\link{utils::write.csv}}}
 }
 \value{
 A list of the requested articles. If file is set, writes a csv including the meta-data of the

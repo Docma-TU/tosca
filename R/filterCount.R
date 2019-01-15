@@ -1,15 +1,17 @@
 #' Subcorpus With Count Filter
 #'
-#' Creates a subcorpus including specific articles.
+#' Generates a subcorpus by restricting it to texts containing a specific number of words
 #'
 #' @param object A \code{\link{textmeta}} object
 #' @param text Not necassary if \code{object} is specified, else should be
-#' \code{object\$text}: list of article texts
+#' \code{object$text}: list of article texts
 #' @param count An integer marking how many words must at least be found in the text.
 #' @param out Type of output: \code{text} filtered corpus,
 #' \code{bin} logical vector for all texts,
 #' \code{count} the counts.
-#' @return Filtered list of texts.
+#' @return \code{\link{textmeta}} object if \code{object} is specified,
+#' else only the filtered \code{text}. If a \code{\link{textmeta}} object is
+#' returned its meta data are filtered to those texts which appear in the corpus.
 #' @examples
 #' texts <- list(A="Give a Man a Fish, and You Feed Him for a Day.
 #' Teach a Man To Fish, and You Feed Him for a Lifetime",

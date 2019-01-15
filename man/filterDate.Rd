@@ -12,10 +12,10 @@ filterDate(object, text = object$text, meta = object$meta,
 \item{object}{\code{\link{textmeta}} object}
 
 \item{text}{Not necessary if \code{object} is specified, else should be
-\code{object\$text}}
+\code{object$text}}
 
 \item{meta}{Not necessary if \code{object} is specified, else should be
-\code{object\$meta}}
+\code{object$meta}}
 
 \item{s.date}{Start date of subcorpus as date object}
 
@@ -23,7 +23,8 @@ filterDate(object, text = object$text, meta = object$meta,
 }
 \value{
 \code{\link{textmeta}} object if \code{object} is specified,
-else only the filtered \code{text}.
+else only the filtered \code{text}. If a \code{\link{textmeta}} object is
+returned its meta data are filtered to those texts which appear in the corpus.
 }
 \description{
 Generates a subcorpus by restricting it to a specific time window

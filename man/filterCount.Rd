@@ -10,7 +10,7 @@ filterCount(object, text, count = 1L, out = c("text", "bin", "count"))
 \item{object}{A \code{\link{textmeta}} object}
 
 \item{text}{Not necassary if \code{object} is specified, else should be
-\code{object\$text}: list of article texts}
+\code{object$text}: list of article texts}
 
 \item{count}{An integer marking how many words must at least be found in the text.}
 
@@ -19,10 +19,12 @@ filterCount(object, text, count = 1L, out = c("text", "bin", "count"))
 \code{count} the counts.}
 }
 \value{
-Filtered list of texts.
+\code{\link{textmeta}} object if \code{object} is specified,
+else only the filtered \code{text}. If a \code{\link{textmeta}} object is
+returned its meta data are filtered to those texts which appear in the corpus.
 }
 \description{
-Creates a subcorpus including specific articles.
+Generates a subcorpus by restricting it to texts containing a specific number of words
 }
 \examples{
 texts <- list(A="Give a Man a Fish, and You Feed Him for a Day.

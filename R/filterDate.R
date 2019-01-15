@@ -4,13 +4,14 @@
 #'
 #' @param object \code{\link{textmeta}} object
 #' @param text Not necessary if \code{object} is specified, else should be
-#' \code{object\$text}
+#' \code{object$text}
 #' @param meta Not necessary if \code{object} is specified, else should be
-#' \code{object\$meta}
+#' \code{object$meta}
 #' @param s.date Start date of subcorpus as date object
 #' @param e.date End date of subcorpus as date object
 #' @return \code{\link{textmeta}} object if \code{object} is specified,
-#' else only the filtered \code{text}.
+#' else only the filtered \code{text}. If a \code{\link{textmeta}} object is
+#' returned its meta data are filtered to those texts which appear in the corpus.
 #' @keywords manip
 #' @examples
 #' texts <- list(A="Give a Man a Fish, and You Feed Him for a Day.
