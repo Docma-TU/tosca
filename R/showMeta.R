@@ -7,7 +7,7 @@
 #' @param id Character vector or matrix including article ids.
 #' @param cols Character vector including the requested columns of meta.
 #' @param file Character Filename for the export.
-#' @param fileEncoding character string: declares file encoding. For more information see \code{\link{utils::write.csv}}
+#' @param fileEncoding character string: declares file encoding. For more information see \code{\link[pkg:utils]{write.csv}}
 #' @return A list of the requested meta data. If file is set, writes a csv including the meta-data of the
 #' requested meta data.
 #' @keywords manip
