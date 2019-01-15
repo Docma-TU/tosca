@@ -1,18 +1,18 @@
 #' Transform textmeta to corpus
 #'
 #' Transfers data from a \code{\link{textmeta}} object to a
-#' \code{\link[pkg:quanteda]{corpus}} object -  the way text data is stored in the
-#' package \code{\link[pkg:quanteda]{quanteda}}.
+#' \code{\link[quanteda]{corpus}} object -  the way text data is stored in the
+#' package \code{\link[quanteda]{quanteda}}.
 #'
 #' @param object \code{\link{textmeta}} object
 #' @param docnames Character: string with the column of object$meta
-#' which should be kept as \code{\link[pkg:quanteda]{docnames}}.
+#' which should be kept as \code{\link[quanteda]{docnames}}.
 #' @param docvars Character: vector with columns of object$meta which
-#' should be kept as \code{\link[pkg:quanteda]{docvars}}.
+#' should be kept as \code{\link[quanteda]{docvars}}.
 #' @param metadoc Character: vector with columns of object$meta which
-#' should be kept as \code{\link[pkg:quanteda]{metadoc}}.
-#' @param ... Additional parameters like \code{compress} for \code{\link[pkg:quanteda]{corpus}}.
-#' @return \code{\link[pkg:quanteda]{corpus}} object
+#' should be kept as \code{\link[quanteda]{metadoc}}.
+#' @param ... Additional parameters like \code{compress} for \code{\link[quanteda]{corpus}}.
+#' @return \code{\link[quanteda]{corpus}} object
 #' @keywords manip
 #' @examples
 #' texts <- list(A="Give a Man a Fish, and You Feed Him for a Day.

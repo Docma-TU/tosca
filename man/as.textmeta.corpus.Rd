@@ -9,7 +9,7 @@ as.textmeta.corpus(corpus, cols, dateFormat = "\%Y-\%m-\%d",
   textCol = "texts", duplicateAction = TRUE, addMetadata = TRUE)
 }
 \arguments{
-\item{corpus}{Object of class \code{\link[pkg:quanteda]{corpus}},
+\item{corpus}{Object of class \code{\link[quanteda]{corpus}},
 package \code{\link[quanteda]{quanteda}}.}
 
 \item{cols}{Character: vector with columns which should be kept.}
@@ -42,8 +42,8 @@ overwritten by the document specific columns.}
 \code{\link{textmeta}} object
 }
 \description{
-Transfers data from a \code{\link[pkg:quanteda]{corpus}} object -  the way text
-data is stored in the package \code{\link[pkg:quanteda]{quanteda}} - to a
+Transfers data from a \code{\link[quanteda]{corpus}} object -  the way text
+data is stored in the package \code{\link[quanteda]{quanteda}} - to a
 \code{\link{textmeta}} object.
 }
 \examples{

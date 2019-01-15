@@ -12,23 +12,23 @@
 \item{object}{\code{\link{textmeta}} object}
 
 \item{docnames}{Character: string with the column of object$meta
-which should be kept as \code{\link[pkg:quanteda]{docnames}}.}
+which should be kept as \code{\link[quanteda]{docnames}}.}
 
 \item{docvars}{Character: vector with columns of object$meta which
-should be kept as \code{\link[pkg:quanteda]{docvars}}.}
+should be kept as \code{\link[quanteda]{docvars}}.}
 
 \item{metadoc}{Character: vector with columns of object$meta which
-should be kept as \code{\link[pkg:quanteda]{metadoc}}.}
+should be kept as \code{\link[quanteda]{metadoc}}.}
 
-\item{...}{Additional parameters like \code{compress} for \code{\link[pkg:quanteda]{corpus}}.}
+\item{...}{Additional parameters like \code{compress} for \code{\link[quanteda]{corpus}}.}
 }
 \value{
-\code{\link[pkg:quanteda]{corpus}} object
+\code{\link[quanteda]{corpus}} object
 }
 \description{
 Transfers data from a \code{\link{textmeta}} object to a
-\code{\link[pkg:quanteda]{corpus}} object -  the way text data is stored in the
-package \code{\link[pkg:quanteda]{quanteda}}.
+\code{\link[quanteda]{corpus}} object -  the way text data is stored in the
+package \code{\link[quanteda]{quanteda}}.
 }
 \examples{
 texts <- list(A="Give a Man a Fish, and You Feed Him for a Day.

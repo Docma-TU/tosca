@@ -1,10 +1,10 @@
 #' Transform corpus to textmeta
 #'
-#' Transfers data from a \code{\link[pkg:quanteda]{corpus}} object -  the way text
-#' data is stored in the package \code{\link[pkg:quanteda]{quanteda}} - to a
+#' Transfers data from a \code{\link[quanteda]{corpus}} object -  the way text
+#' data is stored in the package \code{\link[quanteda]{quanteda}} - to a
 #' \code{\link{textmeta}} object.
 #'
-#' @param corpus Object of class \code{\link[pkg:quanteda]{corpus}},
+#' @param corpus Object of class \code{\link[quanteda]{corpus}},
 #' package \code{\link[quanteda]{quanteda}}.
 #' @param cols Character: vector with columns which should be kept.
 #' @param dateFormat Character: string with the date format in the

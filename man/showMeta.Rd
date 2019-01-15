@@ -16,7 +16,7 @@ showMeta(meta, id = meta$id, cols = colnames(meta), file,
 
 \item{file}{Character Filename for the export.}
 
-\item{fileEncoding}{character string: declares file encoding. For more information see \code{\link[pkg:utils]{write.csv}}}
+\item{fileEncoding}{character string: declares file encoding. For more information see \code{\link[utils]{write.csv}}}
 }
 \value{
 A list of the requested meta data. If file is set, writes a csv including the meta-data of the
