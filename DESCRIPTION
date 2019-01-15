@@ -4,7 +4,7 @@ Title: Tools for Statistical Content Analysis
 Version: 0.1-2
 Date: 2018-09-04
 Authors@R: c(person("Lars", "Koppers", email="koppers@statistik.tu-dortmund.de", role=c("aut", "cre"), comment = c(ORCID = "0000-0002-1642-9616")),
-	     person("Jonas", "Rieger", email="riegerjonas@gmx.de", role=c("aut")),
+	     person("Jonas", "Rieger", email="jonas.rieger@tu-dortmund.de", role=c("aut")),
 	     person("Karin", "Boczek", email="karin.boczek@tu-dortmund.de", role=c("ctb"), comment = c(ORCID = "0000-0003-1516-4094")),
 	     person("Gerret", "von Nordheim", email="gerret.vonnordheim@tu-dortmund.de", role=c("ctb"), comment = c(ORCID = "0000-0001-7553-3838")))
 Description: A framework for statistical analysis in content analysis. In addition to a pipeline for preprocessing text corpora and linking to the latent Dirichlet allocation from the 'lda' package, plots are offered for the descriptive analysis of text corpora and topic models. In addition, an implementation of Chang's intruder words and intruder topics is provided.
@@ -16,6 +16,7 @@ Depends:
 Imports:
 	tm (>= 0.7-3),
 	lda (>= 1.3.2),
+	quanteda (>= 1.1.1),
 	lubridate (>= 1.3.3),
 	htmltools (>= 0.3.6),
 	RColorBrewer (>= 1.1-2),
