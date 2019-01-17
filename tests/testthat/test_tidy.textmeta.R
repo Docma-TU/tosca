@@ -37,4 +37,7 @@ test_that("tidy.textmeta", {
   expect_true(is.textmeta_tidy(tidy_text3))
   expect_equal(tidy_text1$meta, tidy_text3$meta)
   expect_equal(tidy_text$meta[1:3,], tidy_text3$meta)
+  
+  tidy_text2 <- print.textmeta_tidy(tidy_text3)
+  expect_true(is.textmeta_tidy(tidy_text2))
 })
