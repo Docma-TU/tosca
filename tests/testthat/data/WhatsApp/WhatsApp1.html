@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html class="js serviceworker adownload cssanimations csstransitions no-webp" dir="LTR" loc="de" lang="de"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>(85) WhatsApp</title>
+<meta name="viewport" content="width=device-width">
+<meta name="google" content="notranslate">
+<meta name="format-detection" content="telephone=no">
+
+<meta name="description" content="Quickly send and receive WhatsApp messages right from your computer.">
+<meta name="og:description" content="Quickly send and receive WhatsApp messages right from your computer.">
+<meta name="og:url" content="https://web.whatsapp.com/">
+<meta name="og:title" content="WhatsApp Web">
+<meta name="og:image" content="https://www.whatsapp.com/img/whatsapp-promo.png">
+
+<link id="favicon" rel="shortcut icon" href="https://web.whatsapp.com/img/7ea40f8452fb838a747fb0881ffd5980.png" type="image/png">
+<link rel="apple-touch-icon" sizes="194x194" href="https://web.whatsapp.com/apple-touch-icon.png" type="image/png">
+
+<style>
+html, body, #app {
+height: 100%;
+width: 100%;
+overflow: hidden;
+padding: 0;
+margin: 0;
+}
+
+#app {
+position: absolute;
+top: 0;
+left: 0;
+}
+
+#startup, #initial_startup {
+width: 100%;
+height: 100%;
+position: fixed;
+background-color: #f2f2f2;
+
+-moz-user-select: none;
+-webkit-user-select: none;
+
+display: flex;
+align-items: center;
+justify-content: center;
+display: -webkit-box;
+display: -webkit-flex;
+-webkit-align-items: center;
+-webkit-justify-content: center;
+flex-direction: column;
+-webkit-flex-direction: column;
+}
+
+.spinner-container {
+-webkit-animation: rotate 2s linear infinite;
+animation: rotate 2s linear infinite;
+z-index: 2;
+}
+
+.spinner-path {
+stroke-dasharray: 1,150; 
+stroke-dashoffset: 0;
+stroke: #acb9bf;
+stroke-linecap: round;
+-webkit-animation: dash 1.5s ease-in-out infinite;
+animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+100% { transform: rotate(360deg); }
+}
+@-webkit-keyframes rotate{
+100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes dash {
+0% {
+stroke-dasharray: 1,150;  
+stroke-dashoffset: 0;
+}
+50% {
+stroke-dasharray: 90,150; 
+stroke-dashoffset: -35;   
+}
+100% {
+stroke-dasharray: 90,150; 
+stroke-dashoffset: -124;  
+}
+}
+@-webkit-keyframes dash {
+0% {
+stroke-dasharray: 1,150;  
+stroke-dashoffset: 0;
+}
+50% {
+stroke-dasharray: 90,150; 
+stroke-dashoffset: -35;   
+}
+100% {
+stroke-dasharray: 90,150; 
+stroke-dashoffset: -124;  
+}
+}
+
+.progress-container {
+width: 360px;
+position: fixed;
+padding-top: 120px;
+top: 50%;
+left: 50%;
+margin-left: -180px;
+}
+
+progress {
+-webkit-appearance: none;
+appearance: none;
+width: 100%;
+height: 3px;
+border: none;
+margin: 0;
+color: #02d1a4;
+background-color: #e0e4e5;
+}
+
+progress[value]::-webkit-progress-bar {
+background-color: #e0e4e5;
+}
+
+progress[value]::-webkit-progress-value {
+background-color: #02d1a4;
+}
+
+progress[value]::-moz-progress-bar {
+background-color: #02d1a4;
+}
+</style>
+
+
+
+<script id="progress_script_/vendor1.750a4a61979ae2f58517.js" type="text/javascript" charset="utf-8" async="" src="dateia/dateib.js"></script><script id="progress_script_/bla.js" type="text/javascript" charset="utf-8" async="" src="abc.js"></script><script id="id1.js" type="text/javascript" charset="utf-8" async="" src="bla.js"></script><script id="bla.js" type="text/javascript" charset="utf-8" async="" src="bla.js"></script><style id="asset-style" type="text/css"></style><script type="text/javascript" charset="utf-8" async="" src="svg.js"></script><script type="text/javascript" charset="utf-8" async="" src="app2.js"></script><script type="text/javascript" charset="utf-8" async="" src="en.js"></script></head>
+<body class="web">
+<label class="_2MSJr"><input type="text" class="jN-F5 copyable-text selectable-text" data-tab="2" dir="auto" title="Suchen oder neuen Chat beginnen"></label></div></div><div class="_1vDUw _1NrpZ" id="pane-side"><div tabindex="-1" data-tab="3"><div class="" style="pointer-events: auto;"><div class="RLfQR" style="height: 11448px;"><div class="_2wP_Y" style="z-index: 158; height: 72px; transform: translateY(6048px); transition: none 0s ease 0s;"><div tabindex="-1"><div class="_2EXPL CxUIE"><div class="dIyEr"><div class="_1WliW" style="height: 49px; width: 49px;"><img src="123.jpg" draggable="false" class="Qgzj8 gqwaM" style="visibility: visible;"><div class="_3ZW2E"><span data-icon="default-user" class=""><svg xmlns="svg" viewBox="0 0 212 212" width="212" height="212"><path fill="#DFE5E7" d="abc"></path><g fill="#FFF"><path d="z"></path></g></svg></span></div></div></div><div class="_3j7s9"><div class="_2FBdJ"><div class="_25Ooe"><span class="_3TEwt"><span dir="auto" title="Gruppe" class="_1wjpf">Gruppe</span><div class="_1yct0"></div></span></div><div class="_3Bxar"><span class="_3T2VG">Heute</span></div></div><div class="_1AwDx"><div class="_itDl"><span class="_2_LEW" title="‪Text A‬"><span dir="ltr" class="_1wjpf _3NFp9">text B</span></span></div><div class="_3Bxar"><span><div class="_15G96"><span class="OUeyt _3zmhL">82</span></div></span><span></span><span></span></div></div></div></div></div></div><div class="_2wP_Y" style="z-index: 157; height: 72px; transform: translateY(6336px); transition: none 0s ease 0s;"><div tabindex="-1"><div class="_2EXPL CxUIE"><div class="dIyEr"><div class="_1WliW" style="height: 49px; width: 49px;"><img src="abc.jpg" draggable="false" class="Qgzj8 gqwaM" style="visibility: visible;"><div class="_3ZW2E"><span data-icon="default-user" class=""><svg xmlns="2000.svg" viewBox="0 0 212 212" width="212" height="212"><path fill="#DFE5E7" d="x"></path><g fill="#FFF"><path d="p"></path></g></svg></span></div></div></div><div class="_3j7s9"><div class="_2FBdJ"><div class="_25Ooe"><span class="_3TEwt"><span dir="auto" title="gruppe a" class="_1wjpf">gruppe a</span><div class="_1yct0"></div></span></div><div class="_3Bxar"><span class="_3T2VG">Mittwoch</span></div></div><div class="_1AwDx"><div class="_itDl"><span class="_2_LEW" title="‪❄ FAHRT BITTE VORSICHTIG ❄‬"><div class="_3FwEk status-image I9L8x"><span data-icon="status-image" class=""><svg id="Layer_1" xmlns="svg" viewBox="0 0 16 20" width="16" height="20"><path fill="#263238" fill-opacity=".4" d="z"></path></svg></span></div><span dir="ltr" class="_1wjpf _3NFp9"><img crossorigin="anonymous" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="❄" draggable="false" style="background-position: -60px -20px;" class="b7 emoji apple"> FAHRT BITTE VORSICHTIG <img crossorigin="anonymous" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="❄" draggable="false" style="background-position: -60px -20px;" class="b7 emoji apple">
+<em class="">Die aktuellen Verkehrsmeldungen hört ihr wie immer in unserem Programm</em>
+&nbsp;</span></span></div><div class="_3Bxar"><span><div class="_15G96"><span class="OUeyt _3zmhL">42</span></div></span><span></span><span></span></div></div></div></div></div></div><div class="_2wP_Y" style="z-index: 156; height: 72px; transform: translateY(6120px); transition: none 0s ease 0s;"><div tabindex="-1"><div class="_2EXPL _1f1zm"><div class="dIyEr"><div class="_1WliW" style="height: 49px; width: 49px;"><img src="datei.jpg" draggable="false" class="Qgzj8 gqwaM" style="visibility: visible;"><div class="_3ZW2E"><span data-icon="default-user" class=""><svg xmlns="svg" viewBox="0 0 212 212" width="212" height="212"><path fill="#DFE5E7" d="z"></path><g fill="#FFF"><path d="Mz"></path></g></svg></span></div></div></div><div class="_3j7s9"><div class="_2FBdJ"><div class="_25Ooe"><span class="_3TEwt"><span dir="auto" title="gn" class="_1wjpf">gn</span><div class="_1yct0"></div></span></div><div class="_3Bxar"><span class="_3T2VG">Gestern</span></div></div><div class="_1AwDx"><div class="_itDl"><span class="_2_LEW" title="‪hier steht text, 
+
+und Links
+
+und Bilder 
+usw
+</span></span></div>
+<div class="_2f-RV"><div class="_1DZAH"><span class="_1ORuP"></span><span class="_3EFt_">19:12</span></div></div></div><span></span></div></div><div class="vW7d1 _3rjxZ"><div class="_3_7SH Zq3Mc"><span dir="auto" class="">GESTERN</span></div></div><div class="vW7d1"><span></span><div class="_3_7SH _3DFk6 message-in tail"><span class="tail-container"></span><span class="tail-container highlight"></span><div class="Tkt2p"><div class="copyable-text" data-pre-plain-text="[18:56, 29.11.2018] Ressource: "><div class="_3zb-j ZhF0n"><span dir="ltr" class="selectable-text invisible-space copyable-text">Give a Man a Fish, and You Feed Him for a Day.
+Teach a Man To Fish,
+
+and You Feed Him for a Lifetime: <a href="Link" title="Link" target="_blank" rel="noopener noreferrer" class="selectable-text invisible-space copyable-text">Link</a>
+
+</span></div></div><div class="_2f-RV"><div class="_1DZAH"><span class="_1ORuP"></span><span class="_3EFt_">18:56</span></div></div></div><span></span></div></div></div></div></div></div><div style="height: 0px;" class="grGJn"></div><footer tabindex="-1" class="_2tW_W"><div class="_3pkkz copyable-area"><div style="will-change: width;" class="weEq5"><div data-state="closed" class="mYCYF _3svz5"><div tabindex="-1" class="_1x_c3 _35Ob4 _12JTM _2WGh-"><button class="ory3u"><span data-icon="x" class=""><svg id="Layer_1" xmlns="svg" viewBox="0 0 24 24" width="24" height="24"><path opacity=".45" fill="#263238" d="M19.1 17.2l-5.3-5.3 5.3-5.3-1.8-1.8-5.3 5.4-5.3-5.3-1.8 1.7 5.3 5.3-5.3 5.3L6.7 19l5.3-5.3 5.3 5.3 1.8-1.8z"></path></svg></span></button></div><div tabindex="-1" class="_1x_c3 _35Ob4 kQJNA _2-5II _338za" data-tab="4"><button class="ory3u"><span data-icon="smiley" class=""><svg id="Layer_1" xmlns="svg" viewBox="0 0 24 24" width="24" height="24"><path opacity=".45" fill="#263238" d="z"></path></svg></span></button></div><div tabindex="-1" class="_1x_c3 _35Ob4 _1oRJg _338za"><button class="ory3u"><span data-icon="gif" class=""><svg id="Layer_1" xmlns="svg" viewBox="0 0 24 24" width="24" height="24"><path fill="#8d9193" d="Mz"></path></svg></span></button></div></div></div><div tabindex="-1" class="_1Plpp"><div tabindex="-1" class="_3F6QL _2WovP"><div class="_39LWd" style="visibility: visible;">Schreib eine Nachricht</div><div class="_2S1VP copyable-text selectable-text" data-tab="1" dir="ltr" spellcheck="true" contenteditable="true"></div></div></div><div class="weEq5"><div class="_1UWg0"><span><button class="_2SbJ1"><span data-icon="ptt" class=""><svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="#263238" fill-opacity=".45" d="M"></path></svg></span></button></span></div></div></div><div class="_2HFg5"><div class="_1JbDr"><div class="_1vDUw"><object class="_3lztd" data="A/a" type="text/html"></object></div><div class="_1vDUw"><object class="_3lztd" data="A/a" type="text/html"></object></div><div class="_1vDUw"><object class="_3lztd" data="A/a" type="text/html"></object></div><div class="_1vDUw"><object class="_3lztd" data="A/a" type="text/html"></object></div><div class="_1vDUw"><object class="_3lztd" data="A/a" type="text/html"></object></div></div></div><div class="_245vA"></div><div class="TSSFW"></div></footer><span></span></div></div></div></div></div>
+
+
+
+<script src="As.js"></script>
+
+<div id="hard_expire_time" data-time="1558806568.824"></div>
+
+<script src="Ab.js"></script>
+
+
+</body></html>

@@ -77,11 +77,13 @@ readWhatsApp = function(path = getwd(), file = list.files(path = path,
       x = obs[mData$userMessage])
     citedtmp = mData$cited
     citedtmp[is.na(citedtmp)] = FALSE
-    mData$citedAuthor[citedtmp] = removeXML(stringr::str_extract(obs[citedtmp],
-      "<span dir=\"auto\" class=\"((_3Ye_R _1wjpf)|(_2a1Yw))\">(.*?)</div>"))
-    mData$citedText[citedtmp] = removeXML(.extractEmojis2(stringr::str_extract(obs[citedtmp],
-      "<span dir=\"auto\" class=\"quoted-mention\">(.*?)</div>")))
-    # Zitat koennte Emojis enthalten?!
+    if(any(citedtmp)){
+      mData$citedAuthor[citedtmp] = removeXML(stringr::str_extract(obs[citedtmp],
+        "<span dir=\"auto\" class=\"((_3Ye_R _1wjpf)|(_2a1Yw))\">(.*?)</div>"))
+      mData$citedText[citedtmp] = removeXML(.extractEmojis2(stringr::str_extract(obs[citedtmp],
+        "<span dir=\"auto\" class=\"quoted-mention\">(.*?)</div>")))
+      # Zitat koennte Emojis enthalten?!
+    }
     
     mData$time[mData$userMessage] = removeXML(stringr::str_extract(obs[mData$userMessage],
       "<span class=\"_3EFt_\">(.*?)</span>"))
