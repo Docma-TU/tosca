@@ -84,6 +84,10 @@ readWhatsApp = function(path = getwd(), file = list.files(path = path,
         "<span dir=\"auto\" class=\"quoted-mention\">(.*?)</div>")))
       # Zitat koennte Emojis enthalten?!
     }
+    else{
+      mData$citedAuthor = NA
+      mData$citedText = NA
+    }
     
     mData$time[mData$userMessage] = removeXML(stringr::str_extract(obs[mData$userMessage],
       "<span class=\"_3EFt_\">(.*?)</span>"))
