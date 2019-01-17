@@ -30,7 +30,7 @@ tidy.textmeta <- function(object){
   if (any(emptyText)){
     message("Deleting ", sum(emptyText),  " empty texts...")
     object$text <- object$text[!emptyText]
-    object$meta <- object$meta[object$meta %in% names(object$text)]
+    object$meta <- object$meta[object$meta$id %in% names(object$text),]
   }
   if (all(lengths(object$text) == 1)){
     dat <- data.frame(id = names(object$text),
