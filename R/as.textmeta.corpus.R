@@ -60,7 +60,7 @@ as.textmeta.corpus <- function(corpus, cols, dateFormat = "%Y-%m-%d", idCol = "i
   corpus <- list(documents = data.frame(texts = quanteda::texts(corpus), 
                                         quanteda::docvars(corpus),
                                         stringsAsFactors = FALSE),
-                 metadata = quanteda::metacorpus(corpus, type = "all"))
+                 metadata = quanteda::metacorpus(corpus))
   
   if (missing(cols)) cols <- colnames(corpus$documents)
   cols <- setdiff(cols, c(idCol, dateCol, titleCol, textCol))
