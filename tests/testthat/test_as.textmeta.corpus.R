@@ -18,8 +18,4 @@ test_that("as.textmeta.corpus", {
   
   obj <- as.textmeta.corpus(corp)
   expect_true(is.textmeta(obj))
-
-  corp$documents <- corp$documents[,-1]
-  obj <- as.textmeta.corpus(corp)
-  expect_true(is.textmeta(obj))
 })

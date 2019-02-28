@@ -13,6 +13,7 @@ editor_options:
 vignette: >
   %\VignetteIndexEntry{Vignette tosca}
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 \newpage
 # Introduction

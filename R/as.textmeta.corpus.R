@@ -56,7 +56,13 @@ as.textmeta.corpus <- function(corpus, cols, dateFormat = "%Y-%m-%d", idCol = "i
     length(dateCol) == 1, length(titleCol) == 1, length(textCol) == 1,
     length(duplicateAction) == 1)
 
-  if(missing(cols)) cols <- colnames(corpus$documents)
+  # restructure corpus using 1.4.x format
+  corpus <- list(documents = data.frame(texts = quanteda::texts(corpus), 
+                                        quanteda::docvars(corpus),
+                                        stringsAsFactors = FALSE),
+                 metadata = quanteda::metacorpus(corpus))
+  
+  if (missing(cols)) cols <- colnames(corpus$documents)
   cols <- setdiff(cols, c(idCol, dateCol, titleCol, textCol))
 
   if(!(idCol %in% colnames(corpus$documents))){
