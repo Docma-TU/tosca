@@ -93,7 +93,7 @@ readTextmeta <- function(path, file, cols, dateFormat = "%Y-%m-%d", idCol = "id"
 
     # get text from file and name with id
     newText <- lonefile[, textCol]
-    names(newText) <- lonefile[, idCol]
+    names(newText) <- lonefile$id
 
     # merge meta with existing meta information from other files
     lonefile <- data.frame(lonefile[, !(textCol == colnames(lonefile))],
