@@ -100,8 +100,8 @@ LDAgen <- function(documents, K = 100L, vocab, num.iterations = 200L,
       ttw <- rbind(round(t(result$topic_sums / sum(result$topic_sums))*100,2), ttw)
     }
     rownames(ttw) <- c("Topic", 1:num.words)
-    write.csv(ttw, file = paste(folder, "-k", K, "i", num.iterations, "b", burnin, "s",
-                  seed, "alpha", round(alpha,2), "eta", round(eta,2), ".csv", sep = ""), fileEncoding="UTF-8")
+    write.csv(ttw, file = paste(folder, "-k", K, "alpha", round(alpha,2), "eta", round(eta,2), "i", num.iterations, "b", burnin, "s",
+                  seed, ".csv", sep = ""), fileEncoding="UTF-8")
     invisible(result)
 }
 
