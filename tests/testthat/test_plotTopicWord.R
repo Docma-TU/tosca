@@ -1,6 +1,7 @@
 context("plot Words in Topics relative to Words")
 
 test_that("plotTopicWord", {
+  suppressWarnings(RNGversion("3.5.0"))
   set.seed(123)
   x1 <- matrix(sample(c(rep(0, 20), 1:20), 10000, replace = TRUE), 10, 1000)
   ldaID <- paste("ID", 1:200)

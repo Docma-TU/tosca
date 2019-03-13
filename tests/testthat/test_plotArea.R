@@ -1,7 +1,7 @@
 context("plotArea")
 
 test_that("plotArea", {
-
+  suppressWarnings(RNGversion("3.5.0"))
     set.seed(24601)
     ldaresult <- list(document_sums=matrix(sample(c(rep(0,20),1:20),10000, replace=TRUE),10,1000))
     ldaid <- paste("ID", 11:1010)

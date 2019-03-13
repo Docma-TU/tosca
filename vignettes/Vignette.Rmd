@@ -83,6 +83,7 @@ library(tosca)
 ```
 ```{r, include = FALSE, message=FALSE}
 library(tosca)
+suppressWarnings(RNGversion("3.5.0"))
 ```
 
 This vignette gives an overview over the functionality of the package. For a detailed description of the functions see the help pages.

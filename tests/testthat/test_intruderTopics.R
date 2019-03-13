@@ -36,7 +36,7 @@ test_that("intruderWords", {
     ## save(beta, theta, text, iT, iTo, iTs, file="data/intruderTopics.RData", compress="bzip2")
 
     load("data/intruderTopics.RData")
-
+  suppressWarnings(RNGversion("3.5.0"))
     set.seed(24601)
     iT2 <- intruderTopics(text, beta, theta, id=paste("T", 1:100), numIntruder=1:2, numOuttopics=4, byScore=TRUE, minWords=1L, minOuttopics=1L, stopTopics=2, printSolution=FALSE, oldResult=NULL, test=TRUE, testinput=c("h", "1", "5", "2 1", "g", "q"))
 

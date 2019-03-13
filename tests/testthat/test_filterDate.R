@@ -3,6 +3,7 @@ context("filterDate")
 test_that("filterDate", {
     text <- as.list(paste("text", 1:200))
     names(text) <- paste("id", 101:300)
+    suppressWarnings(RNGversion("3.5.0"))
     set.seed(24601)
     meta <- data.frame(
       id = paste("id", 1:400),

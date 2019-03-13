@@ -36,7 +36,7 @@ test_that("intruderWords", {
     ## save(beta, iW, iWo, iWs, file="data/intruderWords.RData")
 
     load("data/intruderWords.RData")
-
+  suppressWarnings(RNGversion("3.5.0"))
     set.seed(24601)
 
     iW2 <- intruderWords(beta, byScore = TRUE, numTopwords = 10L, numIntruder = 1L:2L, numOutwords = 8L, noTopic=TRUE, printSolution = FALSE, oldResult=NULL, test=TRUE, testinput=c("1 2 3", "6", "h", "1", "x", "q"))

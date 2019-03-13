@@ -2,6 +2,7 @@ context("plotting (Sub-)Corpora over Time")
 
 test_that("plotScot", {
   load("data/tm.RData")
+  suppressWarnings(RNGversion("3.5.0"))
   set.seed(123)
   id = sample(tm$meta$id, 0.1*nrow(tm$meta))
   

@@ -1,6 +1,7 @@
 context("plot Topics as Heatmap including Clustering")
 
 test_that("plotHeat", {
+  suppressWarnings(RNGversion("3.5.0"))
   set.seed(123)
   x1 <- matrix(sample(c(rep(0, 20), 1:20), 10000, replace = TRUE), 10, 1000)
   ldaID <- paste("ID", 1:200)

@@ -1,7 +1,8 @@
 context("plot Words in Subcorpora")
 
 test_that("plotWordSub", {
-  set.seed(123)
+  suppressWarnings(RNGversion("3.5.0"))
+    set.seed(123)
   x1 <- matrix(sample(c(rep(0, 20), 1:20), 10000, replace = TRUE), 10, 1000)
   ldaID <- paste("ID", 1:200)
   x2 <- list(document_sums = x1)
