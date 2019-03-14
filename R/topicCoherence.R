@@ -29,6 +29,9 @@
 #' \donttest{topicCoherence(ldaresult=result, documents=ldaPrep, num.words=10, by.score=TRUE)}
 #' @export topicCoherence
 topicCoherence <- function(ldaresult, documents, num.words=10, by.score=TRUE){
+  stopifnot(is.list(ldaresult), is.list(ldaresult$assignments), length(ldaresult$assignments) == length(documents), is.matrix(ldaresult$topics), is.list(documents),
+            as.integer(num.words) == num.words, length(num.words) == 1,
+            is.logical(by.score), length(by.score) == 1)  
   ttw <- lda::top.topic.words(ldaresult$topics, num.words = num.words, by.score = by.score)
   wordtopic <- mapply(function(x,y)list(rbind(x[1,]+1, y+1)), documents, ldaresult$assignments)
   topicCoherence <- numeric(nrow(ldaresult$topics))
