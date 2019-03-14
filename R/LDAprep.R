@@ -42,10 +42,8 @@ LDAprep <- function(text, vocab,
     id <- NULL # for cran check
 
     vtable <- data.table::data.table(word = vocab, id = seq_along(vocab) - 1L, key = "word")
-    text <- mapply(
-        function(article, words) {
-            rbind(vtable[.(words), "id", nomatch = 0L][order(id)]$id, 1L)
-        }, article = names(text), words = text, SIMPLIFY = FALSE)
+    text <- lapply(text,
+      function(words) rbind(vtable[.(words), "id", nomatch = 0L][order(id)]$id, 1L))
                                         # ltable = rbindlist(mapply(
                                         #   function(article, words) {
                                         #   data.table(word = words, article = article)[, list(article = article, N = .N), by = "word"]
