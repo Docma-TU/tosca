@@ -4,7 +4,8 @@
 \alias{topicCoherence}
 \title{Calculating Topic Coherence}
 \usage{
-topicCoherence(ldaresult, documents, num.words = 10, by.score = TRUE)
+topicCoherence(ldaresult, documents, num.words = 10, by.score = TRUE,
+  sym.coherence = FALSE)
 }
 \arguments{
 \item{ldaresult}{The result of a function call \code{\link{LDAgen}}}
@@ -14,6 +15,8 @@ topicCoherence(ldaresult, documents, num.words = 10, by.score = TRUE)
 \item{num.words}{Integer: Number of topwords used for calculating topic coherence (default: \code{10}).}
 
 \item{by.score}{Logical: Should the Score from \code{\link[lda]{top.topic.words}} be used (default: \code{TRUE})?}
+
+\item{sym.coherence}{Logical: Should a symmetric version of the topic coherence used for the calculations? If TRUE the denominator of the topic coherence uses both wordcounts and not just one.}
 }
 \value{
 A vector of topic coherences. the length of the vector corresponds to the number of topics in the model.
@@ -38,7 +41,7 @@ wordlist <- makeWordlist(corpus$text)
 ldaPrep <- LDAprep(text=corpus$text, vocab=wordlist$words)
 
 \donttest{result <- LDAgen(documents=ldaPrep, K = 3L, vocab=wordlist$words, num.words=3)}
-\donttest{topicCoherence(ldaresult=result, documents=ldaPrep, num.words=10, by.score=TRUE)}
+\donttest{topicCoherence(ldaresult=result, documents=ldaPrep, num.words=5, by.score=TRUE)}
 }
 \references{
 Mimno, David and Wallach, Hannah M. and Talley, Edmund and Leenders, Miriam and McCallum, Andrew. Optimizing semantic coherence in topic models. EMNLP '11 Proceedings of the Conference on Empirical Methods in Natural Language Processing, 2011.

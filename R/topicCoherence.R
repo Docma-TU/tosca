@@ -6,6 +6,7 @@
 #' @param documents A list prepared by \code{\link{LDAprep}}.
 #' @param num.words Integer: Number of topwords used for calculating topic coherence (default: \code{10}).
 #' @param by.score Logical: Should the Score from \code{\link[lda]{top.topic.words}} be used (default: \code{TRUE})?
+#' @param sym.coherence Logical: Should a symmetric version of the topic coherence used for the calculations? If TRUE the denominator of the topic coherence uses both wordcounts and not just one.
 #' @return A vector of topic coherences. the length of the vector corresponds to the number of topics in the model.
 #' @references Mimno, David and Wallach, Hannah M. and Talley, Edmund and Leenders, Miriam and McCallum, Andrew. Optimizing semantic coherence in topic models. EMNLP '11 Proceedings of the Conference on Empirical Methods in Natural Language Processing, 2011.
 #'
@@ -26,12 +27,13 @@
 #' ldaPrep <- LDAprep(text=corpus$text, vocab=wordlist$words)
 #'
 #' \donttest{result <- LDAgen(documents=ldaPrep, K = 3L, vocab=wordlist$words, num.words=3)}
-#' \donttest{topicCoherence(ldaresult=result, documents=ldaPrep, num.words=10, by.score=TRUE)}
+#' \donttest{topicCoherence(ldaresult=result, documents=ldaPrep, num.words=5, by.score=TRUE)}
 #' @export topicCoherence
-topicCoherence <- function(ldaresult, documents, num.words=10, by.score=TRUE){
+topicCoherence <- function(ldaresult, documents, num.words=10, by.score=TRUE, sym.coherence = FALSE){
   stopifnot(is.list(ldaresult), is.list(ldaresult$assignments), length(ldaresult$assignments) == length(documents), is.matrix(ldaresult$topics), is.list(documents),
             as.integer(num.words) == num.words, length(num.words) == 1,
             is.logical(by.score), length(by.score) == 1)  
+  
   ttw <- lda::top.topic.words(ldaresult$topics, num.words = num.words, by.score = by.score)
   wordtopic <- mapply(function(x,y)list(rbind(x[1,]+1, y+1)), documents, ldaresult$assignments)
   topicCoherence <- numeric(nrow(ldaresult$topics))
@@ -40,13 +42,15 @@ topicCoherence <- function(ldaresult, documents, num.words=10, by.score=TRUE){
     wordid <- match(ttw[,i], colnames(ldaresult$topics))
     
     D <- NULL
-    for(j in 1:nrow(ttw)) D <- cbind(D, sapply(wordtopic, function(x)wordid[j] %in% x[1,]))
+    for(j in 1:nrow(ttw)) D <- cbind(D, sapply(wordtopic, function(x)wordid[j] %in% x[1,x[2,]==i]))
     Dsum <- colSums(D)
     
     grid <- cbind(rep(2:num.words, 1:(num.words-1)), unlist(sapply(1:(num.words-1), function(x)1:x)))
     
-    tc <- apply(grid, 1, function(x) (sum(D[,x[1]]*D[,x[2]]) +1) / Dsum[x[2]] )
+    if(!sym.coherence){tc <- apply(grid, 1, function(x) (sum(D[,x[1]]*D[,x[2]]) +1) / Dsum[x[2]])}else{
+      tc <- apply(grid, 1, function(x) (sum(D[,x[1]]*D[,x[2]]) +1) / ((Dsum[x[2]] + Dsum[x[1]])/2))}
     topicCoherence[i] <- sum(log(tc))
   }
+  if(any(is.infinite(topicCoherence))){warning("Some Topics have less then num.words allocated words. Return Inf")}
   topicCoherence
 }
