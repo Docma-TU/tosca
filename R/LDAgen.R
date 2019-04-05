@@ -68,16 +68,14 @@ LDAgen <- function(documents, K = 100L, vocab, num.iterations = 200L,
                                               alpha = alpha, eta = eta,
                                               compute.log.likelihood = TRUE)
         ldaID <- names(documents)
-        save(list = c("result", "ldaID"), file = paste(folder, "-k", K,
-                                              "i", num.iterations,
-                                              "b", burnin, "s", seed,
-                                              "alpha", round(alpha,2),
-                                              "eta", round(eta,2),
-                                              ".RData", sep = ""))
+        save(list = c("result", "ldaID"), file = paste0(folder, "-k", K, "alpha", round(alpha,2), 
+                                                        "eta", round(eta,2), "i", num.iterations, 
+                                                        "b", burnin, "s", seed, ".RData"))
     }
     else{
-        load(paste(folder, "-k", K, "i", num.iterations, "b", burnin, "s", seed, "alpha",
-                   round(alpha,2), "eta", round(eta,2), ".RData", sep = ""))
+        load(paste0(folder, "-k", K, "alpha", round(alpha,2), 
+                    "eta", round(eta,2), "i", num.iterations, 
+                    "b", burnin, "s", seed, ".RData"))
     }
     ttw <- lda::top.topic.words(result$topics, num.words = num.words, by.score = TRUE)
     if(count){
@@ -100,8 +98,10 @@ LDAgen <- function(documents, K = 100L, vocab, num.iterations = 200L,
       ttw <- rbind(round(t(result$topic_sums / sum(result$topic_sums))*100,2), ttw)
     }
     rownames(ttw) <- c("Topic", 1:num.words)
-    write.csv(ttw, file = paste(folder, "-k", K, "alpha", round(alpha,2), "eta", round(eta,2), "i", num.iterations, "b", burnin, "s",
-                  seed, ".csv", sep = ""), fileEncoding="UTF-8")
+    write.csv(ttw, file = paste0(folder, "-k", K, "alpha", round(alpha,2), 
+                                 "eta", round(eta,2), "i", num.iterations, 
+                                 "b", burnin, "s", seed, ".csv"), 
+              fileEncoding="UTF-8")
     invisible(result)
 }
 
