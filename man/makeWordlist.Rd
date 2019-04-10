@@ -12,7 +12,8 @@ makeWordlist(text, k = 100000L, ...)
 \item{k}{Integer: How many texts should be processed at once (RAM
 usage)?}
 
-\item{...}{further arguments for the sort function.}
+\item{...}{further arguments for the sort function. Often you
+want to set \code{method = "radix"}.}
 }
 \value{
 \item{words}{An alphabetical list of the words in the corpus}
