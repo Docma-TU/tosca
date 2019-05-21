@@ -58,7 +58,7 @@ LDAprep <- function(text, vocab,
                                         #
     if(reduce){                         # delete entries where dimension is not computable
         tmp <- lengths(lapply(text, dim)) == 0
-        if (length(tmp) > 0) text <- text[!tmp]
+        if (any(tmp)) text <- text[!tmp]
         Dim <- sapply(text, dim)
         text <- text[Dim[2,] != 0]
         text <- text[Dim[1,] != 1]

@@ -7,7 +7,8 @@
 #' @param text List of texts.
 #' @param k Integer: How many texts should be processed at once (RAM
 #' usage)?
-#' @param ... further arguments for the sort function.
+#' @param ... further arguments for the sort function. Often you
+#' want to set \code{method = "radix"}.
 #' @return \item{words}{An alphabetical list of the words in the corpus}
 #' \item{wordtable}{A frequency table of the words in the corpus}
 #' @keywords manip
@@ -35,7 +36,7 @@ makeWordlist <- function(text, k = 100000L, ...){
     words <- c(words, unique(unlist(text[(i*k+1):(min(n, i*k+k))])))
   }
   message("  ", n, " next step")
-  words <- sort(unique(words),...)
+  words <- sort(unique(words), ...)
   message("calculate counts...\n done:")
   wordtable <- rep(0, length(words))
   names(wordtable) <- words
