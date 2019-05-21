@@ -36,18 +36,19 @@
 #'
 #' @export clusterTopics
 clusterTopics <- function(ldaresult, file, tnames = NULL,
-  method = "average", width = 30, height = 15, ...){
+                          method = "average", width = 30, height = 15, ...){
   if(is.matrix(ldaresult)) ldaresult <- list(topics = ldaresult)
   if(is.null(tnames)) tnames <- 1:nrow(ldaresult$topics)
   stopifnot(is.list(ldaresult), is.matrix(ldaresult$topics))
   topics <- ldaresult$topics/rowSums(ldaresult$topics)
+  if(!is.null(tnames)) rownames(topics) <- tnames
   topics <- sqrt(topics)
   Dist <- 1/sqrt(2) * dist(topics)
   attr(Dist, "method") <- "hellinger"
   clust <- hclust(d=Dist, method)
   if(!missing(file)){
     pdf(file, width, height)
-    plot(clust, label=tnames, ...)
+    plot(clust, ...)
     dev.off()
   }
   else plot(clust, label=tnames, ...)
