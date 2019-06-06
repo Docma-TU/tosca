@@ -30,7 +30,7 @@ filterCount <- function(...) UseMethod("filterCount")
 
 #' @rdname filterCount
 #' @export
-filterCount.default <- function(text, count = 1L, out = c("text", "bin", "count")){
+filterCount.default <- function(text, count = 1L, out = c("text", "bin", "count"), ...){
   
   stopifnot(is.textmeta(textmeta(text = text)), as.integer(count) == count,
     all(out %in% c("text", "bin", "count")))
@@ -51,8 +51,7 @@ filterCount.textmeta <- function(object, count = 1L, out = c("text", "bin", "cou
   
   stopifnot(is.textmeta(object), is.logical(filtermeta), length(filtermeta) == 1)
   
-  text = object$text
-  res = NextMethod("filterCount", object = text)
+  res = NextMethod("filterCount", text = object$text, count = count, out = out)
   
   if(out[1] == "text"){
     object$text = res

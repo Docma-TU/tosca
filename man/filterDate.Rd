@@ -12,7 +12,7 @@ filterDate(...)
 
 \method{filterDate}{textmeta}(object, s.date = min(object$meta$date,
   na.rm = TRUE), e.date = max(object$meta$date, na.rm = TRUE),
-  filtermeta = TRUE)
+  filtermeta = TRUE, ...)
 }
 \arguments{
 \item{...}{Arguments.}

@@ -9,9 +9,9 @@
 filterWord(...)
 
 \method{filterWord}{default}(text, search, ignore.case = FALSE,
-  out = c("text", "bin", "count"))
+  out = c("text", "bin", "count"), ...)
 
-\method{filterWord}{textmeta}(object, text, search, ignore.case = FALSE,
+\method{filterWord}{textmeta}(object, search, ignore.case = FALSE,
   out = c("text", "bin", "count"), filtermeta = TRUE)
 }
 \arguments{

@@ -38,8 +38,7 @@ filterDate <- function(...) UseMethod("filterDate")
 #' @export
 filterDate.default <- function(text, meta, ...){
   
-  object <- textmeta(meta = meta, text = text)
-  object <- NextMethod("filterDate", object = object)
+  object <- NextMethod("filterDate", object = textmeta(meta = meta, text = text))
   invisible(object$text)
 }
 
@@ -48,7 +47,7 @@ filterDate.default <- function(text, meta, ...){
 filterDate.textmeta <- function(object,
   s.date = min(object$meta$date, na.rm = TRUE),
   e.date = max(object$meta$date, na.rm = TRUE),
-  filtermeta = TRUE){
+  filtermeta = TRUE, ...){
 
   stopifnot(is.textmeta(object), length(s.date) == 1, length(e.date) == 1,
     is.logical(filtermeta), length(filtermeta) == 1)

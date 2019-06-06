@@ -48,7 +48,7 @@ filterWord <- function(...) UseMethod("filterWord")
 #' @rdname filterWord
 #' @export
 filterWord.default <- function(text, search, ignore.case = FALSE,
-  out = c("text", "bin", "count")){
+  out = c("text", "bin", "count"), ...){
   
   stopifnot(is.textmeta(textmeta(text = text)),
     is.logical(ignore.case), length(ignore.case) == 1, is.character(out),
@@ -108,13 +108,13 @@ filterWord.default <- function(text, search, ignore.case = FALSE,
 
 #' @rdname filterWord
 #' @export
-filterWord.textmeta <- function(object, text, search, ignore.case = FALSE,
+filterWord.textmeta <- function(object, search, ignore.case = FALSE,
   out = c("text", "bin", "count"), filtermeta = TRUE){
   
   stopifnot(is.textmeta(object), is.logical(filtermeta), length(filtermeta) == 1)
   
   text = object$text
-  res = NextMethod("filterWord", object = text)
+  res = NextMethod("filterWord", text = text, search = search, ignore.case = ignore.case, out = out)
   
   if(out[1] == "text"){
     object$text = res
