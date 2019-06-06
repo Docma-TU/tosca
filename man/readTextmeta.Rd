@@ -12,7 +12,7 @@ readTextmeta(path, file, cols, dateFormat = "\%Y-\%m-\%d",
 \arguments{
 \item{path}{\code{character} string with path where the data files are}
 
-\item{file}{\code{character} string with names of the CVS files}
+\item{file}{\code{character} string with names of the CSV files}
 
 \item{cols}{\code{character} vector with columns which should be kept}
 
@@ -29,7 +29,7 @@ for \code{\link{as.Date}}}
 
 \item{encoding}{character string with encoding specification of the files}
 
-\item{xmlAction}{\code{logical} whether all columns of the csv should be
+\item{xmlAction}{\code{logical} whether all columns of the CSV should be
 handled with \code{\link{removeXML}}}
 
 \item{duplicateAction}{\code{logical}
