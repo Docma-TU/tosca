@@ -13,6 +13,8 @@ filterID(...)
 \method{filterID}{textmeta}(object, id, filtermeta = TRUE)
 }
 \arguments{
+\item{...}{Arguments.}
+
 \item{text}{Not necassary if \code{object} is specified, else should be
 \code{object$text}: list of article texts}
 

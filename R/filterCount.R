@@ -1,7 +1,8 @@
 #' Subcorpus With Count Filter
 #'
 #' Generates a subcorpus by restricting it to texts containing a specific number of words.
-#'
+
+#' @param ... Arguments.
 #' @param object A \code{\link{textmeta}} object
 #' @param text Not necassary if \code{object} is specified, else should be
 #' \code{object$text}: list of article texts
@@ -50,7 +51,8 @@ filterCount.textmeta <- function(object, count = 1L, out = c("text", "bin", "cou
   
   stopifnot(is.textmeta(object), is.logical(filtermeta), length(filtermeta) == 1)
   
-  res = filterCount.default(text = object$text, count = count, out = out)
+  text = object$text
+  res = NextMethod("filterCount", object = text)
   
   if(out[1] == "text"){
     object$text = res

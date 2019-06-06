@@ -2,6 +2,7 @@
 #'
 #' Generates a subcorpus by restricting it to specific ids.
 #'
+#' @param ... Arguments.
 #' @param object A \code{\link{textmeta}} object
 #' @param text Not necassary if \code{object} is specified, else should be
 #' \code{object$text}: list of article texts

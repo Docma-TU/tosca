@@ -2,6 +2,7 @@
 #'
 #' Generates a subcorpus by restricting it to texts containing specific filter words.
 #'
+#' @param ... Arguments.
 #' @param object A \code{\link{textmeta}} object
 #' @param text Not necessary if \code{object} is specified, else should be
 #' \code{object$text}: list of article texts.
@@ -112,7 +113,8 @@ filterWord.textmeta <- function(object, text, search, ignore.case = FALSE,
   
   stopifnot(is.textmeta(object), is.logical(filtermeta), length(filtermeta) == 1)
   
-  res = filterWord.default(text = object$text, search = search, ignore.case = ignore.case, out = out)
+  text = object$text
+  res = NextMethod("filterWord", object = text)
   
   if(out[1] == "text"){
     object$text = res

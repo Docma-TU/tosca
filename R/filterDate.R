@@ -2,6 +2,7 @@
 #'
 #' Generates a subcorpus by restricting it to a specific time window.
 #'
+#' @param ... Arguments.
 #' @param object \code{\link{textmeta}} object
 #' @param text Not necessary if \code{object} is specified, else should be
 #' \code{object$text}
@@ -38,7 +39,7 @@ filterDate <- function(...) UseMethod("filterDate")
 filterDate.default <- function(text, meta, ...){
   
   object <- textmeta(meta = meta, text = text)
-  object <- filterDate.textmeta(object = object, ...)
+  object <- NextMethod("filterDate", object = object)
   invisible(object$text)
 }
 
