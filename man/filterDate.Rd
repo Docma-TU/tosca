@@ -8,11 +8,11 @@
 \usage{
 filterDate(...)
 
-\method{filterDate}{default}(text, meta, s.date = min(meta$date, na.rm =
-  TRUE), e.date = max(meta$date, na.rm = TRUE))
+\method{filterDate}{default}(text, meta, ...)
 
-\method{filterDate}{textmeta}(object, s.date = min(meta$date, na.rm =
-  TRUE), e.date = max(meta$date, na.rm = TRUE), filtermeta = TRUE)
+\method{filterDate}{textmeta}(object, s.date = min(object$meta$date,
+  na.rm = TRUE), e.date = max(object$meta$date, na.rm = TRUE),
+  filtermeta = TRUE)
 }
 \arguments{
 \item{text}{Not necessary if \code{object} is specified, else should be
@@ -21,11 +21,11 @@ filterDate(...)
 \item{meta}{Not necessary if \code{object} is specified, else should be
 \code{object$meta}}
 
+\item{object}{\code{\link{textmeta}} object}
+
 \item{s.date}{Start date of subcorpus as date object}
 
 \item{e.date}{End date of subcorpus as date object}
-
-\item{object}{\code{\link{textmeta}} object}
 
 \item{filtermeta}{Logical: Should the meta component be filtered, too?}
 }
