@@ -114,7 +114,7 @@ filterWord.textmeta <- function(object, search, ignore.case = FALSE,
   stopifnot(is.textmeta(object), is.logical(filtermeta), length(filtermeta) == 1)
   
   text = object$text
-  res = NextMethod("filterWord", text = text, search = search, ignore.case = ignore.case, out = out)
+  res = NextMethod("filterWord", object = text, text = text, search = search, ignore.case = ignore.case, out = out)
   
   if(out[1] == "text"){
     object$text = res

@@ -51,7 +51,7 @@ filterCount.textmeta <- function(object, count = 1L, out = c("text", "bin", "cou
   
   stopifnot(is.textmeta(object), is.logical(filtermeta), length(filtermeta) == 1)
   
-  res = NextMethod("filterCount", text = object$text, count = count, out = out)
+  res = NextMethod("filterCount", object = object$text, text = object$text, count = count, out = out)
   
   if(out[1] == "text"){
     object$text = res
