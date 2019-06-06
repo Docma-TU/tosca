@@ -2,13 +2,19 @@
 % Please edit documentation in R/filterCount.R
 \name{filterCount}
 \alias{filterCount}
+\alias{filterCount.default}
+\alias{filterCount.textmeta}
 \title{Subcorpus With Count Filter}
 \usage{
-filterCount(object, text, count = 1L, out = c("text", "bin", "count"))
+filterCount(...)
+
+\method{filterCount}{default}(text, count = 1L, out = c("text", "bin",
+  "count"))
+
+\method{filterCount}{textmeta}(object, count = 1L, out = c("text",
+  "bin", "count"), filtermeta = TRUE)
 }
 \arguments{
-\item{object}{A \code{\link{textmeta}} object}
-
 \item{text}{Not necassary if \code{object} is specified, else should be
 \code{object$text}: list of article texts}
 
@@ -17,14 +23,19 @@ filterCount(object, text, count = 1L, out = c("text", "bin", "count"))
 \item{out}{Type of output: \code{text} filtered corpus,
 \code{bin} logical vector for all texts,
 \code{count} the counts.}
+
+\item{object}{A \code{\link{textmeta}} object}
+
+\item{filtermeta}{Logical: Should the meta component be filtered, too?}
 }
 \value{
 \code{\link{textmeta}} object if \code{object} is specified,
 else only the filtered \code{text}. If a \code{\link{textmeta}} object is
-returned its meta data are filtered to those texts which appear in the corpus.
+returned its meta data are filtered to those texts which appear in the corpus
+by default (\code{filtermeta}).
 }
 \description{
-Generates a subcorpus by restricting it to texts containing a specific number of words
+Generates a subcorpus by restricting it to texts containing a specific number of words.
 }
 \examples{
 texts <- list(A="Give a Man a Fish, and You Feed Him for a Day.
@@ -34,8 +45,6 @@ C="A very able manipulative mathematician, Fisher enjoys a real mastery
 in evaluating complicated multiple integrals.")
 
 filterCount(text=texts, count=10L)
-
 filterCount(text=texts, count=10L, out="bin")
-
 filterCount(text=texts, count=10L, out="count")
 }

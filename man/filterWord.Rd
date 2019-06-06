@@ -2,14 +2,19 @@
 % Please edit documentation in R/filterWord.R
 \name{filterWord}
 \alias{filterWord}
+\alias{filterWord.default}
+\alias{filterWord.textmeta}
 \title{Subcorpus With Word Filter}
 \usage{
-filterWord(object, text, search, ignore.case = FALSE, out = c("text",
-  "bin", "count"))
+filterWord(...)
+
+\method{filterWord}{default}(text, search, ignore.case = FALSE,
+  out = c("text", "bin", "count"))
+
+\method{filterWord}{textmeta}(object, text, search, ignore.case = FALSE,
+  out = c("text", "bin", "count"), filtermeta = TRUE)
 }
 \arguments{
-\item{object}{A \code{\link{textmeta}} object}
-
 \item{text}{Not necessary if \code{object} is specified, else should be
 \code{object$text}: list of article texts.}
 
@@ -20,14 +25,19 @@ If \code{search} is only a character Vector the link is 'or', and a character se
 \item{ignore.case}{Logical: Lower and upper case will be ignored.}
 
 \item{out}{Type of output: \code{text} filtered corpus, \code{bin} logical vector for all texts, \code{count} the number of matches.}
+
+\item{object}{A \code{\link{textmeta}} object}
+
+\item{filtermeta}{Logical: Should the meta component be filtered, too?}
 }
 \value{
 \code{\link{textmeta}} object if \code{object} is specified,
 else only the filtered \code{text}. If a \code{\link{textmeta}} object is
-returned its meta data are filtered to those texts which appear in the corpus.
+returned its meta data are filtered to those texts which appear in the corpus
+by default (\code{filtermeta}).
 }
 \description{
-Generates a subcorpus by restricting it to texts containing specific filter words
+Generates a subcorpus by restricting it to texts containing specific filter words.
 }
 \examples{
 texts <- list(A="Give a Man a Fish, and You Feed Him for a Day.
@@ -54,6 +64,5 @@ ignore.case=TRUE)
 # search for "Thanks" OR "integrals"
 filterWord(text=texts, search=list(data.frame(pattern="Thanks", word="word", count=1),
 data.frame(pattern="integrals", word="word", count=1)))
-
 
 }
