@@ -36,10 +36,21 @@ filterDate <- function(...) UseMethod("filterDate")
 
 #' @rdname filterDate
 #' @export
-filterDate.default <- function(text, meta, ...){
+filterDate.default <- function(text, meta,
+  s.date = min(meta$date, na.rm = TRUE),
+  e.date = max(meta$date, na.rm = TRUE), ...){
   
-  object <- NextMethod("filterDate", object = textmeta(meta = meta, text = text))
-  invisible(object$text)
+  stopifnot(is.textmeta(textmeta(meta = meta, text = text)),
+    length(s.date) == 1, length(e.date) == 1)
+  
+  meta <- meta[match(names(text), meta$id),]
+  ind <- meta$date >= s.date & meta$date <= e.date
+  ind[is.na(ind)] <- FALSE
+  meta <- meta[ind, ]
+  
+  text <- text[match(meta$id, names(text))]
+  
+  invisible(text)
 }
 
 #' @rdname filterDate
@@ -49,17 +60,14 @@ filterDate.textmeta <- function(object,
   e.date = max(object$meta$date, na.rm = TRUE),
   filtermeta = TRUE, ...){
 
-  stopifnot(is.textmeta(object), length(s.date) == 1, length(e.date) == 1,
-    is.logical(filtermeta), length(filtermeta) == 1)
+  stopifnot(is.textmeta(object), is.logical(filtermeta), length(filtermeta) == 1)
   
-  meta <- object$meta[match(names(object$text), object$meta$id),]
-  ind <- meta$date >= s.date & meta$date <= e.date
-  ind[is.na(ind)] <- FALSE
-  meta <- meta[ind, ]
+  text <- NextMethod("filterDate", object = object$text, text = object$text,
+    meta = object$meta, s.date = s.date, e.date = e.date)
   
-  object$text <- object$text[match(meta$id, names(object$text))]
+  object$text <- text
   if(filtermeta){
-    object$meta <- meta
+    object$meta <- object$meta[object$meta$id %in% names(object$text),]
   }
   return(object)
 }
