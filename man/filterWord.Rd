@@ -12,7 +12,7 @@ filterWord(...)
   out = c("text", "bin", "count"), ...)
 
 \method{filterWord}{textmeta}(object, search, ignore.case = FALSE,
-  out = c("text", "bin", "count"), filtermeta = TRUE)
+  out = c("text", "bin", "count"), filtermeta = TRUE, ...)
 }
 \arguments{
 \item{...}{Arguments.}

@@ -47,7 +47,7 @@ filterCount.default <- function(text, count = 1L, out = c("text", "bin", "count"
 
 #' @rdname filterCount
 #' @export
-filterCount.textmeta <- function(object, count = 1L, out = c("text", "bin", "count"), filtermeta = TRUE){
+filterCount.textmeta <- function(object, count = 1L, out = c("text", "bin", "count"), filtermeta = TRUE, ...){
   
   stopifnot(is.textmeta(object), is.logical(filtermeta), length(filtermeta) == 1)
   

@@ -12,7 +12,7 @@ filterCount(...)
   "count"), ...)
 
 \method{filterCount}{textmeta}(object, count = 1L, out = c("text",
-  "bin", "count"), filtermeta = TRUE)
+  "bin", "count"), filtermeta = TRUE, ...)
 }
 \arguments{
 \item{...}{Arguments.}

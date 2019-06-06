@@ -109,7 +109,7 @@ filterWord.default <- function(text, search, ignore.case = FALSE,
 #' @rdname filterWord
 #' @export
 filterWord.textmeta <- function(object, search, ignore.case = FALSE,
-  out = c("text", "bin", "count"), filtermeta = TRUE){
+  out = c("text", "bin", "count"), filtermeta = TRUE, ...){
   
   stopifnot(is.textmeta(object), is.logical(filtermeta), length(filtermeta) == 1)
   

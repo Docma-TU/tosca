@@ -8,9 +8,9 @@
 \usage{
 filterID(...)
 
-\method{filterID}{default}(text, id)
+\method{filterID}{default}(text, id, ...)
 
-\method{filterID}{textmeta}(object, id, filtermeta = TRUE)
+\method{filterID}{textmeta}(object, id, filtermeta = TRUE, ...)
 }
 \arguments{
 \item{...}{Arguments.}

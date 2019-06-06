@@ -33,7 +33,7 @@ filterID <- function(...) UseMethod("filterID")
 
 #' @rdname filterID
 #' @export
-filterID.default <- function(text, id){
+filterID.default <- function(text, id, ...){
   stopifnot(is.textmeta(textmeta(text = text)), is.character(id))
   text <- text[names(text) %in% id]
   invisible(text)
@@ -41,7 +41,7 @@ filterID.default <- function(text, id){
 
 #' @rdname filterID
 #' @export
-filterID.textmeta <- function(object, id, filtermeta = TRUE){
+filterID.textmeta <- function(object, id, filtermeta = TRUE, ...){
   stopifnot(is.textmeta(object), is.character(id), is.logical(filtermeta),
     length(filtermeta) == 1)
   object$text <- object$text[names(object$text) %in% id]
