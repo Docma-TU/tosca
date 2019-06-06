@@ -8,9 +8,7 @@
 #' @param m Integer: Number of new samples.
 #' @param randomize Logical: If \code{TRUE} calculated split is used as parameter to draw from a multnomial distribution.
 #' @param exact Logical: If \code{TRUE} exact calculation is used. For the default \code{FALSE} an approximation is used.
-#' @return \code{\link{textmeta}} object if \code{object} is specified,
-#' else only the filtered \code{text}. If a \code{\link{textmeta}} object is
-#' returned its meta data are filtered to those texts which appear in the corpus.
+#' @return Character vector of IDs, which should be labeled next.
 #' @examples
 #' id <- paste0("ID", 1:1000)
 #' corporaID <- list(sample(id, 300), sample(id, 100), sample(id, 700))
@@ -21,8 +19,6 @@
 #' sampling(id, corporaID, label, m, exact=TRUE)
 #' sampling(id, corporaID, label, m, randomize=TRUE)
 #' @export sampling
-
-
 
 sampling <- function(id, corporaID, label, m, randomize = FALSE, exact = FALSE){
   intersections <- sapply(corporaID, function(x) id %in% x)
@@ -77,7 +73,6 @@ ci <- function(w,p,subset){
     (sum((w*p)[ subset]) / sum(w*p)^2)^2 * w^2*p*(1-p) * !subset
 }
 
-
 quicksample <- function(w,p,subset,n, m){ # smallest negative value iteratively to 0
   CI <- sqrt(ci(w,p,subset))
   mi <- CI * (sum(n) + m) / sum(CI) -n
@@ -120,30 +115,3 @@ calculate.variances <- function(x, w, p, n, subset){
   #  cbind(x,zul)
   zul
 }
-
-vrecall <- function(w,p,subset,n){
-  (sum((w*p)[!subset]) / sum(w*p)^2)^2 * sum((w^2*p*(1-p)/n)[ subset]) +
-    (sum((w*p)[ subset]) / sum(w*p)^2)^2 * sum((w^2*p*(1-p)/n)[!subset])}
-
-
-
-
-# precision <- function(w,p,subset){
-#   w <- w[subset] / sum(w[subset])
-#   sum(w*p[subset])}
-# 
-# vprecision <- function(w,p,subset,n){
-#   sum((w^2*p*(1-p)/n)[subset])}
-# 
-# recall <- function(w,p,subset){
-#   sum((w*p)[subset]) / sum(w*p)}
-# #1 / (1 + (sum((w*p)[!subset]) / sum((w*p)[subset])))}
-# 
-# vrecall <- function(w,p,subset,n){
-#   (sum((w*p)[!subset]) / sum(w*p)^2)^2 * sum((w^2*p*(1-p)/n)[ subset]) +
-#     (sum((w*p)[ subset]) / sum(w*p)^2)^2 * sum((w^2*p*(1-p)/n)[!subset])}
-
-
-
-
-

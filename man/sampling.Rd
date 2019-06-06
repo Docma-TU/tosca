@@ -20,9 +20,7 @@ sampling(id, corporaID, label, m, randomize = FALSE, exact = FALSE)
 \item{exact}{Logical: If \code{TRUE} exact calculation is used. For the default \code{FALSE} an approximation is used.}
 }
 \value{
-\code{\link{textmeta}} object if \code{object} is specified,
-else only the filtered \code{text}. If a \code{\link{textmeta}} object is
-returned its meta data are filtered to those texts which appear in the corpus.
+Character vector of IDs, which should be labeled next.
 }
 \description{
 Sample texts from different subsets to minimize variance of the recall estimator
