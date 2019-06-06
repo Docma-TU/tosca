@@ -31,13 +31,6 @@ filterCount <- function(...) UseMethod("filterCount")
 #' @export
 filterCount.default <- function(text, count = 1L, out = c("text", "bin", "count")){
   
-  returnTextmeta <- FALSE
-  if (!missing(object)){
-    stopifnot(is.textmeta(object))
-    text <- object$text
-    returnTextmeta <- TRUE
-  }
-  
   stopifnot(is.textmeta(textmeta(text = text)), as.integer(count) == count,
     all(out %in% c("text", "bin", "count")))
   
@@ -46,9 +39,9 @@ filterCount.default <- function(text, count = 1L, out = c("text", "bin", "count"
   
   subid <- counts >= count
   subid[is.na(subid)] <- FALSE
-  if(out[1] == "text") invisible(text[subid])
   if(out[1] == "bin") return(subid)
   if(out[1] == "count") return(counts)
+  if(out[1] == "text") invisible(text[subid])
 }
 
 #' @rdname filterCount

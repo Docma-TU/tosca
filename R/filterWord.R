@@ -100,9 +100,9 @@ filterWord.default <- function(text, search, ignore.case = FALSE,
   
   subid <- subid > 0
   subid[is.na(subid)] <- FALSE
-  if(out[1] == "text") invisible(text[subid])
   if(out[1] == "bin") return(subid)
   if(out[1] == "count") return(counts_out)
+  if(out[1] == "text") invisible(text[subid])
 }
 
 #' @rdname filterWord
@@ -112,7 +112,7 @@ filterWord.textmeta <- function(object, text, search, ignore.case = FALSE,
   
   stopifnot(is.textmeta(object), is.logical(filtermeta), length(filtermeta) == 1)
   
-  res = filterCount.default(text = object$text, search = search, ignore.case = ignore.case, out = out)
+  res = filterWord.default(text = object$text, search = search, ignore.case = ignore.case, out = out)
   
   if(out[1] == "text"){
     object$text = res
