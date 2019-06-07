@@ -33,12 +33,19 @@ sampling <- function(id, corporaID, label, m, randomize = FALSE, exact = FALSE){
   w <- lengths(IDsplit)/length(id)
   nc <- ncorrect(n)
   pc <- pcorrect(p, nc)
+
+  IDunused <- lapply(IDsplit, function(x) x[!(x %in% names(label))])
+  Nunused <- lengths(IDunused)
+  if(sum(Nunused) < m){
+    warning(paste("Not enough texts. m too large. Reducing to", sum(Nunused)))
+    m <- sum(Nunused)
+  }
+  
   if(randomize){
     oldvar <- vrecall(w, p = pc, subset = subset, n = nc)
     ncandidates <- nc + diag(length(nc))
     tmp <- oldvar - apply(ncandidates, 2, function(x)vrecall(w, pc, subset, n=x)) # variance improvement for all candidates
     intsample <- table(sample(factor(1:length(tmp)), m, prob = tmp/sum(tmp), replace = TRUE))
-
   }else{
     if(exact){
       intsample <- bestsample(w, p=pc, subset, n=nc, m)
@@ -50,8 +57,17 @@ sampling <- function(id, corporaID, label, m, randomize = FALSE, exact = FALSE){
   }
   names(intsample) <- intlabel
 
-  IDunused <- lapply(IDsplit, function(x) x[!(x %in% names(label))])
-  Nunused <- lengths(IDunused)
+  if(any(Nunused < intsample)){
+    message("At least one intersection includes too few texts. Rearranging the segmentation")
+    empty <- logical(length(intsample))
+    while(any(Nunused < intsample)){
+      empty[Nunused < intsample] <- TRUE
+      intsample[empty] <- Nunused[empty]
+      intsample[!empty] <- intsample[!empty] + ((intsample[!empty] + 1)/ sum(intsample[!empty]+1)) * (m-sum(intsample))
+      intsample <- roundN(intsample)
+    }
+  }
+  
   sampleID <- mapply(function(x,y)sample(x,y), IDunused, intsample)
   unname(sample(unlist(sampleID)))
 }
