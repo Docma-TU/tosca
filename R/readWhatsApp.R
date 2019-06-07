@@ -33,7 +33,8 @@ readWhatsApp.file = function(file){
   
   text = NULL
   meta = NULL
-  filenames = substr(file, 1, nchar(file)-5)
+  filenames = gsub(x = gsub(x = file, pattern = "\\.html$", replacement = ""),
+    pattern = ".*[/\\]+", replacement = "")
   readTime = Sys.time()
   
   for (i in seq_along(file)) {
