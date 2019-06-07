@@ -21,6 +21,12 @@
 #' @export 
 
 precision <- function(w, p, subset){
+  stopifnot(
+    is.numeric(w), round(sum(w),5)==1, all(w>=0),
+    is.numeric(p), all(p>=0), all(p<=1),
+    is.logical(subset),
+    length(w) == length(p), length(p) == length(subset)
+  ) 
   w <- w[subset] / sum(w[subset])
   sum(w*p[subset])}
 
@@ -28,12 +34,25 @@ precision <- function(w, p, subset){
 #' @export
 
 vprecision <- function(w, p, subset, n){
+  stopifnot(
+    is.numeric(w), round(sum(w),5)==1, all(w>=0),
+    is.numeric(p), all(p>=0), all(p<=1),
+    is.logical(subset),
+    all(n == as.integer(n)), all(n>=0),
+    length(w) == length(p), length(p) == length(subset), length(subset) == length(n)
+  ) 
   sum((w^2*p*(1-p)/n)[subset])}
 
 #' @rdname precisionRecall
 #' @export
 
 recall <- function(w, p, subset){
+  stopifnot(
+    is.numeric(w), round(sum(w),5)==1, all(w>=0),
+    is.numeric(p), all(p>=0), all(p<=1),
+    is.logical(subset),
+    length(w) == length(p), length(p) == length(subset)
+  ) 
   sum((w*p)[subset]) / sum(w*p)}
 #1 / (1 + (sum((w*p)[!subset]) / sum((w*p)[subset])))}
 
@@ -41,6 +60,13 @@ recall <- function(w, p, subset){
 #' @export
 
 vrecall <- function(w, p, subset, n){
+  stopifnot(
+    is.numeric(w), round(sum(w),5)==1, all(w>=0),
+    is.numeric(p), all(p>=0), all(p<=1),
+    is.logical(subset),
+    all(n == as.integer(n)), all(n>=0),
+    length(w) == length(p), length(p) == length(subset), length(subset) == length(n)
+  ) 
   (sum((w*p)[!subset]) / sum(w*p)^2)^2 * sum((w^2*p*(1-p)/n)[ subset]) +
     (sum((w*p)[ subset]) / sum(w*p)^2)^2 * sum((w^2*p*(1-p)/n)[!subset])}
 

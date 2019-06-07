@@ -15,12 +15,15 @@
 #' label <- sample(as.logical(0:1), 150, replace=TRUE)
 #' names(label) <- c(sample(id, 100), sample(corporaID[[2]], 50))
 #' m <- 100
-#' sampling(id, corporaID, label, m, exact=FALSE)
-#' sampling(id, corporaID, label, m, exact=TRUE)
-#' sampling(id, corporaID, label, m, randomize=TRUE)
+#' sampling(id, corporaID, label, m)
 #' @export sampling
 
 sampling <- function(id, corporaID, label, m, randomize = FALSE, exact = FALSE){
+  stopifnot(is.character(id), is.list(corporaID), all(sapply(corporaID, is.character)), all(unique(unlist(corporaID)) %in% id),
+            all(names(label) %in% id), is.logical(label), is.integer(as.integer(m)), length(m)==1,
+            length(randomize)==1, is.logical(randomize), length(exact)==1, is.logical(exact)
+  )  
+  
   intersections <- sapply(corporaID, function(x) id %in% x)
   intlabelID <- apply(intersections, 1, function(x) paste0("I", paste(as.integer(x), collapse="")))
   names(intlabelID) <- id

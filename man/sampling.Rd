@@ -31,7 +31,5 @@ corporaID <- list(sample(id, 300), sample(id, 100), sample(id, 700))
 label <- sample(as.logical(0:1), 150, replace=TRUE)
 names(label) <- c(sample(id, 100), sample(corporaID[[2]], 50))
 m <- 100
-sampling(id, corporaID, label, m, exact=FALSE)
-sampling(id, corporaID, label, m, exact=TRUE)
-sampling(id, corporaID, label, m, randomize=TRUE)
+sampling(id, corporaID, label, m)
 }
