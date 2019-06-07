@@ -4,11 +4,12 @@
 \alias{readWhatsApp}
 \title{Read WhatsApp files}
 \usage{
-readWhatsApp(path = getwd(), file = list.files(path = path, pattern =
-  "*.html$", full.names = FALSE, recursive = TRUE))
+readWhatsApp(path, file)
 }
 \arguments{
-\item{path}{Character: string with path where the data files are.}
+\item{path}{Character: string with path where the data files are.
+If only \code{path} is given, \code{file} will be determined by searching
+for html files with \code{\link[base]{list.files}} and recursion.}
 
 \item{file}{Character: string with names of the HTML files.}
 }
