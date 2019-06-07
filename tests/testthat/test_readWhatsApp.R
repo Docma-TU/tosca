@@ -9,6 +9,7 @@ test_that("readWhatsApp", {
   expect_equal(
     readWhatsApp(path = file.path("data", "WhatsApp", "WhatsApp1.html")),
     readWhatsApp(file = file.path("data", "WhatsApp", "WhatsApp1.html")))
+  expect_equal(corp, readWhatsApp())
   
   expect_true(is.textmeta(corp))
   expect_true(is.textmeta(corp1))
