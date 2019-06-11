@@ -2,8 +2,9 @@
 #'
 #' Creates, Tests, Summarises and Plots Textmeta-Objects
 #'
-#' @param meta Data.frame (or matrix) of the meta-data
-#' @param text List (or character vector) of the text-data
+#' @param meta Data.frame (or matrix) of the meta-data, e.g. as received from \code{\link{as.meta}}
+#' @param text Named list (or character vector) of the text-data (names should correspond
+#' to IDs in meta)
 #' @param metamult List of the metamult-data
 #' @param dateFormat Charachter string with the date format in meta
 #' for \code{\link{as.Date}}
@@ -53,18 +54,19 @@ textmeta <- function(meta = NULL, text = NULL, metamult = NULL, dateFormat = "%Y
 #' @param x an R Object.
 #' @export
 is.textmeta <- function(x){
-  isMeta <- function(x){
-    return(
-      all(
-        is.data.frame(x), all(c("id", "date", "title") %in% colnames(x)),
-        is.character(x$id), lubridate::is.Date(x$date), is.character(x$title)))
-  }
   return(
     all(
       class(x) == "textmeta",
       is.null(x$meta) || isMeta(x$meta),
       is.null(x$text) || is.list(x$text) || is.character(x$text),
       is.null(x$metamult) || is.list(x$metamult)))
+}
+
+isMeta <- function(x){
+  return(
+    all(
+      is.data.frame(x), all(c("id", "date", "title") %in% colnames(x)),
+      is.character(x$id), lubridate::is.Date(x$date), is.character(x$title)))
 }
 
 #' @rdname textmeta

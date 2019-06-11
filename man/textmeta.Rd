@@ -21,9 +21,10 @@ is.textmeta(x)
 \method{plot}{textmeta}(x, ...)
 }
 \arguments{
-\item{meta}{Data.frame (or matrix) of the meta-data}
+\item{meta}{Data.frame (or matrix) of the meta-data, e.g. as received from \code{\link{as.meta}}}
 
-\item{text}{List (or character vector) of the text-data}
+\item{text}{Named list (or character vector) of the text-data (names should correspond
+to IDs in meta)}
 
 \item{metamult}{List of the metamult-data}
 
