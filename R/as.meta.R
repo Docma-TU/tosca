@@ -29,8 +29,7 @@ as.meta <- function(x, cols = colnames(x), idCol = "id", dateCol = "date", title
   
   if(!(idCol %in% colnames(x))){
     message(paste0("NOTE: No ID-column \"", idCol, "\" in ", name, ", set to ascending numbers"))
-    x[, idCol] <- paste0("ID-", 1:nrow(x) +
-        ifelse(is.null(meta), 0, nrow(meta)))
+    x[, idCol] <- paste0("ID-", 1:nrow(x))
   }
   if(!(dateCol %in% colnames(x))){
     message(paste0("NOTE: No date-column \"", dateCol, "\" in ", name, ", set to NA"))
