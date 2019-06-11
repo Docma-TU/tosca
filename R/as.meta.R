@@ -15,7 +15,7 @@
 #' meta <- data.frame(id = 1:3, additionalVariable = matrix(5, ncol = 4, nrow = 3))
 #' (as.meta(meta))
 #'
-#' @export textmeta
+#' @export as.meta
 as.meta <- function(x, cols = colnames(x), idCol = "id", dateCol = "date", titleCol = "title", dateFormat){
   
   name <- deparse(substitute(x))
