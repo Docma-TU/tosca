@@ -87,6 +87,8 @@ readTextmeta <- function(path, file, cols, dateFormat = "%Y-%m-%d", idCol = "id"
 
     # format date and rename id, date and title columns to standard
     lonefile[, dateCol] <- as.Date(lonefile[, dateCol], format = dateFormat)
+    lonefile[, idCol] <- as.character(lonefile[, idCol])
+    lonefile[, titleCol] <- as.character(lonefile[, titleCol])
     colnames(lonefile)[colnames(lonefile) == dateCol] <- "date"
     colnames(lonefile)[colnames(lonefile) == idCol] <- "id"
     colnames(lonefile)[colnames(lonefile) == titleCol] <- "title"
