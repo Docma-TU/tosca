@@ -1,9 +1,15 @@
 context("read WhatsApp Chats")
 
 test_that("readWhatsApp", {
-  corp = readWhatsApp(path = "data/WhatsApp")
-  corp1 = readWhatsApp(path = "data/WhatsApp", file = "WhatsApp1.html")
-  corp2 = readWhatsApp(path = "data/WhatsApp", file = "WhatsApp2.html")
+  corp = readWhatsApp(path = file.path("data", "WhatsApp"))
+  corp1 = readWhatsApp(path = file.path("data", "WhatsApp"), file = "WhatsApp1.html")
+  corp2 = readWhatsApp(path = file.path("data", "WhatsApp"), file = "WhatsApp2.html")
+  
+  expect_error(readWhatsApp(path = file.path("data", "WhatsApp"), file = "WhatsApp3.html"))
+  expect_equal(
+    readWhatsApp(path = file.path("data", "WhatsApp", "WhatsApp1.html")),
+    readWhatsApp(file = file.path("data", "WhatsApp", "WhatsApp1.html")))
+  expect_equal(corp, readWhatsApp())
   
   expect_true(is.textmeta(corp))
   expect_true(is.textmeta(corp1))

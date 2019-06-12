@@ -3,24 +3,43 @@
 #' Reads HTML-files from WhatsApp and separates the text and meta data.
 #'
 #' @param path Character: string with path where the data files are.
+#' If only \code{path} is given, \code{file} will be determined by searching
+#' for html files with \code{\link[base]{list.files}} and recursion.
 #' @param file Character: string with names of the HTML files.
 #' @return \code{\link{textmeta}} object.
 #' @author Jonas Rieger (<jonas.rieger@@tu-dortmund.de>)
 #' @keywords manip
 #'
 #' @export readWhatsApp
+readWhatsApp = function(path, file){
+  if(missing(file)){
+    if(missing(path)) path = getwd()
+    if(any(grepl(pattern = "\\.html$", x = path, ignore.case = TRUE))){
+      return(readWhatsApp.file(file = path))
+    }else{
+      return(readWhatsApp.file(file = list.files(path = path, pattern = "*.html$",
+        full.names = TRUE, recursive = TRUE, ignore.case = TRUE)))
+    }
+  }
+  if(missing(path)){
+    return(readWhatsApp.file(file = file))
+  }
+  return(readWhatsApp(file = file.path(path, file)))
+}
 
-readWhatsApp = function(path = getwd(), file = list.files(path = path,
-  pattern = "*.html$", full.names = FALSE, recursive = TRUE)){
+readWhatsApp.file = function(file){
+  
+  stopifnot(is.character(file), all(file.access(file, mode = 4) == 0))
   
   text = NULL
   meta = NULL
-  filenames = substr(file, 1, nchar(file)-5)
+  filenames = gsub(x = gsub(x = file, pattern = "\\.html$", replacement = ""),
+    pattern = ".*[/\\]+", replacement = "")
   readTime = Sys.time()
   
   for (i in seq_along(file)) {
     #message("read WhatsApp-Chat \"", filenames[i], "\" ...")
-    article = readLines(con = paste(path, file[i], sep="/"), encoding = "UTF-8")
+    article = readLines(con = file[i], encoding = "UTF-8")
     lines = grep(pattern = "<div class=\"vW7d1((.){7})?\">", x = article)
     
     articlespan = article[min(lines):length(article)]
