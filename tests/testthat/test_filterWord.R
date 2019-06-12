@@ -48,11 +48,20 @@ test_that("filterWord", {
   expect_equal(filterWord(text=list("a","A"), search="A", out="text", ignore.case=TRUE), list("a", "a"))
   expect_equal(filterWord(text=c("a","A"), search="a", out="text", ignore.case=TRUE), list("a", "a"))
 
+  test <- matrix(c(1,1), nrow=2)
+  colnames(test) <- c("a_case")
+  test2 <- matrix(c(1,0), nrow=2)
+  colnames(test2) <- c("a")
+  expect_equal(filterWord(text=c("a","A"), search="a", out="count", ignore.case=TRUE), test)
+  expect_equal(filterWord(text=c("a","A"), search="a", out="count", ignore.case=FALSE), test2)
+
   ## counts
   counts <- list(c(2,1), 3)
   text2 <- list("abc", c("a","a","b"), c("c","c","c"))
   res <- filterWord(text = text2, search=list(data.frame(pattern=c("a","b"), count=c(2,1), word=c(FALSE, FALSE)), data.frame(pattern="c", count=3, word=FALSE)), out="bin")
   expect_equal(res, c(FALSE, TRUE, TRUE))
+  res2 <- filterWord(textmeta(text = text2), search=list(data.frame(pattern=c("a","b"), count=c(2,1), word=c(FALSE, FALSE)), data.frame(pattern="c", count=3, word=FALSE)), out="bin")
+  expect_equal(res, res2)
 
   ## words
   text <- list("abaabcaa", "ababc", c("aba", "aabc"), c("aa", "aab", "bc"))

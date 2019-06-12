@@ -2,14 +2,21 @@
 % Please edit documentation in R/filterDate.R
 \name{filterDate}
 \alias{filterDate}
+\alias{filterDate.default}
+\alias{filterDate.textmeta}
 \title{Subcorpus With Date Filter}
 \usage{
-filterDate(object, text = object$text, meta = object$meta,
-  s.date = min(meta$date, na.rm = TRUE), e.date = max(meta$date, na.rm
-  = TRUE))
+filterDate(...)
+
+\method{filterDate}{default}(text, meta, s.date = min(meta$date, na.rm =
+  TRUE), e.date = max(meta$date, na.rm = TRUE), ...)
+
+\method{filterDate}{textmeta}(object, s.date = min(object$meta$date,
+  na.rm = TRUE), e.date = max(object$meta$date, na.rm = TRUE),
+  filtermeta = TRUE, ...)
 }
 \arguments{
-\item{object}{\code{\link{textmeta}} object}
+\item{...}{Not used.}
 
 \item{text}{Not necessary if \code{object} is specified, else should be
 \code{object$text}}
@@ -20,14 +27,19 @@ filterDate(object, text = object$text, meta = object$meta,
 \item{s.date}{Start date of subcorpus as date object}
 
 \item{e.date}{End date of subcorpus as date object}
+
+\item{object}{\code{\link{textmeta}} object}
+
+\item{filtermeta}{Logical: Should the meta component be filtered, too?}
 }
 \value{
 \code{\link{textmeta}} object if \code{object} is specified,
 else only the filtered \code{text}. If a \code{\link{textmeta}} object is
-returned its meta data are filtered to those texts which appear in the corpus.
+returned its meta data are filtered to those texts which appear in the corpus
+by default (\code{filtermeta}).
 }
 \description{
-Generates a subcorpus by restricting it to a specific time window
+Generates a subcorpus by restricting it to a specific time window.
 }
 \examples{
 texts <- list(A="Give a Man a Fish, and You Feed Him for a Day.
