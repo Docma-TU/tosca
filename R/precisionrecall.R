@@ -69,8 +69,3 @@ vrecall <- function(w, p, subset, n){
   ) 
   (sum((w*p)[!subset]) / sum(w*p)^2)^2 * sum((w^2*p*(1-p)/n)[ subset]) +
     (sum((w*p)[ subset]) / sum(w*p)^2)^2 * sum((w^2*p*(1-p)/n)[!subset])}
-
-
-
-
-
