@@ -2,7 +2,7 @@
 #'
 #' Generates a subcorpus by restricting it to a specific time window.
 #'
-#' @param ... Arguments.
+#' @param ... Not used.
 #' @param object \code{\link{textmeta}} object
 #' @param text Not necessary if \code{object} is specified, else should be
 #' \code{object$text}

@@ -2,7 +2,7 @@
 #'
 #' Generates a subcorpus by restricting it to texts containing specific filter words.
 #'
-#' @param ... Arguments.
+#' @param ... Not used.
 #' @param object A \code{\link{textmeta}} object
 #' @param text Not necessary if \code{object} is specified, else should be
 #' \code{object$text}: list of article texts.
