@@ -47,5 +47,9 @@ as.meta <- function(x, cols = colnames(x), idCol = "id", dateCol = "date", title
   colnames(x)[colnames(x) == idCol] <- "id"
   colnames(x)[colnames(x) == titleCol] <- "title"
   
+  # firstThreeCols = c("id", "date", "title")
+  # x = x[,match(c(firstThreeCols, setdiff(colnames(x), firstThreeCols)), colnames(x))]
+  x <- cbind(x[,c("id", "date", "title")], x[,!(colnames(x) %in% c("id", "date", "title"))])
+
   invisible(x)
 }

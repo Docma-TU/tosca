@@ -10,4 +10,6 @@ test_that("as.textmeta.corpus", {
   meta <- meta[, -1]
   expect_true(isMeta(as.meta(meta, dateFormat = "%Y-%m-%d")))
   
+  expect_equal(colnames(as.meta(meta))[1:3], c("id", "date", "title"))
+  
 })
