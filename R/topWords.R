@@ -6,7 +6,7 @@
 #' is used, which also can be called independently.
 #'
 #' @param topics [\code{named matrix}]\cr
-#' The counts of vocabularies (row wise) in topics (column wise).
+#' The counts of vocabularies (column wise) in topics (row wise).
 #' @param numWords [\code{integer(1)}]\cr
 #' The number of requested top words per topic.
 #' @param byScore [\code{logical(1)}]\cr

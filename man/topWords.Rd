@@ -12,7 +12,7 @@ importance(topics, epsilon = 1e-05)
 }
 \arguments{
 \item{topics}{[\code{named matrix}]\cr
-The counts of vocabularies (row wise) in topics (column wise).}
+The counts of vocabularies (column wise) in topics (row wise).}
 
 \item{numWords}{[\code{integer(1)}]\cr
 The number of requested top words per topic.}
