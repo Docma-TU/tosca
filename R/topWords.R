@@ -44,6 +44,11 @@
 
 #' @export topWords
 topWords = function(topics, numWords = 1, byScore = TRUE, epsilon = 1e-5, values = FALSE){
+  
+  stopifnot(is.matrix(topics), all(topics >= 0), !is.null(colnames(topics)),
+    length(numWords) == 1, length(byScore) == 1, length(values) == 1,
+    as.integer(numWords) == numWords, is.logical(byScore), is.logical(values))
+  
   if (byScore){
     topics = importance(topics, epsilon = epsilon)
   }
@@ -59,6 +64,10 @@ topWords = function(topics, numWords = 1, byScore = TRUE, epsilon = 1e-5, values
 #' @rdname topWords
 #' @export
 importance = function(topics, epsilon = 1e-5){
+  
+  stopifnot(is.matrix(topics), all(topics >= 0), length(epsilon) == 1,
+    is.numeric(epsilon), epsilon > 0, epsilon < 2)
+  
   rel = topics/rowSums(topics)
   logs = log(rel + epsilon)
   rel * (logs - rep(colMeans(logs), each = nrow(topics)))
