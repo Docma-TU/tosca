@@ -65,6 +65,9 @@ duplist <- function(object, paragraph = FALSE){
     if (is.matrix(dupType)){
       dupType <- as.list(as.data.frame(dupType, stringsAsFactors = FALSE))
     }
+    if (!is.list(dupType)){
+      dupType <- as.list(dupType)
+    }
     names(dupType) <- dups_names
     return(dupType)
   }
