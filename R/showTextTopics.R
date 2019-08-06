@@ -1,14 +1,14 @@
 #' Export Topic-Matrices per Text
 #'
-#' The function extracts the matrix of assignments per topic and word in texts.
+#' The function extracts the matrix (matrices) of assignments per topic and word in texts.
 #'
 #' @param ldaresult LDA result.
 #' @param documents A list prepared by \code{\link{LDAprep}}.
-#' @param id Character vector including text ids
+#' @param id Character vector containing the considered text ids
 #' (default is \code{names(documents)}).
 #' @param vocab Character vector containing the words in the corpus
 #' (default is \code{colnames(ldaresult$topics)}).
-#' @param tnames Names of the topics
+#' @param tnames Character vector containing the names for the topics
 #' (default is \code{1:K},
 #' while \code{K} is the number of topics assumed in \code{ldaresult}).
 #' @param file Character File path for the export. If not specified the function

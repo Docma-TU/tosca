@@ -13,13 +13,13 @@ showTextTopics(ldaresult, documents, id = names(documents),
 
 \item{documents}{A list prepared by \code{\link{LDAprep}}.}
 
-\item{id}{Character vector including text ids
+\item{id}{Character vector containing the considered text ids
 (default is \code{names(documents)}).}
 
 \item{vocab}{Character vector containing the words in the corpus
 (default is \code{colnames(ldaresult$topics)}).}
 
-\item{tnames}{Names of the topics
+\item{tnames}{Character vector containing the names for the topics
 (default is \code{1:K},
 while \code{K} is the number of topics assumed in \code{ldaresult}).}
 
@@ -37,7 +37,7 @@ A list of topic-word-matrices of the requested texts.
 If file is set, for each text a csv is written.
 }
 \description{
-The function extracts the matrix of assignments per topic and word in texts.
+The function extracts the matrix (matrices) of assignments per topic and word in texts.
 }
 \examples{
 texts <- list(
