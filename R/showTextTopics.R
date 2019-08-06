@@ -41,8 +41,7 @@
 #' wordlist <- makeWordlist(corpus$text)
 #' ldaPrep <- LDAprep(text=corpus$text, vocab=wordlist$words)
 #'
-#' \donttest{LDA <- LDAgen(documents = ldaPrep, K = 3L,
-#' vocab = wordlist$words, num.words = 3)}
+#' \donttest{LDA <- LDAgen(documents = ldaPrep, K = 3L, vocab = wordlist$words, num.words = 3)}
 #' \donttest{res <- showTextTopics(ldaresult = LDA, documents = ldaPrep)}
 #' @export showTextTopics
 
@@ -50,13 +49,25 @@ showTextTopics = function(ldaresult, documents, id = names(documents),
   vocab = colnames(ldaresult$topics), tnames,
   file, prefix = "", fileEncoding = "UTF-8"){
   
-  # ldaresult und docs gleiche struktur
-  # alle woerter werden aktuell beruecksichtigt
-  K = nrow(ldaresult$topics)
-  if (missing(tnames)) tnames = 1:K
-  # tnames.laenge == K
-  
   textind = match(id, names(documents))
+  if (any(is.na(textind))){
+    stop(paste0("ID(s) ", paste(id[is.na(textind)], collapse = ", "), " not found."))
+  }
+  
+  stopifnot(is.list(ldaresult), all(c("assignments", "topics") %in% names(ldaresult)),
+    is.list(documents), all(sapply(documents[textind], is.matrix)),
+    length(ldaresult$assignments) == length(documents),
+    all(lengths(ldaresult$assignments) == sapply(documents, ncol)),
+    is.character(id), all(id %in% names(documents)),
+    is.character(vocab), all(vocab %in% colnames(ldaresult$topics)))
+
+  K = nrow(ldaresult$topics)
+  if (missing(tnames)) tnames = as.character(1:K)
+  
+  stopifnot(is.character(tnames), length(tnames) == K, is.character(prefix),
+    length(prefix) == 1, is.character(fileEncoding), length(fileEncoding) == 1,
+    missing(file) || (is.character(file) && length(file) == 1))
+  
   res = list()
   k = 1
   for (i in textind){
@@ -65,6 +76,12 @@ showTextTopics = function(ldaresult, documents, id = names(documents),
       documents[[i]][1,])
     colnames(tab) = vocab[as.integer(colnames(tab))+1]
     rownames(tab) = tnames
+    tab = tab[, colnames(tab) %in% vocab, drop = FALSE]
+    if (ncol(tab) == 0){
+      tab = as.matrix(rep(0, K))
+      colnames(tab) = "none of the words from vocab found in text"
+      rownames(tab) = tnames
+    }
     tab = rbind(colSums(tab), tab)
     tab = cbind(rowSums(tab), tab)
     colnames(tab)[1] = "WORD"
