@@ -24,7 +24,7 @@
 #' words10 <- words10$words[words10$wordtable > 10]
 #' poliLDA <- LDAprep(text=poliClean$text, vocab=words10)
 #' LDAresult <- LDAgen(documents=poliLDA, K=10, vocab=words10)
-#' topicsInText(text=politics$text, ldaID=names(poliLDA), id="ID2756",
+#' topicsInText(text=poliLDA, originaltext=politics$text, ldaID=names(poliLDA), id="ID2756",
 #'              ldaresult=LDAresult, vocab=words10)}
 #' @export topicsInText
 
