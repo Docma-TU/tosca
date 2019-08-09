@@ -80,7 +80,7 @@ showTopicsInText = function(obj, ldaresult, documents, id = names(documents),
   words = lapply(documents, function(x) colnames(ldaresult$topics)[x[1,]+1])
   res = list()
   for (i in seq_along(documents)){
-      o2 <- unlist(strsplit(obj$text[[i]], split="\\s"))
+      o2 <- unlist(strsplit(originaltext[[i]], split="\\s"))
       o2 <- o2[!(o2=="")]
       o2 <- data.frame(
         TEXT = o2,
