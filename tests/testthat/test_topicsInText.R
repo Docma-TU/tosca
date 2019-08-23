@@ -13,21 +13,21 @@ colnames(ldaresult$topics) <- vocab
 meta <- data.frame(id=c("ID1", "ID2", "ID3", "ID4"), date=as.Date(c("2016-01-01","2000-03-24","2017-04-23","1999-12-24")), title=c("title 1", "title 2", "title 3", "title 4"), page=2:5, category=c("A","B","A","B"))
 originaltext <- list(ID1=c("Das Pferd frisst keinen Gurkensalat."), ID2=c("Das Pferd frisst keinen Gurkensalat! Das Pferd frisst 200 Aepfel in Dortmund."))
 
-T1 <- topicsInText(documents=text, id="ID1", ldaresult=ldaresult, wordOrder=c("both", "alphabetical", "topics", ""), fixColors=FALSE, meta=NULL, unclearTopicAssignment=TRUE, htmlreturn=TRUE)
+T1 <- topicsInText(documents=text, id="ID1", ldaresult=ldaresult, wordOrder=c("both", "alphabetical", "topics", ""), fixColors=FALSE, unclearTopicAssignment=TRUE, htmlreturn=TRUE)
 
-T2 <- topicsInText(documents=text, id="ID2", ldaresult=ldaresult, wordOrder=c("both", "alphabetical", "topics", ""), fixColors=FALSE, meta=NULL, originaltext=textmeta(text = originaltext), unclearTopicAssignment=TRUE, htmlreturn=TRUE)
+T2 <- topicsInText(documents=text, id="ID2", ldaresult=ldaresult, wordOrder=c("both", "alphabetical", "topics", ""), fixColors=FALSE, originaltext=textmeta(text = originaltext), unclearTopicAssignment=TRUE, htmlreturn=TRUE)
 
-T3 <- topicsInText(documents=text, id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder=c("both", "alphabetical", "topics", ""), fixColors=FALSE, meta=NULL, unclearTopicAssignment=TRUE, htmlreturn=TRUE)
+T3 <- topicsInText(documents=text, id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder=c("both", "alphabetical", "topics", ""), fixColors=FALSE, unclearTopicAssignment=TRUE, htmlreturn=TRUE)
 
-T4 <- topicsInText(documents=text, id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder="alphabetical", fixColors=FALSE, meta=NULL, unclearTopicAssignment=TRUE, htmlreturn=TRUE)
+T4 <- topicsInText(documents=text, id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder="alphabetical", fixColors=FALSE, unclearTopicAssignment=TRUE, htmlreturn=TRUE)
 
-T5 <- topicsInText(documents=text, id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder="topics", fixColors=FALSE, meta=NULL, unclearTopicAssignment=FALSE, htmlreturn=TRUE)
+T5 <- topicsInText(documents=text, id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder="topics", fixColors=FALSE, unclearTopicAssignment=FALSE, htmlreturn=TRUE)
 
-T6 <- topicsInText(documents=text, id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder="", colors="red", fixColors=FALSE, meta=meta, originaltext=textmeta(text = originaltext), unclearTopicAssignment=TRUE, htmlreturn=TRUE)
+T6 <- topicsInText(documents=text, id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder="", colors="red", fixColors=FALSE, originaltext=textmeta(text = originaltext), unclearTopicAssignment=TRUE, htmlreturn=TRUE)
 
-T7 <- topicsInText(documents=text, id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder="", colors=c("red", "blue", "green"), fixColors=FALSE, meta=meta, originaltext=textmeta(text = originaltext), unclearTopicAssignment=TRUE, htmlreturn=TRUE)
+T7 <- topicsInText(documents=text, id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder="", colors=c("red", "blue", "green"), fixColors=FALSE, originaltext=textmeta(text = originaltext), unclearTopicAssignment=TRUE, htmlreturn=TRUE)
 
-T8 <- topicsInText(documents=text, colors=c(2), id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder="", fixColors=TRUE, meta=meta, originaltext=textmeta(text = originaltext), unclearTopicAssignment=TRUE, htmlreturn=TRUE)
+T8 <- topicsInText(documents=text, colors=c(2), id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder="", fixColors=TRUE, originaltext=textmeta(text = originaltext), unclearTopicAssignment=TRUE, htmlreturn=TRUE)
 ## write.csv(c(T1, T2, T3, T4, T5, T6, T7, T8), file="data/topicsInText.csv", fileEncoding="UTF-8")
 
 Tall <- read.csv("data/topicsInText.csv", stringsAsFactor=FALSE, encoding="UTF-8")
