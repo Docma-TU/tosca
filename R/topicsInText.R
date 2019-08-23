@@ -114,9 +114,8 @@ topicsInText <- function(ldaresult, documents, id, obj,
     
     ## set generic tnames if tnames missing and reduce tnames to used ones
     if(missing(tnames)) tnames <- paste("Topic", 1:(max(as.numeric(names(topictable)))+1))
-    tnames <- tnames[as.numeric(names(topictable))+1]
-    
     stopifnot(is.character(tnames), length(tnames) == nrow(ldaresult$topics))
+    tnames <- tnames[as.numeric(names(topictable))+1]
     
     ## Additional (black colors, if length(colors) is too small)
     
