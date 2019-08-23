@@ -24,7 +24,7 @@ showTextTopics(ldaresult, documents, id = names(documents),
 
 \item{id}{Character vector containing the considered text ids
 (default for \code{show} functions is \code{names(documents)}).
-For \Code{topicsInText} it has to be character string of length 1 (default is
+For \code{topicsInText} it has to be character string of length 1 (default is
 a random id).}
 
 \item{obj}{\code{\link{textmeta}} object (optional for \code{topicsInText}).}
@@ -62,8 +62,6 @@ see \code{\link[utils]{write.csv}}.}
 
 \item{vocab}{Character vector containing the words in the corpus
 (default is \code{colnames(ldaresult$topics)}).}
-
-\item{meta}{Optional input for meta data. It will be printed in the header of the output.}
 }
 \value{
 \describe{

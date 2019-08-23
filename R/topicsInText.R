@@ -10,7 +10,7 @@
 #' @param documents The result of \code{\link{LDAprep}}
 #' @param id Character vector containing the considered text ids
 #' (default for \code{show} functions is \code{names(documents)}).
-#' For \Code{topicsInText} it has to be character string of length 1 (default is
+#' For \code{topicsInText} it has to be character string of length 1 (default is
 #' a random id).
 #' @param obj \code{\link{textmeta}} object (optional for \code{topicsInText}).
 #' @param tnames Character vector containing the names for the topics
@@ -25,7 +25,6 @@
 #' @param fixColors Logical: If \code{FALSE} the first color will be used for
 #' the biggest topic and so on. If \code{fixColors=TRUE} the the color-entry
 #' corresponding to the position of the topic is chosen.
-#' @param meta Optional input for meta data. It will be printed in the header of the output.
 #' @param unclearTopicAssignment Logical: If TRUE all words which are assigned
 #' to more than one topic will not be colored. Otherwise the words will be
 #' colored in order of topic apperance in the \code{ldaresult}.
