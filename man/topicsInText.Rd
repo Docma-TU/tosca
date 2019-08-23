@@ -2,54 +2,114 @@
 % Please edit documentation in R/topicsInText.R
 \name{topicsInText}
 \alias{topicsInText}
-\title{Coloring the words of a text corresponding to topic allocation}
+\alias{showTopicsInText}
+\alias{showTextTopics}
+\title{Topic Assignments per Text}
 \usage{
-topicsInText(text, ldaID, id, ldaresult, label = NULL, vocab,
-  wordOrder = c("both", "alphabetical", "topics", ""), colors = NULL,
-  fixColors = FALSE, meta = NULL, originaltext = NULL,
+topicsInText(ldaresult, documents, id, obj, tnames, wordOrder = c("both",
+  "alphabetical", "topics", ""), colors, fixColors = FALSE,
   unclearTopicAssignment = TRUE, htmlreturn = FALSE)
+
+showTopicsInText(obj, ldaresult, documents, id = names(documents),
+  tnames, file, prefix = "", fileEncoding = "UTF-8")
+
+showTextTopics(ldaresult, documents, id = names(documents),
+  vocab = colnames(ldaresult$topics), tnames, file, prefix = "",
+  fileEncoding = "UTF-8")
 }
 \arguments{
-\item{text}{The result of \code{\link{LDAprep}}}
+\item{ldaresult}{LDA result.}
 
-\item{ldaID}{List of IDs for \code{text}}
+\item{documents}{The result of \code{\link{LDAprep}}}
 
-\item{id}{ID of the article of interest}
+\item{id}{Character vector containing the considered text ids
+(default for \code{show} functions is \code{names(documents)}).
+For \Code{topicsInText} it has to be character string of length 1 (default is
+a random id).}
 
-\item{ldaresult}{A result object from the \code{standardLDA}}
+\item{obj}{\code{\link{textmeta}} object (optional for \code{topicsInText}).}
 
-\item{label}{Optional label for each topic}
+\item{tnames}{Character vector containing the names for the topics
+(default is determined by \code{\link[lda]{top.topic.words}}. For
+\code{topicsInText} no labeling is done, if \code{tnames} is missing).}
 
-\item{vocab}{Character: Vector of \code{vocab} corresponding to the \code{text} object}
+\item{wordOrder}{Type of output: \code{"alphabetical"} prints the words of
+the article in alphabetical order, \code{"topics"} sorts by topic
+(biggest topic first) and \code{"both"} prints both versions. All other
+inputs will result to no output (this is useful only in combination with \code{obj}).}
 
-\item{wordOrder}{Type of output: \code{"alphabetical"} prints the words of the article in alphabetical order, \code{"topics"} sorts by topic (biggest topic first) and \code{"both"} prints both versions. All other inputs will result to no output (this makes only sense in combination with \code{originaltext}.}
+\item{colors}{Character vector of colors. If the vector is shorter than the
+number of topics it will be completed by "black" entrys.}
 
-\item{colors}{Character vector of colors. If the vector is shorter than the number of topics it will be completed by "black" entrys.}
+\item{fixColors}{Logical: If \code{FALSE} the first color will be used for
+the biggest topic and so on. If \code{fixColors=TRUE} the the color-entry
+corresponding to the position of the topic is chosen.}
 
-\item{fixColors}{Logical: If \code{FALSE} the first color will be used for the biggest topic and so on. If \code{fixColors=TRUE} the the color-entry corresponding to the position of the topic is choosen.}
-
-\item{meta}{Optional input for meta data. It will be printed in the header of the output.}
-
-\item{originaltext}{Optional a list of texts (the \code{text} list of the \code{textmeta} object) including the desired text. Listnames must be IDs. Necessary for output in original text}
-
-\item{unclearTopicAssignment}{Logical: If TRUE all words which are assigned to more than one topic will not be colored. Otherwise the words will be colored in order of topic apperance in the \code{ldaresult}.}
+\item{unclearTopicAssignment}{Logical: If TRUE all words which are assigned
+to more than one topic will not be colored. Otherwise the words will be
+colored in order of topic apperance in the \code{ldaresult}.}
 
 \item{htmlreturn}{Logical: HTML output for tests}
+
+\item{file}{Character File path for the export. If not specified the function
+does not write. If \code{file = ""} the current file path is chosen.}
+
+\item{prefix}{Character Prefix for each file (each text). File names are
+build from prefix and the corresponding text id.}
+
+\item{fileEncoding}{Character Declares file encoding. For more information
+see \code{\link[utils]{write.csv}}.}
+
+\item{vocab}{Character vector containing the words in the corpus
+(default is \code{colnames(ldaresult$topics)}).}
+
+\item{meta}{Optional input for meta data. It will be printed in the header of the output.}
 }
 \value{
-A HTML document
+\describe{
+  \item{\code{topicsInText}}{HTML document}
+  \item{\code{showTopicsInText}}{A list of matrices specifying the assigned
+  topics for each token of the requested texts. If file is set, for each
+  text a csv is written.}
+  \item{\code{showTextTopics}}{A list of topic-word-matrices of the requested
+  texts. If file is set, for each text a csv is written.}
+}
 }
 \description{
-The function creates a HTML document with the words of texts colored depending on the topic allocation of each word.
+The function \code{topicsInText} creates a HTML document with the words of
+texts colored depending on the topic allocation of each word. Analogously,
+\code{showTopicsInText} extracts the matrix (matrices) of assignments to each
+word of a text and \code{showTextTopics} extracts the matrix (matrices) of
+assignments per topic and word in texts.
 }
 \examples{
+texts <- list(
+ A = "Give a Man a Fish, and You Feed Him for a Day.
+      Teach a Man To Fish, and You Feed Him for a Lifetime",
+ B = "So Long, and Thanks for All the Fish",
+ C = "A very able manipulative mathematician, Fisher enjoys a real mastery
+      in evaluating complicated multiple integrals.")
+
+corpus <- textmeta(
+ meta = data.frame(
+  id = c("A", "B", "C", "D"),
+  title = c("Fishing", "Don't panic!", "Sir Ronald", "Berlin"),
+  date = c("1885-01-02", "1979-03-04", "1951-05-06", "1967-06-02"),
+  additionalVariable = 1:4,
+  stringsAsFactors = FALSE),
+ text = texts)
+ 
+raw <- corpus
+ 
+corpus <- cleanTexts(corpus)
+wordlist <- makeWordlist(corpus$text)
+ldaPrep <- LDAprep(text=corpus$text, vocab=wordlist$words)
+
 \donttest{
-data(politics)
-poliClean <- cleanTexts(politics)
-words10 <- makeWordlist(text=poliClean$text)
-words10 <- words10$words[words10$wordtable > 10]
-poliLDA <- LDAprep(text=poliClean$text, vocab=words10)
-LDAresult <- LDAgen(documents=poliLDA, K=10, vocab=words10)
-topicsInText(text=poliLDA, originaltext=politics$text, ldaID=names(poliLDA), id="ID2756",
-             ldaresult=LDAresult, vocab=words10)}
+LDA <- LDAgen(documents = ldaPrep, K = 3L, vocab = wordlist$words, num.words = 3)
+topicsInText(LDA, ldaPrep, obj = raw)
+res <- showTopicsInText(raw, LDA, ldaPrep)
+res2 <- showTextTopics(ldaresult = LDA, documents = ldaPrep)
+}
+
 }
