@@ -2,12 +2,16 @@
 #'
 #' Sample texts from different subsets to minimize variance of the recall estimator
 #' 
-#' @param id Character: ID of all texts in the corpus.
-#' @param corporaID List of Character: Each list contains the IDs belonging to one subcorpus. Each ID has to be in \code{id}.
-#' @param label Named Logical: Labeling result for already labeled texts. Names must be corresponding \code{id}.
+#' @param id Character: IDs of all texts in the corpus.
+#' @param corporaID List of Character: Each list element is a character vector and
+#' contains the IDs belonging to one subcorpus. Each ID has to be in \code{id}.
+#' @param label Named Logical: Labeling result for already labeled texts.
+#' Names have to be \code{id}.
 #' @param m Integer: Number of new samples.
-#' @param randomize Logical: If \code{TRUE} calculated split is used as parameter to draw from a multnomial distribution.
-#' @param exact Logical: If \code{TRUE} exact calculation is used. For the default \code{FALSE} an approximation is used.
+#' @param randomize Logical: If \code{TRUE} calculated split is used as parameter
+#' to draw from a multinomial distribution.
+#' @param exact Logical: If \code{TRUE} exact calculation is used. For the default
+#' \code{FALSE} an approximation is used.
 #' @return Character vector of IDs, which should be labeled next.
 #' @examples
 #' id <- paste0("ID", 1:1000)
@@ -19,9 +23,10 @@
 #' @export sampling
 
 sampling <- function(id, corporaID, label, m, randomize = FALSE, exact = FALSE){
-  stopifnot(is.character(id), is.list(corporaID), all(sapply(corporaID, is.character)), all(unique(unlist(corporaID)) %in% id),
-            all(names(label) %in% id), is.logical(label), is.integer(as.integer(m)), length(m)==1,
-            length(randomize)==1, is.logical(randomize), length(exact)==1, is.logical(exact)
+  stopifnot(is.character(id), is.list(corporaID), all(sapply(corporaID, is.character)),
+    all(unique(unlist(corporaID)) %in% id),
+    all(names(label) %in% id), is.logical(label), is.integer(as.integer(m)), length(m)==1,
+    length(randomize)==1, is.logical(randomize), length(exact)==1, is.logical(exact)
   )  
   
   intersections <- sapply(corporaID, function(x) id %in% x)
@@ -36,7 +41,7 @@ sampling <- function(id, corporaID, label, m, randomize = FALSE, exact = FALSE){
   w <- lengths(IDsplit)/length(id)
   nc <- ncorrect(n)
   pc <- pcorrect(p, nc)
-
+  
   IDunused <- lapply(IDsplit, function(x) x[!(x %in% names(label))])
   Nunused <- lengths(IDunused)
   if(sum(Nunused) < m){
@@ -47,7 +52,8 @@ sampling <- function(id, corporaID, label, m, randomize = FALSE, exact = FALSE){
   if(randomize){
     oldvar <- vrecall(w, p = pc, subset = subset, n = nc)
     ncandidates <- nc + diag(length(nc))
-    tmp <- oldvar - apply(ncandidates, 2, function(x)vrecall(w, pc, subset, n=x)) # variance improvement for all candidates
+    tmp <- oldvar - apply(ncandidates, 2, function(x)vrecall(w, pc, subset, n=x))
+    # variance improvement for all candidates
     intsample <- table(sample(factor(1:length(tmp)), m, prob = tmp/sum(tmp), replace = TRUE))
   }else{
     if(exact){
@@ -59,14 +65,15 @@ sampling <- function(id, corporaID, label, m, randomize = FALSE, exact = FALSE){
     }
   }
   names(intsample) <- intlabel
-
+  
   if(any(Nunused < intsample)){
     message("At least one intersection includes too few texts. Rearranging the segmentation")
     empty <- logical(length(intsample))
     while(any(Nunused < intsample)){
       empty[Nunused < intsample] <- TRUE
       intsample[empty] <- Nunused[empty]
-      intsample[!empty] <- intsample[!empty] + ((intsample[!empty] + 1)/ sum(intsample[!empty]+1)) * (m-sum(intsample))
+      intsample[!empty] <- intsample[!empty] +
+        ((intsample[!empty] + 1)/ sum(intsample[!empty]+1)) * (m-sum(intsample))
       intsample <- roundN(intsample)
     }
   }
@@ -123,7 +130,8 @@ roundN <- function(n){
   nrest <- n-floor(n)
   n <- floor(n)
   if(sum(nrest)>0){
-    n[order(nrest, decreasing=TRUE)[1:round(sum(nrest))]] <- n[order(nrest, decreasing=TRUE)[1:round(sum(nrest))]] + 1}
+    n[order(nrest, decreasing=TRUE)[1:round(sum(nrest))]] <-
+      n[order(nrest, decreasing=TRUE)[1:round(sum(nrest))]] + 1}
   return(n)
 }
 

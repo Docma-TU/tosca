@@ -7,17 +7,21 @@
 sampling(id, corporaID, label, m, randomize = FALSE, exact = FALSE)
 }
 \arguments{
-\item{id}{Character: ID of all texts in the corpus.}
+\item{id}{Character: IDs of all texts in the corpus.}
 
-\item{corporaID}{List of Character: Each list contains the IDs belonging to one subcorpus. Each ID has to be in \code{id}.}
+\item{corporaID}{List of Character: Each list element is a character vector and
+contains the IDs belonging to one subcorpus. Each ID has to be in \code{id}.}
 
-\item{label}{Named Logical: Labeling result for already labeled texts. Names must be corresponding \code{id}.}
+\item{label}{Named Logical: Labeling result for already labeled texts.
+Names have to be \code{id}.}
 
 \item{m}{Integer: Number of new samples.}
 
-\item{randomize}{Logical: If \code{TRUE} calculated split is used as parameter to draw from a multnomial distribution.}
+\item{randomize}{Logical: If \code{TRUE} calculated split is used as parameter
+to draw from a multinomial distribution.}
 
-\item{exact}{Logical: If \code{TRUE} exact calculation is used. For the default \code{FALSE} an approximation is used.}
+\item{exact}{Logical: If \code{TRUE} exact calculation is used. For the default
+\code{FALSE} an approximation is used.}
 }
 \value{
 Character vector of IDs, which should be labeled next.

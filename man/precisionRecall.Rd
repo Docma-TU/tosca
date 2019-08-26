@@ -16,11 +16,14 @@ recall(w, p, subset)
 vrecall(w, p, subset, n)
 }
 \arguments{
-\item{w}{Numeric vector: Each entry represents one intersection. Proportion of texts in this intersection.}
+\item{w}{Numeric vector: Each entry represents one intersection.
+Proportion of texts in this intersection.}
 
-\item{p}{Numeric vector: Each entry represents one intersection. Proportion of relevant texts in this intersection.}
+\item{p}{Numeric vector: Each entry represents one intersection.
+Proportion of relevant texts in this intersection.}
 
-\item{subset}{Logical vector: Each entry represents one intersection. Controls if the intersection belongs to the subcorpus of interest or not.}
+\item{subset}{Logical vector: Each entry represents one intersection.
+Controls if the intersection belongs to the subcorpus of interest or not.}
 
 \item{n}{Integer vector: Number of Texts labeled in the corresponding intersection.}
 }
