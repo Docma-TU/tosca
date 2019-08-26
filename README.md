@@ -2,7 +2,7 @@
 Tools for Statistical Content Analysis
 
 ## About
-'tosca' is a framework for statistical methods in content analysis. We offer a pipeline for preprocessing, model text corpora using a link to the implemantation of Latent Dirichlet Allocation from the 'lda' package. Useful plot routines for both - pre- and post-modeled corpora - are given for the descriptive analysis of text corpora and topic models. Moreover, an implementation of Chang's intruder words and intruder topics is provided - as well as reasoned sampling of text ids to get effective sets of texts for human labeling/coding.  
+'tosca' is a framework for statistical methods in content analysis. We offer a pipeline for preprocessing, model text corpora using a link to the implemantation of Latent Dirichlet Allocation from the 'lda' package. Useful plot routines for both - pre- and post-modeled corpora - are given for the descriptive analysis of text corpora and topic models. Moreover, an implementation of Chang's intruder words and intruder topics is provided; as well as reasoned sampling of text ids to get effective sets of texts for human labeling/coding regarding accuracy of estimating Precision and Recall.  
 URL: https://github.com/Docma-TU/tosca  
 created at TU Dortmund University: http://docma.tu-dortmund.de/cms/de/home/R-Paket-_tosca_/index.html
 
