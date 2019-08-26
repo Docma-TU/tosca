@@ -132,7 +132,7 @@ topicsInText <- function(ldaresult, documents, id, obj,
     texttopic$topic <- match(texttopic$topic, names(topictable))
     
     ## print header
-    if(missing(obj)){
+    if(missing(obj) || !(id %in% obj$meta$id)){
         htmlOutput <- c("<h2>Document: ", id, "</h2><p>")
     }else{
         meta <- obj$meta
@@ -163,7 +163,7 @@ topicsInText <- function(ldaresult, documents, id, obj,
     }
     
     ## print topics in original text
-    if(!missing(obj)){
+    if(!missing(obj) && id %in% names(obj$text)){
         originaltext <- obj$text[[id]]
         o2 <- unlist(strsplit(originaltext, split="\\s"))
         o2 <- o2[!(o2=="")]

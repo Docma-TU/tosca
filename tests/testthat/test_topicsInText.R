@@ -23,11 +23,11 @@ T4 <- topicsInText(documents=text, id="ID1", ldaresult=ldaresult, tnames=c("T1",
 
 T5 <- topicsInText(documents=text, id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder="topics", fixColors=FALSE, unclearTopicAssignment=FALSE, htmlreturn=TRUE)
 
-T6 <- topicsInText(documents=text, id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder="", colors="red", fixColors=FALSE, obj=textmeta(text = originaltext), unclearTopicAssignment=TRUE, htmlreturn=TRUE)
+T6 <- topicsInText(documents=text, id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder="", colors="red", fixColors=FALSE, obj=textmeta(text = originaltext, meta = meta), unclearTopicAssignment=TRUE, htmlreturn=TRUE)
 
-T7 <- topicsInText(documents=text, id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder="", colors=c("red", "blue", "green"), fixColors=FALSE, obj=textmeta(text = originaltext), unclearTopicAssignment=TRUE, htmlreturn=TRUE)
+T7 <- topicsInText(documents=text, id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder="", colors=c("red", "blue", "green"), fixColors=FALSE, obj=textmeta(text = originaltext, meta = meta), unclearTopicAssignment=TRUE, htmlreturn=TRUE)
 
-T8 <- topicsInText(documents=text, colors=c(2), id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder="", fixColors=TRUE, obj=textmeta(text = originaltext), unclearTopicAssignment=TRUE, htmlreturn=TRUE)
+T8 <- topicsInText(documents=text, colors=c(2), id="ID1", ldaresult=ldaresult, tnames=c("T1", "T2", "T3"), wordOrder="", fixColors=TRUE, obj=textmeta(text = originaltext, meta = meta), unclearTopicAssignment=TRUE, htmlreturn=TRUE)
 ## write.csv(c(T1, T2, T3, T4, T5, T6, T7, T8), file="data/topicsInText.csv", fileEncoding="UTF-8")
 
 Tall <- read.csv("data/topicsInText.csv", stringsAsFactor=FALSE, encoding="UTF-8")
