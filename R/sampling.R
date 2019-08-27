@@ -5,7 +5,7 @@
 #' @param id Character: IDs of all texts in the corpus.
 #' @param corporaID List of Character: Each list element is a character vector and
 #' contains the IDs belonging to one subcorpus. Each ID has to be in \code{id}.
-#' @param label Named Logical: Labeling result for already labeled texts.
+#' @param label Named Logical: Labeling result for already labeled texts. Could be empty, if no labeled data exists. The algorithm sets \code{p = 0.5} for all intersections.
 #' Names have to be \code{id}.
 #' @param m Integer: Number of new samples.
 #' @param randomize Logical: If \code{TRUE} calculated split is used as parameter
@@ -23,6 +23,7 @@
 #' @export sampling
 
 sampling <- function(id, corporaID, label, m, randomize = FALSE, exact = FALSE){
+  if(missing(label)){label <- logical()}
   stopifnot(is.character(id), is.list(corporaID), all(sapply(corporaID, is.character)),
     all(unique(unlist(corporaID)) %in% id),
     all(names(label) %in% id), is.logical(label), is.integer(as.integer(m)), length(m)==1,
@@ -70,7 +71,7 @@ sampling <- function(id, corporaID, label, m, randomize = FALSE, exact = FALSE){
     message("At least one intersection includes too few texts. Rearranging the segmentation")
     empty <- logical(length(intsample))
     while(any(Nunused < intsample)){
-      empty[Nunused < intsample] <- TRUE
+      empty[Nunused <= intsample] <- TRUE
       intsample[empty] <- Nunused[empty]
       intsample[!empty] <- intsample[!empty] +
         ((intsample[!empty] + 1)/ sum(intsample[!empty]+1)) * (m-sum(intsample))
