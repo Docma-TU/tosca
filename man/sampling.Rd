@@ -12,7 +12,7 @@ sampling(id, corporaID, label, m, randomize = FALSE, exact = FALSE)
 \item{corporaID}{List of Character: Each list element is a character vector and
 contains the IDs belonging to one subcorpus. Each ID has to be in \code{id}.}
 
-\item{label}{Named Logical: Labeling result for already labeled texts.
+\item{label}{Named Logical: Labeling result for already labeled texts. Could be empty, if no labeled data exists. The algorithm sets \code{p = 0.5} for all intersections.
 Names have to be \code{id}.}
 
 \item{m}{Integer: Number of new samples.}
