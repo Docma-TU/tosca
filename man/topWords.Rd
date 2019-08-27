@@ -11,22 +11,22 @@ topWords(topics, numWords = 1, byScore = TRUE, epsilon = 1e-05,
 importance(topics, epsilon = 1e-05)
 }
 \arguments{
-\item{topics}{[\code{named matrix}]\cr
+\item{topics}{\code{named matrix}: 
 The counts of vocabularies (column wise) in topics (row wise).}
 
-\item{numWords}{[\code{integer(1)}]\cr
+\item{numWords}{\code{integer(1)}: 
 The number of requested top words per topic.}
 
-\item{byScore}{[\code{logical(1)}]\cr
+\item{byScore}{\code{logical(1)}: 
 Should the values that are taken for determining the top words per topic be
 calculated by the function \code{importance} (\code{TRUE}) or should
 the absolute counts be considered (\code{FALSE})?}
 
-\item{epsilon}{[\code{numeric(1)}]\cr
+\item{epsilon}{\code{numeric(1)}: 
 Small number to add to logarithmic calculations to overcome the issue of
 determining \code{log(0)}.}
 
-\item{values}{[\code{logical(1)}]\cr
+\item{values}{\code{logical(1)}: 
 Should the values that are taken for determining the top words per topic be
 returned?}
 }
@@ -43,20 +43,20 @@ is used, which also can be called independently.
 \examples{
 texts <- list(A="Give a Man a Fish, and You Feed Him for a Day.
 Teach a Man To Fish, and You Feed Him for a Lifetime",
-B="So Long, and Thanks for All the Fish",
-C="A very able manipulative mathematician, Fisher enjoys a real mastery
+B <- "So Long, and Thanks for All the Fish",
+C <- "A very able manipulative mathematician, Fisher enjoys a real mastery
 in evaluating complicated multiple integrals.")
 
-corpus <- textmeta(meta=data.frame(id=c("A", "B", "C", "D"),
-title=c("Fishing", "Don't panic!", "Sir Ronald", "Berlin"),
-date=c("1885-01-02", "1979-03-04", "1951-05-06", "1967-06-02"),
-additionalVariable=1:4, stringsAsFactors=FALSE), text=texts)
+corpus <- textmeta(meta = data.frame(id = c("A", "B", "C", "D"),
+  title = c("Fishing", "Don't panic!", "Sir Ronald", "Berlin"),
+  date = c("1885-01-02", "1979-03-04", "1951-05-06", "1967-06-02"),
+  additionalVariable = 1:4, stringsAsFactors = FALSE), text = texts)
 
 corpus <- cleanTexts(corpus)
 wordlist <- makeWordlist(corpus$text)
-ldaPrep <- LDAprep(text=corpus$text, vocab=wordlist$words)
+ldaPrep <- LDAprep(text = corpus$text, vocab = wordlist$words)
 
-\donttest{LDA <- LDAgen(documents=ldaPrep, K = 3L, vocab=wordlist$words, num.words=3)}
+\donttest{LDA <- LDAgen(documents = ldaPrep, K = 3L, vocab = wordlist$words, num.words = 3)}
 \donttest{topWords(LDA$topics)}
 
 \donttest{importance(LDA$topics)}
