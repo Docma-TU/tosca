@@ -1,4 +1,4 @@
-context("topArticles")
+context("topTexts")
 
 test_that("topTexts", {
 
