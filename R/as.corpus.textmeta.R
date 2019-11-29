@@ -47,7 +47,10 @@ as.corpus.textmeta <- function(object, docnames = "id",
   colnames(meta) <- metadoc
 
   corp <- quanteda::corpus(x = texts, docnames = id, docvars = vars, ...)
-  quanteda::metadoc(corp) <- meta
+  suppressWarnings(
+    quanteda::docvars(corp) <- 
+      cbind(quanteda::docvars(corp), quanteda::metadoc(corp))
+  )
 
   return(corp)
 }
