@@ -75,7 +75,7 @@ as.textmeta.corpus <- function(corpus, cols, dateFormat = "%Y-%m-%d", idCol = "i
   }
   tmpid <- meta$id
 
-  if(addMetadata){
+  if (addMetadata && length(corpus$metadata)) {
     tmp <- unlist(corpus$metadata)
     meta[, names(corpus$metadata)] <- matrix(rep(tmp, each = length(tmpid)), nrow = length(tmpid))
   }
