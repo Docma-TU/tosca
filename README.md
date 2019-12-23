@@ -20,3 +20,4 @@ For wishes, issues, and bugs please use the [issue tracker](https://github.com/D
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/tosca)](https://CRAN.R-project.org/package=tosca)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/tosca)](https://CRAN.R-project.org/package=tosca)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/tosca?color=orange)](https://CRAN.R-project.org/package=tosca)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3591068.svg)](https://doi.org/10.5281/zenodo.3591068)
