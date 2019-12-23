@@ -4,10 +4,19 @@
 \alias{readTextmeta}
 \title{Read Corpora as CSV}
 \usage{
-readTextmeta(path, file, cols, dateFormat = "\%Y-\%m-\%d",
-  idCol = "id", dateCol = "date", titleCol = "title",
-  textCol = "text", encoding = "UTF-8", xmlAction = TRUE,
-  duplicateAction = TRUE)
+readTextmeta(
+  path,
+  file,
+  cols,
+  dateFormat = "\%Y-\%m-\%d",
+  idCol = "id",
+  dateCol = "date",
+  titleCol = "title",
+  textCol = "text",
+  encoding = "UTF-8",
+  xmlAction = TRUE,
+  duplicateAction = TRUE
+)
 }
 \arguments{
 \item{path}{\code{character} string with path where the data files are}

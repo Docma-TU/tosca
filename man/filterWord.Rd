@@ -8,11 +8,22 @@
 \usage{
 filterWord(...)
 
-\method{filterWord}{default}(text, search, ignore.case = FALSE,
-  out = c("text", "bin", "count"), ...)
+\method{filterWord}{default}(
+  text,
+  search,
+  ignore.case = FALSE,
+  out = c("text", "bin", "count"),
+  ...
+)
 
-\method{filterWord}{textmeta}(object, search, ignore.case = FALSE,
-  out = c("text", "bin", "count"), filtermeta = TRUE, ...)
+\method{filterWord}{textmeta}(
+  object,
+  search,
+  ignore.case = FALSE,
+  out = c("text", "bin", "count"),
+  filtermeta = TRUE,
+  ...
+)
 }
 \arguments{
 \item{...}{Not used.}

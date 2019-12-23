@@ -8,11 +8,15 @@
 \usage{
 filterCount(...)
 
-\method{filterCount}{default}(text, count = 1L, out = c("text", "bin",
-  "count"), ...)
+\method{filterCount}{default}(text, count = 1L, out = c("text", "bin", "count"), ...)
 
-\method{filterCount}{textmeta}(object, count = 1L, out = c("text",
-  "bin", "count"), filtermeta = TRUE, ...)
+\method{filterCount}{textmeta}(
+  object,
+  count = 1L,
+  out = c("text", "bin", "count"),
+  filtermeta = TRUE,
+  ...
+)
 }
 \arguments{
 \item{...}{Not used.}

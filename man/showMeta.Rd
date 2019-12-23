@@ -4,8 +4,13 @@
 \alias{showMeta}
 \title{Export Readable Meta-Data of Articles.}
 \usage{
-showMeta(meta, id = meta$id, cols = colnames(meta), file,
-  fileEncoding = "UTF-8")
+showMeta(
+  meta,
+  id = meta$id,
+  cols = colnames(meta),
+  file,
+  fileEncoding = "UTF-8"
+)
 }
 \arguments{
 \item{meta}{A data.frame of meta-data as a result of a read-function.}

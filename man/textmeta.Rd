@@ -8,15 +8,13 @@
 \alias{plot.textmeta}
 \title{"textmeta"-Objects}
 \usage{
-textmeta(meta = NULL, text = NULL, metamult = NULL,
-  dateFormat = "\%Y-\%m-\%d")
+textmeta(meta = NULL, text = NULL, metamult = NULL, dateFormat = "\%Y-\%m-\%d")
 
 is.textmeta(x)
 
 \method{print}{textmeta}(x, ...)
 
-\method{summary}{textmeta}(object, listnames = names(object),
-  metavariables = character(), ...)
+\method{summary}{textmeta}(object, listnames = names(object), metavariables = character(), ...)
 
 \method{plot}{textmeta}(x, ...)
 }

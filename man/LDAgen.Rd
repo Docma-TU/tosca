@@ -4,10 +4,20 @@
 \alias{LDAgen}
 \title{Function to fit LDA model}
 \usage{
-LDAgen(documents, K = 100L, vocab, num.iterations = 200L,
-  burnin = 70L, alpha = NULL, eta = NULL, seed = NULL,
-  folder = file.path(tempdir(), "lda-result"), num.words = 50L,
-  LDA = TRUE, count = FALSE)
+LDAgen(
+  documents,
+  K = 100L,
+  vocab,
+  num.iterations = 200L,
+  burnin = 70L,
+  alpha = NULL,
+  eta = NULL,
+  seed = NULL,
+  folder = file.path(tempdir(), "lda-result"),
+  num.words = 50L,
+  LDA = TRUE,
+  count = FALSE
+)
 }
 \arguments{
 \item{documents}{A list prepared by \code{\link{LDAprep}}.}

@@ -4,13 +4,34 @@
 \alias{plotTopicWord}
 \title{Plotting Counts of Topics-Words-Combination over Time (Relative to Words)}
 \usage{
-plotTopicWord(object, docs, ldaresult, ldaID,
-  wordlist = lda::top.topic.words(ldaresult$topics, 1), link = c("and",
-  "or"), select = 1:nrow(ldaresult$document_sums), tnames, wnames,
-  rel = FALSE, mark = TRUE, unit = "month", curves = c("exact",
-  "smooth", "both"), smooth = 0.05, legend = ifelse(pages,
-  "onlyLast:topright", "topright"), pages = FALSE, natozero = TRUE,
-  file, main, xlab, ylab, ylim, both.lwd, both.lty, col, ...)
+plotTopicWord(
+  object,
+  docs,
+  ldaresult,
+  ldaID,
+  wordlist = lda::top.topic.words(ldaresult$topics, 1),
+  link = c("and", "or"),
+  select = 1:nrow(ldaresult$document_sums),
+  tnames,
+  wnames,
+  rel = FALSE,
+  mark = TRUE,
+  unit = "month",
+  curves = c("exact", "smooth", "both"),
+  smooth = 0.05,
+  legend = ifelse(pages, "onlyLast:topright", "topright"),
+  pages = FALSE,
+  natozero = TRUE,
+  file,
+  main,
+  xlab,
+  ylab,
+  ylim,
+  both.lwd,
+  both.lty,
+  col,
+  ...
+)
 }
 \arguments{
 \item{object}{\code{\link{textmeta}} object with strictly tokenized

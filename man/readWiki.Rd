@@ -4,8 +4,12 @@
 \alias{readWiki}
 \title{Read Pages from Wikipedia}
 \usage{
-readWiki(category, subcategories = TRUE, language = "en",
-  project = "wikipedia")
+readWiki(
+  category,
+  subcategories = TRUE,
+  language = "en",
+  project = "wikipedia"
+)
 }
 \arguments{
 \item{category}{\code{character} articles of which category should be

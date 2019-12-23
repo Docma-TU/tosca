@@ -4,10 +4,22 @@
 \alias{plotArea}
 \title{Plotting topics over time as stacked areas below plotted lines.}
 \usage{
-plotArea(ldaresult, ldaID, select = NULL, tnames = NULL,
-  threshold = NULL, meta, unit = "quarter", xunit = "year",
-  color = NULL, sort = TRUE, legend = NULL, legendLimit = 0,
-  peak = 0, file)
+plotArea(
+  ldaresult,
+  ldaID,
+  select = NULL,
+  tnames = NULL,
+  threshold = NULL,
+  meta,
+  unit = "quarter",
+  xunit = "year",
+  color = NULL,
+  sort = TRUE,
+  legend = NULL,
+  legendLimit = 0,
+  peak = 0,
+  file
+)
 }
 \arguments{
 \item{ldaresult}{LDA result object}

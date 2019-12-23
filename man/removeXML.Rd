@@ -10,8 +10,15 @@ removeXML(x)
 
 removeUmlauts(x)
 
-removeHTML(x, dec = TRUE, hex = TRUE, entity = TRUE,
-  symbolList = c(1:4, 9, 13, 15, 16), delete = TRUE, symbols = FALSE)
+removeHTML(
+  x,
+  dec = TRUE,
+  hex = TRUE,
+  entity = TRUE,
+  symbolList = c(1:4, 9, 13, 15, 16),
+  delete = TRUE,
+  symbols = FALSE
+)
 }
 \arguments{
 \item{x}{Character: Vector or list of character vectors.}
@@ -46,7 +53,7 @@ x <- "&#x00f8; &#248; &oslash;"
 removeHTML(x=x, symbolList = 1, dec=TRUE, hex=FALSE, entity=FALSE, delete = FALSE)
 removeHTML(x=x, symbolList = c(1,3))
 
-y <- c("Bl\\UFChende Apfelb\\UE4ume")
+y <- c("Bl\UFChende Apfelb\UE4ume")
 removeUmlauts(y)
 
 }

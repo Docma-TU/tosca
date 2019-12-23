@@ -4,8 +4,14 @@
 \alias{topicCoherence}
 \title{Calculating Topic Coherence}
 \usage{
-topicCoherence(ldaresult, documents, num.words = 10, by.score = TRUE,
-  sym.coherence = FALSE, epsilon = 1)
+topicCoherence(
+  ldaresult,
+  documents,
+  num.words = 10,
+  by.score = TRUE,
+  sym.coherence = FALSE,
+  epsilon = 1
+)
 }
 \arguments{
 \item{ldaresult}{The result of a function call \code{\link{LDAgen}}}

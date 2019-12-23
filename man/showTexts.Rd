@@ -4,8 +4,7 @@
 \alias{showTexts}
 \title{Exports Readable Text Lists}
 \usage{
-showTexts(object, id = names(object$text), file,
-  fileEncoding = "UTF-8")
+showTexts(object, id = names(object$text), file, fileEncoding = "UTF-8")
 }
 \arguments{
 \item{object}{\code{\link{textmeta}} object}

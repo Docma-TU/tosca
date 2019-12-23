@@ -4,10 +4,26 @@
 \alias{plotScot}
 \title{Plots Counts of Documents or Words over Time (relative to Corpus)}
 \usage{
-plotScot(object, id = object$meta$id, type = c("docs", "words"),
-  rel = FALSE, mark = TRUE, unit = "month", curves = c("exact",
-  "smooth", "both"), smooth = 0.05, main, xlab, ylab, ylim, both.lwd,
-  both.col, both.lty, natozero = TRUE, file, ...)
+plotScot(
+  object,
+  id = object$meta$id,
+  type = c("docs", "words"),
+  rel = FALSE,
+  mark = TRUE,
+  unit = "month",
+  curves = c("exact", "smooth", "both"),
+  smooth = 0.05,
+  main,
+  xlab,
+  ylab,
+  ylim,
+  both.lwd,
+  both.col,
+  both.lty,
+  natozero = TRUE,
+  file,
+  ...
+)
 }
 \arguments{
 \item{object}{\code{\link{textmeta}} object with strictly tokenized

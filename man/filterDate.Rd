@@ -8,12 +8,21 @@
 \usage{
 filterDate(...)
 
-\method{filterDate}{default}(text, meta, s.date = min(meta$date, na.rm =
-  TRUE), e.date = max(meta$date, na.rm = TRUE), ...)
+\method{filterDate}{default}(
+  text,
+  meta,
+  s.date = min(meta$date, na.rm = TRUE),
+  e.date = max(meta$date, na.rm = TRUE),
+  ...
+)
 
-\method{filterDate}{textmeta}(object, s.date = min(object$meta$date,
-  na.rm = TRUE), e.date = max(object$meta$date, na.rm = TRUE),
-  filtermeta = TRUE, ...)
+\method{filterDate}{textmeta}(
+  object,
+  s.date = min(object$meta$date, na.rm = TRUE),
+  e.date = max(object$meta$date, na.rm = TRUE),
+  filtermeta = TRUE,
+  ...
+)
 }
 \arguments{
 \item{...}{Not used.}

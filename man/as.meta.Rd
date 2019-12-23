@@ -4,8 +4,14 @@
 \alias{as.meta}
 \title{"meta" Component of "textmeta"-Objects}
 \usage{
-as.meta(x, cols = colnames(x), idCol = "id", dateCol = "date",
-  titleCol = "title", dateFormat)
+as.meta(
+  x,
+  cols = colnames(x),
+  idCol = "id",
+  dateCol = "date",
+  titleCol = "title",
+  dateFormat
+)
 }
 \arguments{
 \item{x}{data.frame to convert}

@@ -4,11 +4,31 @@
 \alias{plotFreq}
 \title{Plotting Counts of specified Wordgroups over Time (relative to Corpus)}
 \usage{
-plotFreq(object, id = names(object$text), type = c("docs", "words"),
-  wordlist, link = c("and", "or"), wnames, ignore.case = FALSE,
-  rel = FALSE, mark = TRUE, unit = "month", curves = c("exact",
-  "smooth", "both"), smooth = 0.05, both.lwd, both.lty, main, xlab, ylab,
-  ylim, col, legend = "topright", natozero = TRUE, file, ...)
+plotFreq(
+  object,
+  id = names(object$text),
+  type = c("docs", "words"),
+  wordlist,
+  link = c("and", "or"),
+  wnames,
+  ignore.case = FALSE,
+  rel = FALSE,
+  mark = TRUE,
+  unit = "month",
+  curves = c("exact", "smooth", "both"),
+  smooth = 0.05,
+  both.lwd,
+  both.lty,
+  main,
+  xlab,
+  ylab,
+  ylim,
+  col,
+  legend = "topright",
+  natozero = TRUE,
+  file,
+  ...
+)
 }
 \arguments{
 \item{object}{\code{\link{textmeta}} object with strictly tokenized

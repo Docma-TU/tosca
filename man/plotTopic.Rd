@@ -4,12 +4,30 @@
 \alias{plotTopic}
 \title{Plotting Counts of Topics over Time (Relative to Corpus)}
 \usage{
-plotTopic(object, ldaresult, ldaID,
-  select = 1:nrow(ldaresult$document_sums), tnames, rel = FALSE,
-  mark = TRUE, unit = "month", curves = c("exact", "smooth", "both"),
-  smooth = 0.05, main, xlab, ylim, ylab, both.lwd, both.lty, col,
+plotTopic(
+  object,
+  ldaresult,
+  ldaID,
+  select = 1:nrow(ldaresult$document_sums),
+  tnames,
+  rel = FALSE,
+  mark = TRUE,
+  unit = "month",
+  curves = c("exact", "smooth", "both"),
+  smooth = 0.05,
+  main,
+  xlab,
+  ylim,
+  ylab,
+  both.lwd,
+  both.lty,
+  col,
   legend = ifelse(pages, "onlyLast:topright", "topright"),
-  pages = FALSE, natozero = TRUE, file, ...)
+  pages = FALSE,
+  natozero = TRUE,
+  file,
+  ...
+)
 }
 \arguments{
 \item{object}{\code{\link{textmeta}} object with strictly tokenized

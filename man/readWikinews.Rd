@@ -4,8 +4,11 @@
 \alias{readWikinews}
 \title{Read files from Wikinews}
 \usage{
-readWikinews(path = getwd(), file = list.files(path = path, pattern =
-  "*.xml$", full.names = FALSE, recursive = TRUE))
+readWikinews(
+  path = getwd(),
+  file = list.files(path = path, pattern = "*.xml$", full.names = FALSE, recursive =
+    TRUE)
+)
 }
 \arguments{
 \item{path}{Path where the data files are.}

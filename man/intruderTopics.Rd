@@ -4,10 +4,22 @@
 \alias{intruderTopics}
 \title{Function to validate the fit of the LDA model}
 \usage{
-intruderTopics(text = NULL, beta = NULL, theta = NULL, id = NULL,
-  numIntruder = 1, numOuttopics = 4, byScore = TRUE, minWords = 0L,
-  minOuttopics = 0L, stopTopics = NULL, printSolution = FALSE,
-  oldResult = NULL, test = FALSE, testinput = NULL)
+intruderTopics(
+  text = NULL,
+  beta = NULL,
+  theta = NULL,
+  id = NULL,
+  numIntruder = 1,
+  numOuttopics = 4,
+  byScore = TRUE,
+  minWords = 0L,
+  minOuttopics = 0L,
+  stopTopics = NULL,
+  printSolution = FALSE,
+  oldResult = NULL,
+  test = FALSE,
+  testinput = NULL
+)
 }
 \arguments{
 \item{text}{A list of texts (e.g. the text element of a \code{\link{textmeta}} object).}

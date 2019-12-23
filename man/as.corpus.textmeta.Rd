@@ -4,9 +4,13 @@
 \alias{as.corpus.textmeta}
 \title{Transform textmeta to corpus}
 \usage{
-as.corpus.textmeta(object, docnames = "id",
+as.corpus.textmeta(
+  object,
+  docnames = "id",
   docvars = setdiff(colnames(object$meta), "id"),
-  metadoc = character(), ...)
+  metadoc = character(),
+  ...
+)
 }
 \arguments{
 \item{object}{\code{\link{textmeta}} object}

@@ -4,9 +4,19 @@
 \alias{plotHeat}
 \title{Plotting Topics over Time relative to Corpus}
 \usage{
-plotHeat(object, ldaresult, ldaID,
-  select = 1:nrow(ldaresult$document_sums), tnames, norm = FALSE, file,
-  unit = "year", date_breaks = 1, margins = c(5, 0), ...)
+plotHeat(
+  object,
+  ldaresult,
+  ldaID,
+  select = 1:nrow(ldaresult$document_sums),
+  tnames,
+  norm = FALSE,
+  file,
+  unit = "year",
+  date_breaks = 1,
+  margins = c(5, 0),
+  ...
+)
 }
 \arguments{
 \item{object}{\code{\link{textmeta}} object with strictly tokenized \code{text}

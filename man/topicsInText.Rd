@@ -4,10 +4,21 @@
 \alias{topicsInText}
 \title{Coloring the words of a text corresponding to topic allocation}
 \usage{
-topicsInText(text, ldaID, id, ldaresult, label = NULL, vocab,
-  wordOrder = c("both", "alphabetical", "topics", ""), colors = NULL,
-  fixColors = FALSE, meta = NULL, originaltext = NULL,
-  unclearTopicAssignment = TRUE, htmlreturn = FALSE)
+topicsInText(
+  text,
+  ldaID,
+  id,
+  ldaresult,
+  label = NULL,
+  vocab,
+  wordOrder = c("both", "alphabetical", "topics", ""),
+  colors = NULL,
+  fixColors = FALSE,
+  meta = NULL,
+  originaltext = NULL,
+  unclearTopicAssignment = TRUE,
+  htmlreturn = FALSE
+)
 }
 \arguments{
 \item{text}{The result of \code{\link{LDAprep}}}

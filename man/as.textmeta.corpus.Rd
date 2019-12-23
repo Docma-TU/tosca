@@ -4,9 +4,17 @@
 \alias{as.textmeta.corpus}
 \title{Transform corpus to textmeta}
 \usage{
-as.textmeta.corpus(corpus, cols, dateFormat = "\%Y-\%m-\%d",
-  idCol = "id", dateCol = "date", titleCol = "title",
-  textCol = "texts", duplicateAction = TRUE, addMetadata = TRUE)
+as.textmeta.corpus(
+  corpus,
+  cols,
+  dateFormat = "\%Y-\%m-\%d",
+  idCol = "id",
+  dateCol = "date",
+  titleCol = "title",
+  textCol = "texts",
+  duplicateAction = TRUE,
+  addMetadata = TRUE
+)
 }
 \arguments{
 \item{corpus}{Object of class \code{\link[quanteda]{corpus}},

@@ -4,12 +4,34 @@
 \alias{plotWordSub}
 \title{Plotting Counts/Proportion of Words/Docs in LDA-generated Topic-Subcorpora over Time}
 \usage{
-plotWordSub(object, ldaresult, ldaID, limit = 10, alloc = c("multi",
-  "unique", "best"), select = 1:nrow(ldaresult$document_sums), tnames,
-  search, ignore.case = TRUE, type = c("docs", "words"), rel = TRUE,
-  mark = TRUE, unit = "month", curves = c("exact", "smooth", "both"),
-  smooth = 0.05, main, xlab, ylab, ylim, both.lwd, both.lty, col,
-  legend = "topright", natozero = TRUE, file, ...)
+plotWordSub(
+  object,
+  ldaresult,
+  ldaID,
+  limit = 10,
+  alloc = c("multi", "unique", "best"),
+  select = 1:nrow(ldaresult$document_sums),
+  tnames,
+  search,
+  ignore.case = TRUE,
+  type = c("docs", "words"),
+  rel = TRUE,
+  mark = TRUE,
+  unit = "month",
+  curves = c("exact", "smooth", "both"),
+  smooth = 0.05,
+  main,
+  xlab,
+  ylab,
+  ylim,
+  both.lwd,
+  both.lty,
+  col,
+  legend = "topright",
+  natozero = TRUE,
+  file,
+  ...
+)
 }
 \arguments{
 \item{object}{\code{\link{textmeta}} object with strictly tokenized

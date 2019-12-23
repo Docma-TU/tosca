@@ -4,8 +4,15 @@
 \alias{topTexts}
 \title{Get The IDs Of The Most Representive Texts}
 \usage{
-topTexts(ldaresult, ldaID, limit = 20L, rel = TRUE,
-  select = 1:nrow(ldaresult$document_sums), tnames, minlength = 30L)
+topTexts(
+  ldaresult,
+  ldaID,
+  limit = 20L,
+  rel = TRUE,
+  select = 1:nrow(ldaresult$document_sums),
+  tnames,
+  minlength = 30L
+)
 }
 \arguments{
 \item{ldaresult}{LDA result}

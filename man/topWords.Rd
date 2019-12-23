@@ -5,8 +5,7 @@
 \alias{importance}
 \title{Top Words per Topic}
 \usage{
-topWords(topics, numWords = 1, byScore = TRUE, epsilon = 1e-05,
-  values = FALSE)
+topWords(topics, numWords = 1, byScore = TRUE, epsilon = 1e-05, values = FALSE)
 
 importance(topics, epsilon = 1e-05)
 }

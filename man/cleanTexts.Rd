@@ -4,9 +4,17 @@
 \alias{cleanTexts}
 \title{Data Preprocessing}
 \usage{
-cleanTexts(object, text, sw = "en", paragraph = FALSE,
-  lowercase = TRUE, rmPunctuation = TRUE, rmNumbers = TRUE,
-  checkUTF8 = TRUE, ucp = TRUE)
+cleanTexts(
+  object,
+  text,
+  sw = "en",
+  paragraph = FALSE,
+  lowercase = TRUE,
+  rmPunctuation = TRUE,
+  rmNumbers = TRUE,
+  checkUTF8 = TRUE,
+  ucp = TRUE
+)
 }
 \arguments{
 \item{object}{\code{\link{textmeta}} object}

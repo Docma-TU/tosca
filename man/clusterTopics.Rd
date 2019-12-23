@@ -4,8 +4,15 @@
 \alias{clusterTopics}
 \title{Cluster Analysis}
 \usage{
-clusterTopics(ldaresult, file, tnames = NULL, method = "average",
-  width = 30, height = 15, ...)
+clusterTopics(
+  ldaresult,
+  file,
+  tnames = NULL,
+  method = "average",
+  width = 30,
+  height = 15,
+  ...
+)
 }
 \arguments{
 \item{ldaresult}{The result of a function call \code{\link{LDAgen}} -

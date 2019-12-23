@@ -4,10 +4,18 @@
 \alias{intruderWords}
 \title{Function to validate the fit of the LDA model}
 \usage{
-intruderWords(beta = NULL, byScore = TRUE, numTopwords = 30L,
-  numIntruder = 1L, numOutwords = 5L, noTopic = TRUE,
-  printSolution = FALSE, oldResult = NULL, test = FALSE,
-  testinput = NULL)
+intruderWords(
+  beta = NULL,
+  byScore = TRUE,
+  numTopwords = 30L,
+  numIntruder = 1L,
+  numOutwords = 5L,
+  noTopic = TRUE,
+  printSolution = FALSE,
+  oldResult = NULL,
+  test = FALSE,
+  testinput = NULL
+)
 }
 \arguments{
 \item{beta}{A matrix of word-probabilities or frequency table for the topics (e.g. the \code{topics} matrix from the \code{\link{LDAgen}} result). Each row is a topic, each column a word. The rows will be divided by the row sums, if they are not 1.}
