@@ -36,7 +36,7 @@ filterCount.default <- function(text, count = 1L, out = c("text", "bin", "count"
     all(out %in% c("text", "bin", "count")))
   
   counts <- stringr::str_count(unlist(lapply(lapply(text, unlist),
-    function(x) paste(x, collapse = " "))), pattern = "\\b[a-z,A-Z](.*?)\\b")
+    function(x) paste(x, collapse = " "))), pattern = "\\b[a-zA-Z](.*?)\\b")
   
   subid <- counts >= count
   subid[is.na(subid)] <- FALSE
