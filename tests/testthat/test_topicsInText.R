@@ -10,7 +10,7 @@ ldaresult$topics <- split(unlist(lapply(text, function(x)x[1,])), unlist(ldaresu
 ldaresult$topics <- sapply(ldaresult$topics, factor, levels=1:length(vocab))
 ldaresult$topics <- t(sapply(ldaresult$topics, table))
 colnames(ldaresult$topics) <- vocab
-meta <- data.frame(id=c("ID1", "ID2", "ID3", "ID4"), date=as.Date(c("2016-01-01","2000-03-24","2017-04-23","1999-12-24")), title=c("title 1", "title 2", "title 3", "title 4"), page=2:5, category=c("A","B","A","B"))
+meta <- data.frame(id=c("ID1", "ID2", "ID3", "ID4"), date=as.Date(c("2016-01-01","2000-03-24","2017-04-23","1999-12-24")), title=c("title 1", "title 2", "title 3", "title 4"), page=2:5, category=c("A","B","A","B"), stringsAsFactors = FALSE)
 originaltext <- list(ID1=c("Das Pferd frisst keinen Gurkensalat."), ID2=c("Das Pferd frisst keinen Gurkensalat! Das Pferd frisst 200 Aepfel in Dortmund."))
 
 T1 <- topicsInText(text=text, ldaID=ldaID, id="ID1", ldaresult=ldaresult, label=NULL, vocab=vocab, wordOrder=c("both", "alphabetical", "topics", ""), colors=NULL, fixColors=FALSE, meta=NULL, originaltext=NULL, unclearTopicAssignment=TRUE, htmlreturn=TRUE)
