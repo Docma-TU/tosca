@@ -35,13 +35,13 @@
 #' @export plotArea
 #'
 plotArea <- function(ldaresult, ldaID, select = NULL, tnames = NULL,
-  threshold = NULL, meta, unit = "quarter", xunit = "year", color = NULL,
-  sort = TRUE, legend = NULL, legendLimit = 0, peak = 0, file){
-
+                     threshold = NULL, meta, unit = "quarter", xunit = "year", color = NULL,
+                     sort = TRUE, legend = NULL, legendLimit = 0, peak = 0, file){
+  
   if(!missing(file)) pdf(file, width = 15, height = 8)
   if(is.null(color)) color <- RColorBrewer::brewer.pal(n=12, name="Paired")[c(2*(1:6),2*(1:6)-1)]
   if(is.null(tnames)) tnames <- paste0("T", 1:nrow(ldaresult$document_sums))
-
+  
   IDmatch <- match(ldaID,meta$id)
   if(any(is.na(IDmatch))){stop("missing id's in meta")}
   x <- as.data.frame(t(ldaresult$document_sums))
@@ -50,43 +50,58 @@ plotArea <- function(ldaresult, ldaID, select = NULL, tnames = NULL,
   x <- sapply(x,colSums)
   x <- t(t(x)/colSums(x))
   rownames(x) <- tnames
-
+  
+  ## add zeros
+  levs <-
+    as.character(unique(lubridate::floor_date(
+      seq(from = as.Date(min(colnames(x))), to = as.Date(max(colnames(x))), by = "day"), unit = unit)))
+  zerosToAdd <- !(levs %in% colnames(x))
+  if(any(zerosToAdd)){
+    # add NA for proportion
+    tab <- matrix(NA, nrow = nrow(x), ncol = sum(zerosToAdd))
+    colnames(tab) <- levs[zerosToAdd]
+    x <- cbind(x, tab)
+    x <- x[,order(colnames(x))]
+  }
+  
   ## reduce to used topics
   if(!is.null(select)){
     if(is.numeric(select) | is.integer(select)){x <- x[select,]
     }else{x <- x[match(select, tnames),]
     }
   }
-
+  
   ## reduce via threshold
-  if(!is.null(threshold)){x <- x[apply(x,1, function(x)any(x>=threshold)),]}
-
-
+  if(!is.null(threshold)){x <- x[apply(x,1, function(x)any(x>=threshold, na.rm = TRUE)),]}
+  
+  
   ## sort topics
-  if(sort){topicVolume <- rowSums(x)
+  if(sort){topicVolume <- rowSums(x, na.rm = TRUE)
   x <- x[order(topicVolume, decreasing=FALSE),]}
-
+  
   ## cumsum
   y <- apply(x,2, cumsum)
-  y <- rbind(0,y)
-
+  y <- rbind(y[1,]-y[1,],y)
+  
   ## expand color vector if necessary
   if(length(color) < nrow(y)) color <- rep(color, ceiling(nrow(y)/length(color)))[1:nrow(x)]else color <- color[1:nrow(x)]
-
+  
   ## plotting
   tmplas <- par("las")
   par(las = 2)
-  plot(NULL, xlim=range(as.Date(colnames(x))), ylim=c(0,max(y)), ylab="", xlab="", xaxt="n")
+  plot(NULL, xlim=range(as.Date(colnames(x))), ylim=c(0,max(y, na.rm = TRUE)), ylab="", xlab="", xaxt="n")
   for(i in 1:(nrow(y)-1)){
     polygon(x=c(as.Date(colnames(y)), rev(as.Date(colnames(y)))), c(y[i,], rev(y[i+1,])), col=color[i])
   }
   xvals <- seq(lubridate::floor_date(min(as.Date(colnames(y))), unit=xunit), max(as.Date(colnames(y))), by=xunit)
   axis(side = 1, xvals, format(xvals, "%b %y"), cex.axis = .85)
-
+  
   ## label peaks
   if(peak>0){
     xPeak <- x>peak
     xPeaklower <- x>0.01
+    xPeak[is.na(xPeak)] = FALSE
+    xPeaklower[is.na(xPeaklower)] = FALSE
     for(i in 1:nrow(xPeak)){
       wPeak <- which(xPeak[i,])
       if(length(wPeak)==0)next
@@ -97,7 +112,7 @@ plotArea <- function(ldaresult, ldaID, select = NULL, tnames = NULL,
       while(j <length(wPeak)){
         kold <- 0
         for(k in j:length(wPeak)){
-          if(any(x[i,(wPeak[j]+1):(wPeak[j+1]-1)]<0.01)){ wPeakNew <- c(wPeakNew, wPeak[j:k][which.max(x[i,wPeak[j:k]])])
+          if(any(x[i,(wPeak[j]+1):(wPeak[j+1]-1)]<0.01, na.rm = TRUE)){ wPeakNew <- c(wPeakNew, wPeak[j:k][which.max(x[i,wPeak[j:k]])])
           kold <- k
           j <- k+1
           break}
@@ -109,7 +124,7 @@ plotArea <- function(ldaresult, ldaID, select = NULL, tnames = NULL,
       text(x=as.Date(names(wPeakNew)),y=(y[i,wPeakNew] + y[i+1,wPeakNew])/2, labels=rownames(y)[i+1])
     }
   }
-
+  
   ## legend
   if(!is.null(legend)){legend(x=legend, legend= rev(rownames(y)[-1][apply(x,1,function(z)any(z>legendLimit))]), bg="white", pch=15, col=rev(color[apply(x,1,function(z)any(z>legendLimit))]))}
   par(las=tmplas)

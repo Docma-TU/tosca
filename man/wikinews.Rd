@@ -6,7 +6,11 @@
 \alias{politics}
 \alias{economy}
 \title{The wikinews dataset}
-\format{textmeta object}
+\format{
+textmeta object
+
+An object of class \code{textmeta} of length 3.
+}
 \usage{
 data(politics)
 

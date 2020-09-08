@@ -28,6 +28,6 @@ Suggests:
 	knitr (>= 1.20),
 	devtools (>= 1.13),
 	rmarkdown (>= 1.9)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 LazyData: true
 VignetteBuilder: knitr
