@@ -27,7 +27,7 @@
 #'  additionalVariable=1:4, stringsAsFactors=FALSE), text=texts)
 #'
 #' corp <- as.corpus.textmeta(obj)
-#' summary(corp)
+#' quanteda:::summary.corpus(corp)
 #' @export as.corpus.textmeta
 
 as.corpus.textmeta <- function(object, docnames = "id",

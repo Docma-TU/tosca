@@ -1,11 +1,10 @@
 context("plotArea")
 
 test_that("plotArea", {
-  suppressWarnings(RNGversion("3.5.0"))
     set.seed(24601)
     ldaresult <- list(document_sums=matrix(sample(c(rep(0,20),1:20),10000, replace=TRUE),10,1000))
-    ldaid <- paste("ID", 11:1010)
-    meta1 <- data.frame(id=paste("ID", 1:1020), date=as.Date(sample(1:730, 1020, replace=TRUE), origin="1990-10-03"))
+    ldaid <- paste("ID", 22:1021)
+    meta1 <- data.frame(id=paste("ID", 1:1021), date=as.Date(c(sample(1:730, 1020, replace=TRUE), -100), origin="1990-10-03"))
     ldaresult2 <- list(document_sums=matrix(c(60,50,50,50,200,1,100,1,20,80,45,55),2,6))
     ldaid2 <- paste("ID", 1:6)
     meta2 <- data.frame(id=paste("ID", 1:6), date=as.Date(c(1,32,64,96,128,160), origin="1990-10-03"))
