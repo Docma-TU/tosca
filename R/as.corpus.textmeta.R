@@ -9,8 +9,7 @@
 #' which should be kept as \code{\link[quanteda]{docnames}}.
 #' @param docvars Character: vector with columns of \code{object$meta} which
 #' should be kept as \code{\link[quanteda]{docvars}}.
-#' @param metadoc Character: vector with columns of \code{object$meta} which
-#' should be kept as \code{\link[quanteda]{metadoc}}.
+# @param metadoc Character: vector with columns of \code{object$meta} which should be kept as \code{\link[quanteda]{metadoc}}.
 #' @param ... Additional parameters like \code{compress} for \code{\link[quanteda]{corpus}}.
 #' @return \code{\link[quanteda]{corpus}} object
 #' @keywords manip
@@ -27,12 +26,14 @@
 #'  additionalVariable=1:4, stringsAsFactors=FALSE), text=texts)
 #'
 #' corp <- as.corpus.textmeta(obj)
-#' library(quanteda)
-#' summary(corp)
+#' quanteda::docvars(corp)
+#' quanteda::textstat_summary(corp)
 #' @export as.corpus.textmeta
 
 as.corpus.textmeta <- function(object, docnames = "id",
-  docvars = setdiff(colnames(object$meta), "id"), metadoc = character(), ...){
+  docvars = setdiff(colnames(object$meta), "id"),
+  #metadoc = character(),
+  ...){
 
   # stop if parameters set wrong
   stopifnot(is.textmeta(object), is.character(docnames), length(docnames) == 1,
@@ -48,10 +49,10 @@ as.corpus.textmeta <- function(object, docnames = "id",
   colnames(meta) <- metadoc
 
   corp <- quanteda::corpus(x = texts, docnames = id, docvars = vars, ...)
-  suppressWarnings(
-    quanteda::docvars(corp) <- 
-      cbind(quanteda::docvars(corp), quanteda::metadoc(corp))
-  )
+  #suppressWarnings(
+  #  quanteda::docvars(corp) <- 
+  #    cbind(quanteda::docvars(corp), quanteda::metadoc(corp))
+  #)
 
   return(corp)
 }
