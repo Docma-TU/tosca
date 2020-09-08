@@ -47,6 +47,7 @@ obj <- textmeta(meta=data.frame(id=c("A", "B", "C", "D"),
  additionalVariable=1:4, stringsAsFactors=FALSE), text=texts)
 
 corp <- as.corpus.textmeta(obj)
-quanteda:::summary.corpus(corp)
+library(quanteda)
+summary(corp)
 }
 \keyword{manip}
