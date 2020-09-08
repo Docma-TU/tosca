@@ -37,8 +37,8 @@ as.corpus.textmeta <- function(object, docnames = "id",
 
   # stop if parameters set wrong
   stopifnot(is.textmeta(object), is.character(docnames), length(docnames) == 1,
-    is.character(docvars), is.character(metadoc),
-    all(union(union(docnames, docvars), metadoc) %in% colnames(object$meta)))
+    is.character(docvars), #is.character(metadoc),
+    all(union(docnames, docvars) %in% colnames(object$meta)))
   
   id <- object$meta[,docnames]
   texts <- sapply(object$text, paste, collapse = "\n\n")[match(id, names(object$text))]
