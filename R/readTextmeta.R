@@ -111,7 +111,7 @@ readTextmeta <- function(path, file, cols, dateFormat = "%Y-%m-%d", idCol = "id"
   class(res) <- "textmeta"
 
   # remove duplicates
-  if(duplicateAction) res <- deleteAndRenameDuplicates(res, paragraph = FALSE)
+  if(duplicateAction) res <- deleteAndRenameDuplicates(res)
 
   # print summary to console
   summary(res)
