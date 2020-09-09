@@ -12,8 +12,8 @@ editor_options:
   chunk_output_type: console
 vignette: >
   %\VignetteIndexEntry{Vignette tosca}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 \newpage
 # Introduction
@@ -144,6 +144,10 @@ Additionally you can identify \texttt{text} component duplicates in your corpus 
 
 In the given example corpus complete duplicates are only expected if pages were associated to both categories. These duplicates are deleted. 
 ```{r}
+any(duplicated(corpus$meta$id))
+sum(duplicated(names(corpus$text)))
+length(corpus$text) - nrow(corpus$meta)
+corpus$meta <- corpus$meta[match(names(corpus$text), corpus$meta$id),]
 corpus <- deleteAndRenameDuplicates(corpus)
 ```
 The function \texttt{deleteAndRenameDuplicates} deleted 286 complete duplicates, so that \texttt{duplist} is applicable to the corpus.
