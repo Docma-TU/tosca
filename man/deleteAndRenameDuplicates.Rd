@@ -4,13 +4,14 @@
 \alias{deleteAndRenameDuplicates}
 \title{Deletes and Renames Articles with the same ID}
 \usage{
-deleteAndRenameDuplicates(object, paragraph = FALSE)
+deleteAndRenameDuplicates(object, renameRemaining = TRUE)
 }
 \arguments{
 \item{object}{A \code{textmeta} object as a result of a read-function.}
 
-\item{paragraph}{Logical: Should be set to \code{TRUE} if the article is a
-list of character strings, representing the paragraphs.}
+\item{renameRemaining}{Logical: Should all articles for which a counterpart with the same
+id exists, but which do not have the same text and - in addition - which matches (an)other
+article(s) in the text field be named a "fake duplicate" or not.}
 }
 \value{
 A filtered \code{textmeta} object with updated IDs.
@@ -43,4 +44,25 @@ stringsAsFactors=FALSE), text=texts)
 
 duplicates <- deleteAndRenameDuplicates(object=corpus)
 duplicates$meta$id
+
+texts <- list(A="Give a Man a Fish, and You Feed Him for a Day.
+Teach a Man To Fish, and You Feed Him for a Lifetime",
+A="Give a Man a Fish, and You Feed Him for a Day.
+Teach a Man To Fish, and You Feed Him for a Lifetime",
+A="A fake duplicate",
+B="So Long, and Thanks for All the Fish",
+B="So Long, and Thanks for All the Fish",
+C="A very able manipulative mathematician, Fisher enjoys a real mastery
+in evaluating complicated multiple integrals.",
+C="A very able manipulative mathematician, Fisher enjoys a real mastery
+in evaluating complicated multiple integrals.")
+
+corpus <- textmeta(meta=data.frame(id=c("A", "A", "A", "B", "B", "C", "C"),
+title=c("Fishing", "Fishing2", "Fake duplicate", "Don't panic!", "towel day", "Sir Ronald", "Sir Ronald"),
+date=c("1885-01-02", "1885-01-02", "1885-01-03", "1979-03-04", "1979-03-05", "1951-05-06", "1951-05-06"),
+stringsAsFactors=FALSE), text=texts)
+
+duplicates <- deleteAndRenameDuplicates(object=corpus)
+duplicates2 <- deleteAndRenameDuplicates(object=corpus, renameRemaining = FALSE)
+
 }
