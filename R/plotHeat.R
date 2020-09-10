@@ -27,7 +27,7 @@
 #' @return A pdf.
 #' Invisible: A dataframe.
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' data(politics)
 #' poliClean <- cleanTexts(politics)
 #' words10 <- makeWordlist(text=poliClean$text)

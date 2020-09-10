@@ -61,7 +61,7 @@ Creates a stacked area plot of all or selected topics.
 This function is useful to visualize the volume of topics and to show trends over time.
 }
 \examples{
-\donttest{
+\dontrun{
 data(politics)
 poliClean <- cleanTexts(politics)
 words10 <- makeWordlist(text=poliClean$text)

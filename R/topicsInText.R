@@ -17,7 +17,7 @@
 #' @param htmlreturn Logical: HTML output for tests
 #' @return A HTML document
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' data(politics)
 #' poliClean <- cleanTexts(politics)
 #' words10 <- makeWordlist(text=poliClean$text)

@@ -58,7 +58,7 @@
 #' additionally columns \code{wnames_rel} for \code{rel = TRUE} - with the
 #' counts (and proportion) of the given wordgroups.
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' data(politics)
 #' poliClean <- cleanTexts(politics)
 #' plotFreq(poliClean, wordlist=c("obama", "bush"))

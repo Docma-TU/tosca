@@ -125,7 +125,7 @@ Additionally the corpora are reduced by \code{\link{filterWord}} and a
 \code{rel = TRUE} proportion of subcorpora to its corresponding whole corpus.
 }
 \examples{
-\donttest{
+\dontrun{
 data(politics)
 poliClean <- cleanTexts(politics)
 poliPraesidents <- filterWord(object=poliClean, search=c("bush", "obama"))

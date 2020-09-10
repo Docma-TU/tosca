@@ -109,7 +109,7 @@ or to create one plot for every curve (see \code{pages}).
 In addition the plots can be written to a pdf by setting \code{file}.
 }
 \examples{
-\donttest{
+\dontrun{
 data(politics)
 poliClean <- cleanTexts(politics)
 words10 <- makeWordlist(text=poliClean$text)

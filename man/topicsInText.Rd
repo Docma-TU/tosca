@@ -54,7 +54,7 @@ A HTML document
 The function creates a HTML document with the words of texts colored depending on the topic allocation of each word.
 }
 \examples{
-\donttest{
+\dontrun{
 data(politics)
 poliClean <- cleanTexts(politics)
 words10 <- makeWordlist(text=poliClean$text)

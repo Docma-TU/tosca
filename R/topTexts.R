@@ -30,8 +30,8 @@
 #' wordlist <- makeWordlist(corpus$text)
 #' ldaPrep <- LDAprep(text=corpus$text, vocab=wordlist$words)
 #'
-#' \donttest{LDA <- LDAgen(documents=ldaPrep, K = 3L, vocab=wordlist$words, num.words=3)}
-#' \donttest{topTexts(ldaresult=LDA, ldaID=c("A","B","C"), limit = 1L, minlength=2)}
+#' LDA <- LDAgen(documents=ldaPrep, K = 3L, vocab=wordlist$words, num.words=3)
+#' topTexts(ldaresult=LDA, ldaID=c("A","B","C"), limit = 1L, minlength=2)
 #' @export topTexts
 topTexts <- function(ldaresult, ldaID, limit = 20L, rel = TRUE,
   select = 1:nrow(ldaresult$document_sums), tnames, minlength = 30L){

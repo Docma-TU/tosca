@@ -54,7 +54,7 @@
 #' Invisible: A dataframe with columns \code{date} and \code{tnames} with the
 #' counts/proportion of the selected topics.
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' data(politics)
 #' poliClean <- cleanTexts(politics)
 #' words10 <- makeWordlist(text=poliClean$text)

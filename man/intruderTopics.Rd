@@ -68,7 +68,7 @@ Object of class \code{IntruderTopics}. List of 11
 This function validates a LDA result by presenting a mix of topics and intruder topics to a human user, who has to identity them.
 }
 \examples{
-\donttest{
+\dontrun{
 data(politics)
 poliClean <- cleanTexts(politics)
 words10 <- makeWordlist(text=poliClean$text)

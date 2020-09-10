@@ -60,7 +60,7 @@ its current share from its mean share. Shares can be calculated on corpus level 
 Shares can be calculated in absolute deviation from the mean or relative to the mean of the topic to account for different topic strengths.
 }
 \examples{
-\donttest{
+\dontrun{
 data(politics)
 poliClean <- cleanTexts(politics)
 words10 <- makeWordlist(text=poliClean$text)

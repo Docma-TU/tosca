@@ -87,7 +87,7 @@ which could be specified by \code{id}.
 If you use \code{type = "docs"} you can use a tokenized or a non-tokenized text component.
 }
 \examples{
-\donttest{
+\dontrun{
 data(politics)
 poliClean <- cleanTexts(politics)
 

@@ -56,8 +56,8 @@ corpus <- cleanTexts(corpus)
 wordlist <- makeWordlist(corpus$text)
 ldaPrep <- LDAprep(text = corpus$text, vocab = wordlist$words)
 
-\donttest{LDA <- LDAgen(documents = ldaPrep, K = 3L, vocab = wordlist$words, num.words = 3)}
-\donttest{topWords(LDA$topics)}
+LDA <- LDAgen(documents = ldaPrep, K = 3L, vocab = wordlist$words, num.words = 3)
+topWords(LDA$topics)
 
-\donttest{importance(LDA$topics)}
+importance(LDA$topics)
 }

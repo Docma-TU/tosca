@@ -48,8 +48,8 @@ corpus <- cleanTexts(corpus)
 wordlist <- makeWordlist(corpus$text)
 ldaPrep <- LDAprep(text=corpus$text, vocab=wordlist$words)
 
-\donttest{result <- LDAgen(documents=ldaPrep, K = 3L, vocab=wordlist$words, num.words=3)}
-\donttest{topicCoherence(ldaresult=result, documents=ldaPrep, num.words=5, by.score=TRUE)}
+result <- LDAgen(documents=ldaPrep, K = 3L, vocab=wordlist$words, num.words=3)
+topicCoherence(ldaresult=result, documents=ldaPrep, num.words=5, by.score=TRUE)
 }
 \references{
 Mimno, David and Wallach, Hannah M. and Talley, Edmund and Leenders, Miriam and McCallum, Andrew. Optimizing semantic coherence in topic models. EMNLP '11 Proceedings of the Conference on Empirical Methods in Natural Language Processing, 2011.

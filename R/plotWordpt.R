@@ -72,7 +72,7 @@
 #' Invisible: A dataframe with columns \code{date} and \code{tnames: wnames}
 #' with the counts/proportion of the selected combination of topics and words.
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' data(politics)
 #' poliClean <- cleanTexts(politics)
 #' words10 <- makeWordlist(text=poliClean$text)

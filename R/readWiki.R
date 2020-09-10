@@ -16,7 +16,7 @@
 #' @return \code{\link{textmeta}} object
 #' @keywords manip
 #' @examples
-#' \donttest{corpus <- readWiki(category="Person_(Studentenbewegung)",
+#' \dontrun{corpus <- readWiki(category="Person_(Studentenbewegung)",
 #' subcategories = FALSE, language = "de", project = "wikipedia")}
 #' @export readWiki
 #'

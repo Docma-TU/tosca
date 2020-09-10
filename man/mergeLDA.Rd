@@ -37,8 +37,8 @@ corpus <- cleanTexts(corpus)
 wordlist <- makeWordlist(corpus$text)
 ldaPrep <- LDAprep(text=corpus$text, vocab=wordlist$words)
 
-\donttest{LDA1 <- LDAgen(documents=ldaPrep, K = 3L, vocab=wordlist$words, num.words=3)}
-\donttest{LDA2 <- LDAgen(documents=ldaPrep, K = 3L, vocab=wordlist$words, num.words=3)}
-\donttest{mergeLDA(list(LDA1=LDA1, LDA2=LDA2))}
+LDA1 <- LDAgen(documents=ldaPrep, K = 3L, vocab=wordlist$words, num.words=3)
+LDA2 <- LDAgen(documents=ldaPrep, K = 3L, vocab=wordlist$words, num.words=3)
+mergeLDA(list(LDA1=LDA1, LDA2=LDA2))
 }
 \keyword{manip}

@@ -30,7 +30,7 @@
 #' \item{stopTopics}{Parameter of the function call}
 #' @references Chang, Jonathan and Sean Gerrish and Wang, Chong and Jordan L. Boyd-graber and David M. Blei. Reading Tea Leaves: How Humans Interpret Topic Models. Advances in Neural Information Processing Systems, 2009.
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' data(politics)
 #' poliClean <- cleanTexts(politics)
 #' words10 <- makeWordlist(text=poliClean$text)

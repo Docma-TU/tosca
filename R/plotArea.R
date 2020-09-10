@@ -21,7 +21,7 @@
 #' @details This function is useful to visualize the volume of topics and to show trends over time.
 #' @return List of two matrices. \code{rel} contains the topic proportions over time, \code{relcum} contains the cumulated topic proportions
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' data(politics)
 #' poliClean <- cleanTexts(politics)
 #' words10 <- makeWordlist(text=poliClean$text)

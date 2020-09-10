@@ -27,8 +27,8 @@
 #' wordlist <- makeWordlist(corpus$text)
 #' ldaPrep <- LDAprep(text=corpus$text, vocab=wordlist$words)
 #'
-#' \donttest{result <- LDAgen(documents=ldaPrep, K = 3L, vocab=wordlist$words, num.words=3)}
-#' \donttest{topicCoherence(ldaresult=result, documents=ldaPrep, num.words=5, by.score=TRUE)}
+#' result <- LDAgen(documents=ldaPrep, K = 3L, vocab=wordlist$words, num.words=3)
+#' topicCoherence(ldaresult=result, documents=ldaPrep, num.words=5, by.score=TRUE)
 #' @export topicCoherence
 topicCoherence <- function(ldaresult, documents, num.words=10, by.score=TRUE, sym.coherence = FALSE, epsilon=1){
   stopifnot(is.list(ldaresult), is.list(ldaresult$assignments), length(ldaresult$assignments) == length(documents), is.matrix(ldaresult$topics), is.list(documents),

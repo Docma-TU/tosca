@@ -62,7 +62,7 @@
 #' Invisible: A dataframe with columns \code{date} and \code{tnames} with the
 #' counts/proportion of the selected topics.
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' data(politics)
 #' poliClean <- cleanTexts(politics)
 #' poliPraesidents <- filterWord(object=poliClean, search=c("bush", "obama"))

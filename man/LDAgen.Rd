@@ -70,7 +70,7 @@ corpus <- cleanTexts(corpus)
 wordlist <- makeWordlist(corpus$text)
 ldaPrep <- LDAprep(text=corpus$text, vocab=wordlist$words)
 
-\donttest{LDAgen(documents=ldaPrep, K = 3L, vocab=wordlist$words, num.words=3)}
+LDAgen(documents=ldaPrep, K = 3L, vocab=wordlist$words, num.words=3)
 
 }
 \references{

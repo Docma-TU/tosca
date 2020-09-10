@@ -38,7 +38,7 @@
 #' Invisible: A dataframe with columns \code{date} and \code{counts},
 #' respectively \code{proportion}
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' data(politics)
 #' poliClean <- cleanTexts(politics)
 #'

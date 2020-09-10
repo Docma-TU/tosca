@@ -33,7 +33,7 @@ with functions from the package \code{\link{WikipediR}}. Creates a
 \code{\link{textmeta}} object including the requested pages.
 }
 \examples{
-\donttest{corpus <- readWiki(category="Person_(Studentenbewegung)",
+\dontrun{corpus <- readWiki(category="Person_(Studentenbewegung)",
 subcategories = FALSE, language = "de", project = "wikipedia")}
 }
 \keyword{manip}
