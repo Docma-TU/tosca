@@ -2,6 +2,7 @@
 % Please edit documentation in R/readTextmeta.R
 \name{readTextmeta}
 \alias{readTextmeta}
+\alias{readTextmeta.df}
 \title{Read Corpora as CSV}
 \usage{
 readTextmeta(
@@ -17,9 +18,22 @@ readTextmeta(
   xmlAction = TRUE,
   duplicateAction = TRUE
 )
+
+readTextmeta.df(
+  df,
+  cols = colnames(df),
+  dateFormat = "\%Y-\%m-\%d",
+  idCol = "id",
+  dateCol = "date",
+  titleCol = "title",
+  textCol = "text",
+  xmlAction = TRUE,
+  duplicateAction = TRUE
+)
 }
 \arguments{
-\item{path}{\code{character} string with path where the data files are}
+\item{path}{\code{character/data.frame} string with path where the data files
+are OR parameter \code{df} for \code{readTextmeta.df}}
 
 \item{file}{\code{character} string with names of the CSV files}
 
@@ -44,6 +58,8 @@ handled with \code{\link{removeXML}}}
 \item{duplicateAction}{\code{logical}
 whether \code{\link{deleteAndRenameDuplicates}} should be applied to the
 created \code{\link{textmeta}} object}
+
+\item{df}{\code{data.frame} table which should be transformed to a textmeta object}
 }
 \value{
 \code{\link{textmeta}} object
