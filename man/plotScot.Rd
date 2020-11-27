@@ -85,6 +85,10 @@ which could be specified by \code{id}.
 \code{object} needs a textmeta object with strictly tokenized text component
 (character vectors) if you use \code{type = "words"}.
 If you use \code{type = "docs"} you can use a tokenized or a non-tokenized text component.
+In fact, you can use the textmeta constructor
+(\code{textmeta(meta = <your-meta-data.frame>)}) to create a text meta object
+containing only the meta field and plot the resulting object.
+This way you can save time and disk space at the first glance.
 }
 \examples{
 \dontrun{
