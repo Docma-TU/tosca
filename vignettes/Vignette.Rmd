@@ -70,10 +70,19 @@ The following table shows an overview over the functions in the package.
 |intruderTopics                  |intruder topics for topic validation
 |intruderWords                   |intruder words for topic validation
 
+```{r, echo = FALSE} 
+# Sys.setenv(NOT_CRAN = TRUE)
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+knitr::opts_chunk$set(
+  purl = NOT_CRAN,
+  eval = NOT_CRAN
+)
+```
 
-The current version of the package can be installed with the \texttt{devtools} package.
+The current version of the package can be installed with the \texttt{devtools} package. The data for this vignatte can be found in the toscaData package on gitHub.
 ```{r, include = TRUE, message=FALSE, eval = FALSE}
 devtools::install_github("DoCMA-TU/tosca")
+devtools::install_github("DoCMA-TU/toscaData")
 library(tosca)
 ```
 The actual version on CRAN can be installed with \texttt{install.packages}.
@@ -83,6 +92,7 @@ library(tosca)
 ```
 ```{r, include = FALSE, message=FALSE}
 library(tosca)
+library(toscaData)
 suppressWarnings(RNGversion("3.5.0"))
 ```
 
@@ -104,7 +114,7 @@ corpus <- readWikinews()
 
 Another method to read both files is to read them seperately and merge them with the function \texttt{mergeTextmeta}. This function should be used if you want to merge data from different sources using different read-functions. We use the two example datasets from the package.
 
-```{r, eval = TRUE}
+```{r}
 data(politics)
 data(economy)
 corpus <- mergeTextmeta(list(politics, economy))
@@ -367,7 +377,7 @@ After receiving the words which appear at least six times in the whole filtered 
 The function that has to be applied first to the corpus prepared by \texttt{LDAprep} is \texttt{LDAgen}. The function offers the options \texttt{K} (\texttt{integer}, default: \texttt{K = 100L}) to set the number of topics, \texttt{vocab} (\texttt{character} vector) for specifying the words which are considered in the preparation of the corpus and several more e.g. number of iterations for the burnin (default: \texttt{burnin = 70}) and the number of iterations for the Gibbs sampler (default: \texttt{num.iterations = 200}). The result is saved in a \texttt{R} workspace, the first part of the results name can be specified by setting the option \texttt{folder} (default: \texttt{folder = file.path(tempdir(),"lda-result")}). If you want to save your data permanent, you have to change the path in an non temporary one.
 
 In the concrete example corpus the manipulated corpus \texttt{pagesLDA} is used for \texttt{documents}, the topic number is set to \texttt{K = 10} and for reproducibility a seed is set to \texttt{seed = 123}. The filename consists of the \texttt{folder} argument followed by the options of \texttt{K}, \texttt{num.iterations}, \texttt{burnin} and the \texttt{seed} of the LDA. The hyperparameter \texttt{alpha} and \texttt{eta} are set to $1/K$ by default.
-```{r, eval = TRUE, include = FALSE}
+```{r, include = FALSE}
 result <- LDAgen(documents = pagesLDA, K = 10L, vocab = words5, seed = 123)
 load("lda-result-k10i200b70s123alpha0.1eta0.1.RData")
 ```

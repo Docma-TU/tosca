@@ -1,8 +1,8 @@
 Package: tosca
 Type: Package
 Title: Tools for Statistical Content Analysis
-Version: 0.2-0
-Date: 2020-03-10
+Version: 0.3-0
+Date: 2021-04-18
 Authors@R: c(person("Lars", "Koppers", email="koppers@statistik.tu-dortmund.de", role=c("aut", "cre"), comment = c(ORCID = "0000-0002-1642-9616")),
 	     person("Jonas", "Rieger", email="jonas.rieger@tu-dortmund.de", role=c("aut"), comment = c(ORCID = "0000-0002-0007-4478")),
 	     person("Karin", "Boczek", email="karin.boczek@tu-dortmund.de", role=c("ctb"), comment = c(ORCID = "0000-0003-1516-4094")),
@@ -24,10 +24,10 @@ Imports:
 	WikipediR (>= 1.5.0),
 	data.table (>= 1.11.4)
 Suggests:
+	toscaData,
 	testthat (>= 2.0.0),
 	knitr (>= 1.20),
 	devtools (>= 1.13),
 	rmarkdown (>= 1.9)
 RoxygenNote: 7.1.1
-LazyData: true
 VignetteBuilder: knitr

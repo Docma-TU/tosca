@@ -5,9 +5,15 @@
 \alias{importance}
 \title{Top Words per Topic}
 \usage{
-topWords(topics, numWords = 1, byScore = TRUE, epsilon = 1e-05, values = FALSE)
+topWords(
+  topics,
+  numWords = 1,
+  byScore = TRUE,
+  epsilon = 0.00001,
+  values = FALSE
+)
 
-importance(topics, epsilon = 1e-05)
+importance(topics, epsilon = 0.00001)
 }
 \arguments{
 \item{topics}{\code{named matrix}: 
