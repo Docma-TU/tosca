@@ -2,9 +2,15 @@
 % Please edit documentation in R/readWhatsApp.R
 \name{readWhatsApp}
 \alias{readWhatsApp}
+\alias{datemining.WA}
+\alias{authormining.WA}
 \title{Read WhatsApp files}
 \usage{
 readWhatsApp(path, file)
+
+datemining.WA(object)
+
+authormining.WA(object)
 }
 \arguments{
 \item{path}{Character: string with path where the data files are.
@@ -12,12 +18,16 @@ If only \code{path} is given, \code{file} will be determined by searching
 for html files with \code{\link[base]{list.files}} and recursion.}
 
 \item{file}{Character: string with names of the HTML files.}
+
+\item{object}{\code{\link{textmeta}} object, result from readWhatsapp.}
 }
 \value{
 \code{\link{textmeta}} object.
 }
 \description{
-Reads HTML-files from WhatsApp and separates the text and meta data.
+Reads HTML-files from WhatsApp and separates the text and meta data. The
+functions \code{datemining} and \code{authormining} can be used to deduce
+some missing values (concerning the author or date tag) from the data itself.
 }
 \author{
 Jonas Rieger (<jonas.rieger@tu-dortmund.de>)

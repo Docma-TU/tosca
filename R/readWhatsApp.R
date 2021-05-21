@@ -1,6 +1,8 @@
 #' Read WhatsApp files
 #'
-#' Reads HTML-files from WhatsApp and separates the text and meta data.
+#' Reads HTML-files from WhatsApp and separates the text and meta data. The
+#' functions \code{datemining} and \code{authormining} can be used to deduce
+#' some missing values (concerning the author or date tag) from the data itself.
 #'
 #' @param path Character: string with path where the data files are.
 #' If only \code{path} is given, \code{file} will be determined by searching
@@ -24,7 +26,7 @@ readWhatsApp = function(path, file){
   if(missing(path)){
     return(readWhatsApp.file(file = file))
   }
-  return(readWhatsApp(file = file.path(path, file)))
+  return(readWhatsApp.file(file = file.path(path, file)))
 }
 
 readWhatsApp.file = function(file){
@@ -155,4 +157,81 @@ readWhatsApp.file = function(file){
   textandemojis = sapply(seq_len(ncol(indsplit)), function(x)
     paste(textandemojis[indsplit[1,x]:indsplit[2,x]], collapse = " "))
   return(textandemojis)
+}
+
+#' @rdname readWhatsApp
+#' @param object \code{\link{textmeta}} object, result from readWhatsapp.
+#' @export datemining.WA
+datemining.WA = function(object){
+  
+  stopifnot(is.textmeta(object),
+    all(c("systemDate", "userMessage") %in% colnames(object$meta)))
+  
+  noDate = which(object$meta$userMessage & is.na(object$meta$date))
+  
+  for (i in seq_along(noDate)){
+    tmp = which.max(object$meta$systemDate[seq(noDate[i], nrow(object$meta))]) #findet ersten TRUE
+    tmp = tmp + noDate[i] - 1 #berechnet Index
+    nextDate = object$text[[object$meta$id[tmp]]]
+    
+    tmp = which.max(object$meta$systemDate[seq(noDate[i], 1)]) #findet ersten TRUE rueckwaerts
+    tmp = noDate[i] - tmp + 1 #berechnet Index
+    prevDate = object$text[[object$meta$id[tmp]]]
+    
+    nextDate = as.Date(nextDate, format = "%d.%m.%Y")
+    prevDate = as.Date(prevDate, format = "%d.%m.%Y")
+    daydiff = as.numeric(difftime(nextDate, prevDate, "day"))
+    if(!is.na(daydiff) && daydiff == 1){
+      object$meta$date[noDate[i]] = prevDate
+    }
+  }
+  
+  newnoDate = noDate[is.na(object$meta$date[noDate])]
+  
+  for (i in seq_along(newnoDate)){
+    tmp = which.max(!is.na(object$meta$date[seq(newnoDate[i], nrow(object$meta))])) #findet ersten TRUE
+    ind1 = tmp + newnoDate[i] - 1 #berechnet Index
+    nextDate = object$meta$date[ind1]
+    
+    tmp = which.max(!is.na(object$meta$date[seq(newnoDate[i], 1)])) #findet ersten TRUE rueckwaerts
+    ind2 = newnoDate[i] - tmp + 1 #berechnet Index
+    prevDate = object$meta$date[ind2]
+    
+    daydiff = as.numeric(difftime(nextDate, prevDate, "day"))
+    if(!is.na(daydiff) && daydiff == 0){
+      object$meta$date[newnoDate[i]] = prevDate
+    }
+    if(!any(object$meta$systemDate[ind2:newnoDate[i]])){
+      object$meta$date[newnoDate[i]] = prevDate
+    }
+    if(!any(object$meta$systemDate[ind1:newnoDate[i]])){
+      object$meta$date[newnoDate[i]] = nextDate
+    }
+  }
+  
+  return(object)
+}
+
+#' @rdname readWhatsApp
+#' @export authormining.WA
+authormining.WA = function(object){
+  
+  stopifnot(is.textmeta(object),
+    all(c("author", "userMessage") %in% colnames(object$meta)))
+  
+  warning("\nadding author for user observations (replacing NAs by setting author to the most often author per ID-prefix - or to the ID-prefix itself, if no there is no known author at all): make sure that all user messages without author tag are sent from the main user in each chat!")
+  noAuthor = which(object$meta$userMessage & is.na(object$meta$author))
+  
+  ids = gsub(pattern = "\\.[0-9]*", x = object$meta$id, replacement = "")
+  
+  object$meta$author[noAuthor] =
+    sapply(gsub(pattern = "\\.[0-9]*", x = object$meta$id[noAuthor], replacement = ""),
+      function(x) ifelse(!is.null(names(which.max(table(object$meta$author[ids == x])))),
+        names(which.max(table(object$meta$author[ids == x]))), NA_character_))
+  
+  noAuthor = which(object$meta$userMessage & is.na(object$meta$author))
+  
+  object$meta$author[noAuthor] = gsub(pattern = "\\.[0-9]*",
+    x = object$meta$id[noAuthor], replacement = "")
+  return(object)
 }
