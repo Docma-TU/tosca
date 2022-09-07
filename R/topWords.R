@@ -50,12 +50,17 @@ topWords <- function(topics, numWords = 1, byScore = TRUE, epsilon = 1e-5, value
     length(numWords) == 1, length(byScore) == 1, length(values) == 1,
     as.integer(numWords) == numWords, is.logical(byScore), is.logical(values))
   
+  words <- matrix(NA_character_, ncol = nrow(topics), nrow = numWords)
+  unzero_topics <- rowSums(topics) != 0
+  topics <- topics[unzero_topics,,drop=FALSE]
+  
   if (byScore){
     topics <- importance(topics, epsilon = epsilon)
   }
-  words <- apply(topics, 1, function(y) colnames(topics)[head(order(y, decreasing = TRUE), numWords)])
+  words[,unzero_topics] <- apply(topics, 1, function(y) colnames(topics)[head(order(y, decreasing = TRUE), numWords)])
   if (values){
-    vals <- drop(head(apply(topics, 1, function(y) -sort(-y, partial = seq_len(numWords))), numWords))
+    vals <- matrix(NA_real_, ncol = ncol(words), nrow = numWords)
+    vals[,unzero_topics] <- drop(head(apply(topics, 1, function(y) -sort(-y, partial = seq_len(numWords))), numWords))
     return(list(word = words, val = vals))
   }else{
     return(words)
