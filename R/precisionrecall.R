@@ -44,8 +44,9 @@ vprecision <- function(w, p, subset, n){
     is.logical(subset),
     all(n == as.integer(n)), all(n>=0),
     length(w) == length(p), length(p) == length(subset), length(subset) == length(n)
-  ) 
-  sum((w^2*p*(1-p)/n)[subset])
+  )
+  w <- w[subset] / sum(w[subset])
+  sum((w^2*p[subset]*(1-p[subset])/n[subset]))
 }
 
 #' @rdname precisionRecall
