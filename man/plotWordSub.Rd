@@ -57,7 +57,7 @@ topic (\code{"best"}) (default: \code{"multi"})? If \code{alloc = "best"} \code{
 
 \item{tnames}{Character vector of same length as \code{select}
 - labels for the topics (default are the first returned words of
-\code{\link{top.topic.words}} from the \code{lda} package for each topic)}
+\code{\link[lda]{top.topic.words}} from the \code{lda} package for each topic)}
 
 \item{search}{See \code{\link{filterWord}}}
 

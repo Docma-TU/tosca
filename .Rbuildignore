@@ -4,3 +4,4 @@ README.md
 (.*?).R2
 ^.*\.Rproj$
 ^\.Rproj\.user$
+global.R

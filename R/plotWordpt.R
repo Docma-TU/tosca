@@ -28,12 +28,12 @@
 #' or an \code{"or"} (default: \code{"and"})?
 #' @param wordlist List of character vectors: Which words - always linked by an "or" -
 #' should be taken into account for plotting the topic counts/proportion
-#' (default: the first \code{\link{top.topic.words}} per topic as simple character vector)?
+#' (default: the first \code{\link[lda]{top.topic.words}} per topic as simple character vector)?
 #' @param tnames Character vector of same length as \code{select}
 #' - labels for the topics (default are the first returned words of
 #' @param wnames Character vector of same length as \code{wordlist}
 #' - labels for every group of 'and' linked words
-#' \code{\link{top.topic.words}} from the \code{lda} package for each topic)
+#' \code{\link[lda]{top.topic.words}} from the \code{lda} package for each topic)
 #' @param rel Logical:  Should counts
 #' (\code{FALSE}) or proportion (\code{TRUE}) be plotted (default: \code{FALSE})?
 #' @param mark Logical: Should years be marked by

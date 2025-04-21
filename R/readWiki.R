@@ -1,18 +1,18 @@
 #' Read Pages from Wikipedia
 #'
 #' Downloads pages from Wikipedia and extracts some meta information
-#' with functions from the package \code{\link{WikipediR}}. Creates a
+#' with functions from the package \code{\link[WikipediR]{WikipediR}}. Creates a
 #' \code{\link{textmeta}} object including the requested pages.
 #'
 #'
 #' @param category \code{character} articles of which category should be
-#' downloaded, see \code{\link{pages_in_category}}, argument \code{categories}
+#' downloaded, see \code{\link[WikipediR]{pages_in_category}}, argument \code{categories}
 #' @param subcategories \code{logical} (default: \code{TRUE}) should
 #' subcategories be downloaded as well
 #' @param language \code{character} (default: \code{"en"}),
-#' see \code{\link{pages_in_category}}
+#' see \code{\link[WikipediR]{pages_in_category}}
 #' @param project \code{character} (default: \code{"wikipedia"}),
-#' see \code{\link{pages_in_category}}
+#' see \code{\link[WikipediR]{pages_in_category}}
 #' @return \code{\link{textmeta}} object
 #' @keywords manip
 #' @examples

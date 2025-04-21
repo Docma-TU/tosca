@@ -33,7 +33,7 @@
 #' - labels for the topics (default are the first returned words of
 #' @param wnames Character vector of same length as \code{wordlist}
 #' - labels for every group of 'and' linked words
-#' \code{\link{top.topic.words}} from the \code{lda} package for each topic)
+#' \code{\link[lda]{top.topic.words}} from the \code{lda} package for each topic)
 #' @param rel Logical: Should counts
 #' (\code{FALSE}) or proportion (\code{TRUE}) be plotted (default: \code{FALSE})?
 #' @param mark Logical: Should years be marked by

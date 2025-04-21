@@ -23,7 +23,7 @@ this word.
 }
 \description{
 This function transforms a text corpus such as the result of
-\code{\link{cleanTexts}} into the form needed by the \code{\link{lda}}-package.
+\code{\link{cleanTexts}} into the form needed by the \code{\link[lda]{lda}}-package.
 }
 \examples{
 texts <- list(A="Give a Man a Fish, and You Feed Him for a Day.

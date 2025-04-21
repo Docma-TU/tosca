@@ -15,7 +15,7 @@
 #' \code{ldaresult} should be plotted (default: all topics)?
 #' @param tnames Character vector of same length as \code{select}
 #' - labels for the topics (default are the first returned words of
-#' \code{\link{top.topic.words}} from the \code{lda} package for each topic)
+#' \code{\link[lda]{top.topic.words}} from the \code{lda} package for each topic)
 #' @param rel Logical: Should counts (\code{FALSE}) or
 #' proportion (\code{TRUE}) be plotted (default: \code{FALSE})?
 #' @param mark Logical: Should years be marked by

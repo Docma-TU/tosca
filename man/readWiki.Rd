@@ -13,23 +13,23 @@ readWiki(
 }
 \arguments{
 \item{category}{\code{character} articles of which category should be
-downloaded, see \code{\link{pages_in_category}}, argument \code{categories}}
+downloaded, see \code{\link[WikipediR]{pages_in_category}}, argument \code{categories}}
 
 \item{subcategories}{\code{logical} (default: \code{TRUE}) should
 subcategories be downloaded as well}
 
 \item{language}{\code{character} (default: \code{"en"}),
-see \code{\link{pages_in_category}}}
+see \code{\link[WikipediR]{pages_in_category}}}
 
 \item{project}{\code{character} (default: \code{"wikipedia"}),
-see \code{\link{pages_in_category}}}
+see \code{\link[WikipediR]{pages_in_category}}}
 }
 \value{
 \code{\link{textmeta}} object
 }
 \description{
 Downloads pages from Wikipedia and extracts some meta information
-with functions from the package \code{\link{WikipediR}}. Creates a
+with functions from the package \code{\link[WikipediR]{WikipediR}}. Creates a
 \code{\link{textmeta}} object including the requested pages.
 }
 \examples{

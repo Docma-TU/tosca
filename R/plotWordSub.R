@@ -25,7 +25,7 @@
 #' \code{ldaresult} should be plotted (default: all topics)?
 #' @param tnames Character vector of same length as \code{select}
 #' - labels for the topics (default are the first returned words of
-#' \code{\link{top.topic.words}} from the \code{lda} package for each topic)
+#' \code{\link[lda]{top.topic.words}} from the \code{lda} package for each topic)
 #' @param search See \code{\link{filterWord}}
 #' @param ignore.case See \code{\link{filterWord}}
 #' @param type Character: Should counts/proportion of documents, where every

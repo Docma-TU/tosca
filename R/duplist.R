@@ -136,7 +136,7 @@ duplist <- function(object, paragraph = FALSE){
 #' @param x An R Object.
 #' @export
 is.duplist <- function(x){
-  if(class(x) != "duplist"){
+  if(!inherits(x, "duplist")){
     message("Object is not of class \"duplist\".")
     return(FALSE)
   }
