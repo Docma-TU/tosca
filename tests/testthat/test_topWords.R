@@ -6,7 +6,7 @@ test_that("topWords", {
   
   topics <- result$topics
   
-  expect_equal(topWords(topics = topics),
+  expect_equal(as.vector(topWords(topics = topics)),
     lda::top.topic.words(topics = topics, num.words = 1, by.score = TRUE))
   expect_equal(topWords(topics = topics, numWords = 20, byScore = FALSE),
     lda::top.topic.words(topics = topics))
@@ -17,6 +17,6 @@ test_that("topWords", {
   expect_true(all(names(tw) == c("word", "val")))
   
   imp <- importance(topics = topics)
-  expect_equal(diag(imp[1:3, tw$word]), tw$val)
+  expect_equal(diag(imp[1:3, tw$word]), as.vector(tw$val))
   
 })

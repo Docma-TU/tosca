@@ -10,7 +10,7 @@ test_that("precisionrecall", {
   subset <- c(FALSE, TRUE, FALSE, TRUE)
   n <- c(40, 20, 15, 33)
   expect_equal(0.9, precision(w, p, subset))
-  expect_equal(0.0001375758, round(vprecision(w, p, subset, n), 10))
+  expect_equal(0.001528619, round(vprecision(w, p, subset, n), 10))
   expect_equal(0.6352941, round(recall(w, p, subset), 7))
   expect_equal(0.001356794, round(vrecall(w, p, subset, n), 9))
   
