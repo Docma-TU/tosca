@@ -19,7 +19,7 @@ setwd("..")
 system("R CMD build tosca --resave-data")
 
 # verify current version
-system("R CMD check tosca_0.3-3.tar.gz --as-cran")
+system("R CMD check tosca_0.3-4.tar.gz --as-cran")
 
 ###############################################
 ## Install locally to test for hidden errors ##
